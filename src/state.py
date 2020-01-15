@@ -5,6 +5,21 @@ class State:
     def add_student(self, student):
         self.students.append(student)
 
+    def generate_neighbour(self):
+        for student in self.students: # select a student
+            for target_subject in student.subject_targets: # select a subject that has target classes (classes that the student wants to go to)
+                for target_class in target_subject[1]: # select, for that subject, a possible target class
+
+                    for trader_student in self.students: # find a trader student
+                        if trader_student == student
+                            continue
+
+                        for trader_student_classes in 
+
+
+
+
+
 class Student:
     # @param: subjects_and_classes looks like [[subject name, class number], ...]
     # Represents the class a student has for each subject.
@@ -39,4 +54,8 @@ class Student:
                 flag = True
         if not flag: self.subject_give_ins.append([subject_name, [class_number]])
 
+
+    # equality comparator overload (compares student ids)
+    def __eq__(self, x):
+        return self.student_id == x.student_id
     
