@@ -5,8 +5,11 @@ class State:
     def add_student(self, student):
         self.students.append(student)
 
-    def trade_classes(self,student1,student2):
-        print("ZAs")
+    def trade_classes(self,student1,student2,subject_name):
+        student1_class = student1.get_class_for_subject(subject_name)
+        student2_class = student2.get_class_for_subject(subject_name)
+        student1.set_class_for_subject(subject_name, student2_class)
+        student2.set_class_for_subject(subject_name, student1_class)
 
     def generate_neighbour(self):
         for student in self.students: # select a student
@@ -29,14 +32,12 @@ class State:
                             continue
 
 
-                        trader_targets = trader_student.get_targets_for_subject(subject_name) # get the targets for that suject, for the trader student
+                        trader_targets = trader_student.get_targets_for_subject(subject_name) # get the targets for that subject, for the trader student
                         if trader_targets is not None and student_class in trader_targets:
-                            student.set_class_for_subject(subject_name, trader_class)
-                            student.remove_subject_target(subject_name)
+                            self.trade_classes(student,trader_student,subject_name) #trades the students classes for that subject
+                            break
                             
                             
-
-
                         trader_giveins = trader_student.get_giveins_for_subject(subject_name) # get the giveins for that subject, for the trader student
                         #if trader_giveins is not None and student_class in trader_giveins:
                             # TODO: GENERATE NEW STATE, SWITCH CLASSES AND FINISH
@@ -146,4 +147,8 @@ state.generate_neighbour()
 
 #First Student after trading
 print("\nID: ",a.student_id,"\nClasses: ",a.subjects_and_classes,"\nTarget Classes: ",a.subject_targets)
+
+#Second Student after trading
+print("\nID: ",b.student_id,"\nClasses",b.subjects_and_classes,"\nTarget Classes",b.subject_targets)
+
 
