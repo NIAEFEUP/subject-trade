@@ -11,9 +11,11 @@ class State:
         student2_class = student2.get_class_for_subject(subject_name)
         student1.set_class_for_subject(subject_name, student2_class)
         student2.set_class_for_subject(subject_name, student1_class)
+        #student1.remove_subject_target(subject_name) #E suposto ele remover os targets a medida que vai trocando? Ou e usado para a funçao de fitness?
+        #student2.remove_subject_target(subject_name)
 
     def generate_neighbour(self):
-        for student in self.students: # select a student
+        for student_index,student in enumerate(self.students,start=1): # select a student
 
 
             for subject_name,target_classes in student.subject_targets.items(): # select a subject name and its respective  target classes
@@ -22,9 +24,8 @@ class State:
 
 
                 for target_class in target_classes: # select, for that subject, a possible target class
-        
 
-                    for trader_student in self.students: # find a trader student
+                    for trader_student in self.students[student_index:]: # find a trader student
                         if trader_student == student:
                             continue
                         
@@ -33,14 +34,13 @@ class State:
                         if trader_class is None or trader_class != target_class: # if target student does not have the desired class for that subject, continue
                             continue
                   
-
                         trader_targets = trader_student.get_targets_for_subject(subject_name) # get the targets for that subject, for the trader student
                         
                         if trader_targets is not None and student_class in trader_targets:
                             self.trade_classes(student,trader_student,subject_name) #trades the students classes for that subject
                             break
-                            
-                            
+                                     
+                        #Afinal os give in so vao ser feitos depois de já se ter verificado os targets todos
                         trader_giveins = trader_student.get_giveins_for_subject(subject_name) # get the giveins for that subject, for the trader student
                         #if trader_giveins is not None and student_class in trader_giveins:
                             # TODO: GENERATE NEW STATE, SWITCH CLASSES AND FINISH
@@ -69,27 +69,14 @@ class Student:
     def add_subject_target(self, subject_name, class_number):
         self.subject_targets[subject_name].append(class_number)
 
-        # flag = False
-        # for st in self.subject_targets:
-        #     if st[0] == subject_name:
-        #         st[1].append(class_number)
-        #         flag = True
-        # if not flag: self.subject_targets.append([subject_name, [class_number]])
 
     def remove_subject_target(self,subject_name):
         del self.subject_targets[subject_name]
-        # for subject_target in self.subject_targets:
-        #     if subject_target[0] == subject_name:
-        #         self.subject_targets.remove(subject_target)
+
 
     def add_subject_give_in(self, subject_name, class_number):
         self.subject_give_ins[subject_name].append(class_number)
-        # flag = False
-        # for sgi in self.subject_give_ins:
-        #     if sgi[0] == subject_name:
-        #         sgi[1].append(class_number)
-        #         flag = True
-        # if not flag: self.subject_give_ins.append([subject_name, [class_number]])
+
 
 
     def get_class_for_subject(self, subject):
@@ -106,18 +93,12 @@ class Student:
     def get_targets_for_subject(self, subject):
         if subject in self.subject_targets:
             return self.subject_targets[subject]
-        # for subject_and_targets in self.subject_targets:
-        #     if subject_and_targets[0] == subject:
-        #         return subject_and_targets[1]
         return None
 
     def get_giveins_for_subject(self, subject):
         if subject in self.subject_give_ins:
             return self.subject_give_ins[subject]
 
-        # for subject_and_giveins in self.subject_give_ins:
-        #     if subject_and_giveins[0] == subject:
-        #         return subject_and_giveins[1]
         return None
 
 
