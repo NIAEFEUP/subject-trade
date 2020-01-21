@@ -1,3 +1,5 @@
+from copy import deepcopy   
+
 class State:
     def __init__(self):
         self.students = []
@@ -5,16 +7,18 @@ class State:
     def add_student(self, student):
         self.students.append(student)
 
+
     #Given two students and a subject, trades their classes for that given subject
     def trade_classes(self,student1,student2,subject_name):
+
         student1_class = student1.get_class_for_subject(subject_name)
         student2_class = student2.get_class_for_subject(subject_name)
         student1.set_class_for_subject(subject_name, student2_class)
         student2.set_class_for_subject(subject_name, student1_class)
-        #student1.remove_subject_target(subject_name) #E suposto ele remover os targets a medida que vai trocando? Ou e usado para a funçao de fitness?
-        #student2.remove_subject_target(subject_name)
+
 
     def generate_neighbour(self):
+
         for student_index,student in enumerate(self.students,start=1): # select a student
 
 
@@ -37,8 +41,9 @@ class State:
                         trader_targets = trader_student.get_targets_for_subject(subject_name) # get the targets for that subject, for the trader student
                         
                         if trader_targets is not None and student_class in trader_targets:
-                            self.trade_classes(student,trader_student,subject_name) #trades the students classes for that subject
-                            break
+                            state = deepcopy(self)
+                            state.trade_classes(student,trader_student,subject_name) #trades the students classes for that subject
+                            yield state
                                      
                         #Afinal os give in so vao ser feitos depois de já se ter verificado os targets todos
                         trader_giveins = trader_student.get_giveins_for_subject(subject_name) # get the giveins for that subject, for the trader student
@@ -95,13 +100,17 @@ class Student:
             return self.subject_targets[subject]
         return None
 
+    def __str__(self):
+        return "\nID: " + str(self.student_id) + "\nClasses: " + str(self.subjects_and_classes) + "\nTarget Classes: " + str(self.subject_targets)
+         
+
     def get_giveins_for_subject(self, subject):
         if subject in self.subject_give_ins:
             return self.subject_give_ins[subject]
 
         return None
 
-
+    
     # equality comparator overload (compares student ids)
     def __eq__(self, x):
         return self.student_id == x.student_id
@@ -132,18 +141,19 @@ state = State()
 state.add_student(a)
 state.add_student(b)
 
-print("\nID: ",a.student_id,"\nClasses: ",a.subjects_and_classes,"\nTarget Classes: ",a.subject_targets)
-print("\nID: ",b.student_id,"\nClasses",b.subjects_and_classes,"\nTarget Classes",b.subject_targets)
+#print("\nID: ",a.student_id,"\nClasses: ",a.subjects_and_classes,"\nTarget Classes: ",a.subject_targets)
+#print("\nID: ",b.student_id,"\nClasses",b.subjects_and_classes,"\nTarget Classes",b.subject_targets)
 
-state.generate_neighbour()
+print("First State")
+for student in state.students:
+    print(student)
 
 
-#First Student after trading
-print("\nID: ",a.student_id,"\nClasses: ",a.subjects_and_classes,"\nTarget Classes: ",a.subject_targets)
+print("\nNew State")
+for neighbor in state.generate_neighbour():
 
-#Second Student after trading
-print("\nID: ",b.student_id,"\nClasses",b.subjects_and_classes,"\nTarget Classes",b.subject_targets)
-
+    for student in neighbor.students:
+        print(student)
 
 
 
