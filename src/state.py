@@ -10,11 +10,18 @@ class State:
 
     #Given two students and a subject, trades their classes for that given subject
     def trade_classes(self,student1,student2,subject_name):
+        print("Antes da troca")
+
+        for student1 in self.students:
+            print(student1)
 
         student1_class = student1.get_class_for_subject(subject_name)
         student2_class = student2.get_class_for_subject(subject_name)
         student1.set_class_for_subject(subject_name, student2_class)
         student2.set_class_for_subject(subject_name, student1_class)
+        print("Fiz a troca",subject_name)
+        for student1 in self.students:
+            print(student1)
 
 
     def generate_neighbour(self):
@@ -23,12 +30,11 @@ class State:
 
 
             for subject_name,target_classes in student.subject_targets.items(): # select a subject name and its respective  target classes
-
+        
                 student_class = student.get_class_for_subject(subject_name) # get the current class of the first student for that subject
-
-
+                
                 for target_class in target_classes: # select, for that subject, a possible target class
-
+  
                     for trader_student in self.students[student_index:]: # find a trader student
                         if trader_student == student:
                             continue
@@ -41,15 +47,19 @@ class State:
                         trader_targets = trader_student.get_targets_for_subject(subject_name) # get the targets for that subject, for the trader student
                         
                         if trader_targets is not None and student_class in trader_targets:
-                            state = deepcopy(self)
-                            state.trade_classes(student,trader_student,subject_name) #trades the students classes for that subject
-                            yield state
-                                     
-                        #Afinal os give in so vao ser feitos depois de já se ter verificado os targets todos
-                        trader_giveins = trader_student.get_giveins_for_subject(subject_name) # get the giveins for that subject, for the trader student
-                        #if trader_giveins is not None and student_class in trader_giveins:
-                            # TODO: GENERATE NEW STATE, SWITCH CLASSES AND FINISH
+                            state_targets = deepcopy(self)
+                            state_targets.trade_classes(student,trader_student,subject_name) #trades the students classes for that subject
+                            
+                            
+                        
+                            yield state_targets
 
+                        #trader_give_ins = trader_student.get_giveins_for_subject(subject_name)
+
+                        # if trader_give_ins is not None and student_class in trader_give_ins:
+                        #     state_give_ins = deepcopy(self)
+                        #     state.trade_classes(student,trader_student,subject_name)
+                        #     yield state_give_ins
 
 
 
@@ -120,8 +130,8 @@ class Student:
 #TESTING
 
 #First Student
-subjects_and_classes1 = {"LPOO": 1,"TCOM": 1,"MDIS": 1,"PLOG": 1}
-subject_targets1 = {"LPOO": [2,3],"TCOM": [4,5]}
+subjects_and_classes1 = {"LPOO": 1,"TCOM": 2,"MDIS": 1,"PLOG": 1}
+subject_targets1 = {"LPOO": [2,3],"TCOM": [3,4],"MDIS":[5]}
 subject_give_ins1 = {"MDIS": [2,3],"PLOG": [4,5]}
 
 
@@ -129,10 +139,16 @@ a = Student(201603820,subjects_and_classes1,subject_targets1,subject_give_ins1)
 
 
 #Second student
-subjects_and_classes2 = {"LPOO": 2,"TCOM": 4,"MDIS": 2,"PLOG": 4}
-subject_targets2 = {"LPOO": [1,4], "TCOM": [1,5]}
+subjects_and_classes2 = {"LPOO": 2,"TCOM": 3,"MDIS": 2,"PLOG": 4}
+subject_targets2 = {"LPOO": [1,4], "TCOM": [2,5]}
 subject_give_ins2 = {"MDIS": [1,3],"PLOG": [1,5]}
 b = Student(201703820,subjects_and_classes2,subject_targets2,subject_give_ins2)
+
+#Third student
+subjects_and_classes2 = {"LPOO": 5,"TCOM": 5,"MDIS": 5,"PLOG": 5}
+subject_targets2 = {"MDIS": [1]}
+subject_give_ins2 = {}
+c = Student(201803820,subjects_and_classes2,subject_targets2,subject_give_ins2)
 
 #Creates the state
 state = State()
@@ -144,16 +160,17 @@ state.add_student(b)
 #print("\nID: ",a.student_id,"\nClasses: ",a.subjects_and_classes,"\nTarget Classes: ",a.subject_targets)
 #print("\nID: ",b.student_id,"\nClasses",b.subjects_and_classes,"\nTarget Classes",b.subject_targets)
 
-print("First State")
-for student in state.students:
-    print(student)
+# print("First State")
+# for student in state.students:
+#     print(student)
 
 
-print("\nNew State")
+
 for neighbor in state.generate_neighbour():
-
-    for student in neighbor.students:
-        print(student)
+    print("\nNew State")
+    for student in (neighbor.students):
+        # print(student)
+        pass
 
 
 
