@@ -22,16 +22,17 @@ class State:
     def generate_neighbour(self):
 
 
-        for student_index,student in enumerate(self.students,start=1): # select a student
-
-
+        for student_id,student in self.students.items(): # select a student
+        
+            
+     
             for subject_name,target_classes in student.subject_targets.items(): # select a subject name and its respective  target classes
         
                 student_class = student.get_class_for_subject(subject_name) # get the current class of the first student for that subject
                 
                 for target_class in target_classes: # select, for that subject, a possible target class
   
-                    for trader_student in self.students[student_index:]: # find a trader student
+                    for trader_id,trader_student in self.students.items(): # find a trader student
                         if trader_student == student:
                             continue
                         
@@ -42,18 +43,21 @@ class State:
                   
                         trader_targets = trader_student.get_targets_for_subject(subject_name) # get the targets for that subject, for the trader student
                         
+
+
                         if trader_targets is not None and student_class in trader_targets:
                             state_targets = deepcopy(self)
-                            state_targets.trade_classes(student.student_id,trader_studentstudent_id,subject_name) #trades the students classes for that subject
+                            state_targets.trade_classes(student_id,trader_id,subject_name) #trades the students classes for that subject
                             
                             yield state_targets
 
-                        #trader_give_ins = trader_student.get_giveins_for_subject(subject_name)
+                        trader_give_ins = trader_student.get_giveins_for_subject(subject_name)
 
-                        # if trader_give_ins is not None and student_class in trader_give_ins:
-                        #     state_give_ins = deepcopy(state_targets)
-                        #     state.trade_classes(student,trader_student,subject_name)
-                        #     yield state_give_ins
+                        if trader_give_ins is not None and student_class in trader_give_ins:
+                            state_give_ins = deepcopy(self)
+                            state.trade_classes(student_id,trader_id,subject_name)
+                            yield state_give_ins
+  
 
 
 
@@ -105,7 +109,7 @@ class Student:
         return None
 
     def __str__(self):
-        return "\nID: " + str(self.student_id) + "\nClasses: " + str(self.subjects_and_classes) + "\nTarget Classes: " + str(self.subject_targets)
+        return "\nID: " + str(self.student_id) + "\nClasses: " + str(self.subjects_and_classes) + "\nTarget Classes: " + str(self.subject_targets) + "\nGive ins" + str(self.subject_give_ins)
          
 
     def get_giveins_for_subject(self, subject):
@@ -125,7 +129,8 @@ class Student:
 
 #First Student
 subjects_and_classes1 = {"LPOO": 1,"TCOM": 2,"MDIS": 1,"PLOG": 1}
-subject_targets1 = {"LPOO": [2,3],"TCOM": [3,4],"MDIS":[5]}
+#subject_targets1 = {"LPOO": [2,3],"TCOM": [3,4],"MDIS":[5]}
+subject_targets1 = {"MDIS": [2]}
 subject_give_ins1 = {"MDIS": [2,3],"PLOG": [4,5]}
 
 
@@ -134,7 +139,8 @@ a = Student(201603820,subjects_and_classes1,subject_targets1,subject_give_ins1)
 
 #Second student
 subjects_and_classes2 = {"LPOO": 2,"TCOM": 3,"MDIS": 2,"PLOG": 4}
-subject_targets2 = {"LPOO": [1,4], "TCOM": [2,5]}
+# subject_targets2 = {"LPOO": [1,4], "TCOM": [2,5]}
+subject_targets2 = {}
 subject_give_ins2 = {"MDIS": [1,3],"PLOG": [1,5]}
 b = Student(201703820,subjects_and_classes2,subject_targets2,subject_give_ins2)
 
@@ -157,15 +163,16 @@ state.add_student(b)
 #print("\nID: ",b.student_id,"\nClasses",b.subjects_and_classes,"\nTarget Classes",b.subject_targets)
 
 print("First State")
-for student in state.students:
+for student in state.students.values():
     print(student)
+
     
 
 
 
 for neighbor in state.generate_neighbour():
     print("\nNew State")
-    for student in neighbor.students:
+    for student in neighbor.students.values():
         print(student)
         
         
