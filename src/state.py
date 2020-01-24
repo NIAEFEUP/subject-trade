@@ -2,31 +2,26 @@ from copy import deepcopy
 
 class State:
     def __init__(self):
-        self.students = []
+        self.students = {}
 
     def add_student(self, student):
-        self.students.append(student)
-
+        self.students[student.student_id] = student
 
     #Given two students and a subject, trades their classes for that given subject
-    def trade_classes(self,student1,student2,subject_name):
-        print("Antes da troca")
+    def trade_classes(self,student1_id,student2_id,subject_name):
 
-        for student1 in self.students:
-            print(student1)
+        students = self.students
+        student1_class = students[student1_id].get_class_for_subject(subject_name)
+        student2_class = students[student2_id].get_class_for_subject(subject_name)       
+        students[student1_id].set_class_for_subject(subject_name, student2_class)
+        students[student2_id].set_class_for_subject(subject_name, student1_class)
 
-        student1_class = student1.get_class_for_subject(subject_name)
-        student2_class = student2.get_class_for_subject(subject_name)
-        student1.set_class_for_subject(subject_name, student2_class)
-        student2.set_class_for_subject(subject_name, student1_class)
-        print("Fiz a troca",subject_name)
-        for student1 in self.students:
-            print(student1)
 
 
     def generate_neighbour(self):
 
-        for student_index,student in enumerate(self.students,start=1): # select a student
+
+        for student_id,student in self.students.items(): # select a student
 
 
             for subject_name,target_classes in student.subject_targets.items(): # select a subject name and its respective  target classes
@@ -35,29 +30,28 @@ class State:
                 
                 for target_class in target_classes: # select, for that subject, a possible target class
   
-                    for trader_student in self.students[student_index:]: # find a trader student
-                        if trader_student == student:
+                    for trader_student_id,trader_student in self.students.items(): # find a trader student
+                        if trader_student_id == student_id:
                             continue
                         
                         trader_class = trader_student.get_class_for_subject(subject_name) # get the class of the trader student, for that subject
 
                         if trader_class is None or trader_class != target_class: # if target student does not have the desired class for that subject, continue
                             continue
+                        
                   
                         trader_targets = trader_student.get_targets_for_subject(subject_name) # get the targets for that subject, for the trader student
                         
                         if trader_targets is not None and student_class in trader_targets:
                             state_targets = deepcopy(self)
-                            state_targets.trade_classes(student,trader_student,subject_name) #trades the students classes for that subject
+                            state_targets.trade_classes(student_id,trader_student_id,subject_name) #trades the students classes for that subject
                             
-                            
-                        
                             yield state_targets
 
                         #trader_give_ins = trader_student.get_giveins_for_subject(subject_name)
 
                         # if trader_give_ins is not None and student_class in trader_give_ins:
-                        #     state_give_ins = deepcopy(self)
+                        #     state_give_ins = deepcopy(state_targets)
                         #     state.trade_classes(student,trader_student,subject_name)
                         #     yield state_give_ins
 
@@ -156,21 +150,28 @@ state = State()
 #Add both students
 state.add_student(a)
 state.add_student(b)
+# state.add_student(c)
+
 
 #print("\nID: ",a.student_id,"\nClasses: ",a.subjects_and_classes,"\nTarget Classes: ",a.subject_targets)
 #print("\nID: ",b.student_id,"\nClasses",b.subjects_and_classes,"\nTarget Classes",b.subject_targets)
 
-# print("First State")
-# for student in state.students:
-#     print(student)
+print("First State")
+for student in state.students.values():
+    print(student)
+    
 
 
 
 for neighbor in state.generate_neighbour():
     print("\nNew State")
-    for student in (neighbor.students):
-        # print(student)
-        pass
+    for student in neighbor.students.values():
+        print(student)
+        
+
+
+
+        
 
 
 
