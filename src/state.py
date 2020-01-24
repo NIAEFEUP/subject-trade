@@ -1,9 +1,18 @@
+def translate_subject_and_class(subject, class_number):
+    return subject + str(class_number)
+
+
 class State:
     def __init__(self):
         self.students = []
+        self.class_schedules = {}
+
+    def add_schedule(self, subject, class_number, schedule):
+        self.class_schedules[translate_subject_and_class(subject, class_number)] = schedule
 
     def add_student(self, student):
         self.students.append(student)
+
 
 class Student:
     # @param: subjects_and_classes looks like [[subject name, class number], ...]
