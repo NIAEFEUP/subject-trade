@@ -48,14 +48,13 @@ class State:
                         if trader_targets is not None and student_class in trader_targets:
                             state_targets = deepcopy(self)
                             state_targets.trade_classes(student_id,trader_id,subject_name) #trades the students classes for that subject
-                            
                             yield state_targets
 
                         trader_give_ins = trader_student.get_giveins_for_subject(subject_name)
 
                         if trader_give_ins is not None and student_class in trader_give_ins:
                             state_give_ins = deepcopy(self)
-                            state.trade_classes(student_id,trader_id,subject_name)
+                            state_give_ins.trade_classes(student_id,trader_id,subject_name)
                             yield state_give_ins
   
 
@@ -131,14 +130,14 @@ class Student:
 subjects_and_classes1 = {"LPOO": 1,"TCOM": 2,"MDIS": 1,"PLOG": 1}
 #subject_targets1 = {"LPOO": [2,3],"TCOM": [3,4],"MDIS":[5]}
 subject_targets1 = {"MDIS": [2]}
-subject_give_ins1 = {"MDIS": [2,3],"PLOG": [4,5]}
+subject_give_ins1 = {"MDIS": [3],"PLOG": [4,5]}
 
 
 a = Student(201603820,subjects_and_classes1,subject_targets1,subject_give_ins1)
 
 
 #Second student
-subjects_and_classes2 = {"LPOO": 2,"TCOM": 3,"MDIS": 2,"PLOG": 4}
+subjects_and_classes2 = {"LPOO": 3,"TCOM": 3,"MDIS": 2,"PLOG": 4}
 # subject_targets2 = {"LPOO": [1,4], "TCOM": [2,5]}
 subject_targets2 = {}
 subject_give_ins2 = {"MDIS": [1,3],"PLOG": [1,5]}
