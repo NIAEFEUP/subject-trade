@@ -7,6 +7,25 @@ class State:
     def add_student(self, student):
         self.students.append(student)
 
+    def get_score(self): 
+        score = 0
+        #if traded the subject as expected get score
+        for i in self.students: 
+            for j in i.subjects_and_classes: 
+                if any(j.values) in i.subject_targets[j]:  
+                    score += 4
+                else: 
+                    score -= 3
+                # check if the givin classes. If a class was abdicated, then score-=1
+                for k in i.subject_give_ins[j]: 
+                    if k not in j: 
+                        score -= 1 
+                    else: 
+                        score += 2
+                # space for the abdicaded subjects                                      Score -= 2 
+                # space to check the time of the classes, if they are incompatible...   Score  -= 1000
+                # if there's a giving but not the target 
+        return score 
 
     #Given two students and a subject, trades their classes for that given subject
     def trade_classes(self,student1,student2,subject_name):
