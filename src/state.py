@@ -57,11 +57,12 @@ class Student:
     #
     # @param: subject_give_ins looks like [[subject name, [class number,...]], ...]
     # Represents the classes for which the student would give in his place for each subject.
-    def __init__(self, student_id, subjects_and_classes, subject_targets, subject_give_ins):
+    def __init__(self, student_id, subjects_and_classes, subject_targets, subject_give_ins, buddies):
         self.student_id = student_id
         self.subjects_and_classes = subjects_and_classes 
         self.subject_targets = subject_targets
         self.subject_give_ins = subject_give_ins
+        self.buddies = buddies
     
     def add_subject_and_class(self, subject_name, class_name):
         self.subjects_and_classes.append([subject_name, class_name])
@@ -81,3 +82,9 @@ class Student:
                 sgi[1].append(class_number)
                 flag = True
         if not flag: self.subject_give_ins.append([subject_name, [class_number]])
+
+    def add_buddy(self, subject_name, buddies_up):
+        for buddy in buddies_up:
+            self.buddies[subject_name] = buddy
+    
+        
