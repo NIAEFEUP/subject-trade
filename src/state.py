@@ -2,13 +2,47 @@ def translate_subject_and_class(subject, class_number):
     return subject + str(class_number)
 
 
+class Hour:
+    def __init__(self, hours, minutes):
+        self.hours = hours
+        self.minutes = minutes
+
+    def __lt__(self, other):
+        if self.hours == other.hours:
+            return self.minutes < other.minutes
+
+        return self.hours < other.hours
+
+    def __le__(self, other):
+        if self.hours == other.hours:
+            return self.minutes <= other.minutes
+
+        return self.hours <= other.hours
+
+
+class Schedule:
+    def __init__(self, start_hour, end_hour):
+        self.start_hour = start_hour
+        self.end_hour = end_hour
+
+    def conflicts(self, other):
+        flag = False
+        if other.start_hour <= self.start_hour and self.start_hour < other.end_hour:
+            flag = True
+
+        if other.start_hour < self.end_hour and self.end_hour <= other.end_hour:
+            flag = True
+
+        return flag
+
+
 class State:
     def __init__(self):
         self.students = []
         self.class_schedules = {}
 
-    def add_schedule(self, subject, class_number, schedule):
-        self.class_schedules[translate_subject_and_class(subject, class_number)] = schedule
+    def add_schedule(self, subject, class_number, start_hour, end_hour):
+        self.class_schedules[translate_subject_and_class(subject, class_number)] = Schedule(start_hour, end_hour)
 
     def add_student(self, student):
         self.students.append(student)
@@ -47,5 +81,3 @@ class Student:
                 sgi[1].append(class_number)
                 flag = True
         if not flag: self.subject_give_ins.append([subject_name, [class_number]])
-
-    
