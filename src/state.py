@@ -61,14 +61,6 @@ class State:
 
 
 class Student:
-    # @param: subjects_and_classes looks like [[subject name, class number], ...]
-    # Represents the class a student has for each subject.
-    #
-    # @param: subject_targets looks like [[subject name, [class number, ...]], ...]
-    # Represents the classes a student would like to trade to for each subject.
-    #
-    # @param: subject_give_ins looks like [[subject name, [class number,...]], ...]
-    # Represents the classes for which the student would give in his place for each subject.
     def __init__(self, student_id, subjects_and_classes, subject_targets, subject_give_ins):
         self.student_id = student_id
         self.subjects_and_classes = subjects_and_classes 
