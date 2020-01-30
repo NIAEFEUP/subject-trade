@@ -16,6 +16,15 @@ class State:
         score = 0
         #if traded the subject as expected get score
         for i in self.students.values(): 
+            #checking buddies 
+            for numbers in set(list(i.buddies.values())):
+                    for classes in set(list(i.buddies.keys())): 
+                        if i.subjects_and_classes[classes] == self.students[numbers].subjects_and_classes[classes]: 
+                            score += 30 
+                        else: 
+                            score -= 20
+                        
+
             for position, j in enumerate(i.subjects_and_classes): 
                 if j in i.subject_targets.keys(): 
                     # check if the student got the target class 
@@ -30,29 +39,23 @@ class State:
                         score -= 3      #if a class was abdicated
                     else: 
                         score += 5
-               
-               #checking budies 
+                     
 
                #checking schedule conflicts. If two classes are incompatible then score = -100000
                 for p in range(position+1, len(list(i.subjects_and_classes.keys()))):
-                    name_1 = translate_subject_and_class(j,i.subjects_and_classes[j])
                     key = list(i.subjects_and_classes.keys())[p] 
-                    name_2 = translate_subject_and_class(key, i.subjects_and_classes[key])
-                    if (name_1 != name_2): 
-                        sched_1 = self.class_schedules[name_1]
-                        sched_2 = self.class_schedules[name_2] 
-                        if (sched_1.conflicts(sched_2)):
-                            score = -100000
-                            # tests to print, please don't delete
-                            # print("--Conflict between: {%s,%s}" %(name_1, name_2))
-                            # print("----HOURS_1----")
-                            # print("START: %i \n END_ %i" %(sched_1.start_hour.hours, sched_1.end_hour.hours))
-                            # print("---HOURS_2----")
-                            # print("START: %i \n END_ %i" %(sched_2.start_hour.hours, sched_2.end_hour.hours))
-                            break 
-                    
-                
-                 
+                    sched_1 = self.class_schedules[translate_subject_and_class(j,i.subjects_and_classes[j])]
+                    sched_2 = self.class_schedules[translate_subject_and_class(key, i.subjects_and_classes[key])] 
+                    if (sched_1.conflicts(sched_2)):
+                        score = -100000
+                        # tests to print, please don't delete
+                        # print("--Conflict between: {%s,%s}" %(name_1, name_2))
+                        # print("----HOURS_1----")
+                        # print("START: %i \n END_ %i" %(sched_1.start_hour.hours, sched_1.end_hour.hours))
+                        # print("---HOURS_2----")
+                        # print("START: %i \n END_ %i" %(sched_2.start_hour.hours, sched_2.end_hour.hours))
+                        break 
+                               
         return score 
 
     def add_schedule(self, subject, class_number, start_hour, end_hour):
