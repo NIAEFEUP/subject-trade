@@ -16,38 +16,46 @@ class State:
         score = 0
         #if traded the subject as expected get score
         for i in self.students.values(): 
+
+            #FLAGS 
+            alone = True        #the person is not with a friend
+            no_givin = True     #the person didn't givin any class 
+            no_target = True    #the person didn't get the target 
+
             #checking buddies 
             for numbers in set(list(i.buddies.values())):
                     for classes in set(list(i.buddies.keys())): 
                         if i.subjects_and_classes[classes] == self.students[numbers].subjects_and_classes[classes]: 
-                            score += 30 
+                            score += 30     #the person is at the same class of his friend
+                            alone = False   #Flag-- 
                         else: 
                             score -= 20
                         
-
+            #checking target class
             for position, j in enumerate(i.subjects_and_classes): 
                 if j in i.subject_targets.keys(): 
-                    # check if the student got the target class 
                     if i.subjects_and_classes[j] in i.subject_targets[j]:  
-                        score += 40
+                        score += 40         #if the person got the target class 
+                        no_target = False   #Flag--
                     else: 
                         score -= 30
 
+                #checking givin classes 
                 if j in i.subject_give_ins.keys():
-                    # check the givin classes but not so much
                     if i.subjects_and_classes[j] in i.subject_give_ins[j]: 
-                        score -= 3      #if a class was abdicated
+                        score -= 3          #if a class was abdicated
+                        no_givin = False    #Flag--
                     else: 
                         score += 5
                      
 
-               #checking schedule conflicts. If two classes are incompatible then score = -100000
+               #checking schedule conflicts. If two classes are incompatible then score = -inf 
                 for p in range(position+1, len(list(i.subjects_and_classes.keys()))):
                     key = list(i.subjects_and_classes.keys())[p] 
                     sched_1 = self.class_schedules[translate_subject_and_class(j,i.subjects_and_classes[j])]
                     sched_2 = self.class_schedules[translate_subject_and_class(key, i.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
-                        score = -100000
+                        score = float('-inf')
                         # tests to print, please don't delete
                         # print("--Conflict between: {%s,%s}" %(name_1, name_2))
                         # print("----HOURS_1----")
@@ -55,7 +63,16 @@ class State:
                         # print("---HOURS_2----")
                         # print("START: %i \n END_ %i" %(sched_2.start_hour.hours, sched_2.end_hour.hours))
                         break 
-                               
+                
+            #case the person didn't get the target, didn't givin the class and is alone 
+            if alone and no_givin and no_target:    #once the score is -inf it will not change 
+                score = float('-inf') 
+                break 
+            #case the person abdicates one class but doesn't get any in target
+            if not no_givin and no_target: 
+                score = float('-inf')
+                break 
+
         return score 
 
     def add_schedule(self, subject, class_number, start_hour, end_hour):
