@@ -58,7 +58,8 @@ for number, subject in enumerate(["LPOO", "TCOM", "MDIS", "PLOG", "SINF"]):
         hour_2 = Hour(number, randint(1,50))
         state_2.add_schedule(subject, j, hour_2, Hour(hour_2.hours, hour_2.hours + 9))
 
-# Wrong state the person got nothing. It's not with his buddy, neither target, neither any givin -------[STATE 3] 
+# State that the students didn't make a trade. 
+# It's not with his buddy, neither target, neither any givin -------[STATE 3] 
 
 subjects_and_classes1 = {"LPOO": 4,"TCOM": 1,"MDIS": 1,"PLOG": 1}
 subject_targets1 = {"LPOO": [2,3],"TCOM": [4,5]}

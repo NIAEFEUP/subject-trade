@@ -17,17 +17,12 @@ class State:
         #if traded the subject as expected get score
         for i in self.students.values(): 
 
-            #FLAGS 
-            alone = True        #the person is not with a friend
-            no_givin = True     #the person didn't givin any class 
-            no_target = True    #the person didn't get the target 
-
             #checking buddies 
             for numbers in set(list(i.buddies.values())):
                     for classes in set(list(i.buddies.keys())): 
                         if i.subjects_and_classes[classes] == self.students[numbers].subjects_and_classes[classes]: 
-                            score += 30     #the person is at the same class of his friend
-                            alone = False   #Flag-- 
+                            score += 30         #the person is at the same class of his friend
+                            i.alone = False     #Flag-- 
                         else: 
                             score -= 20
                         
@@ -36,7 +31,7 @@ class State:
                 if j in i.subject_targets.keys(): 
                     if i.subjects_and_classes[j] in i.subject_targets[j]:  
                         score += 40         #if the person got the target class 
-                        no_target = False   #Flag--
+                        i.target = True     #Flag--
                     else: 
                         score -= 30
 
@@ -44,7 +39,7 @@ class State:
                 if j in i.subject_give_ins.keys():
                     if i.subjects_and_classes[j] in i.subject_give_ins[j]: 
                         score -= 3          #if a class was abdicated
-                        no_givin = False    #Flag--
+                        i.givin = True    #Flag--
                     else: 
                         score += 5
                      
@@ -56,20 +51,18 @@ class State:
                     sched_2 = self.class_schedules[translate_subject_and_class(key, i.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
                         score = float('-inf')
-                        # tests to print, please don't delete
-                        # print("--Conflict between: {%s,%s}" %(name_1, name_2))
-                        # print("----HOURS_1----")
-                        # print("START: %i \n END_ %i" %(sched_1.start_hour.hours, sched_1.end_hour.hours))
-                        # print("---HOURS_2----")
-                        # print("START: %i \n END_ %i" %(sched_2.start_hour.hours, sched_2.end_hour.hours))
                         break 
-                
-            #case the person didn't get the target, didn't givin the class and is alone 
-            if alone and no_givin and no_target:    #once the score is -inf it will not change 
-                score = float('-inf') 
+
+            # Reading the method of gen states we have that it's just possible to trade classes in the givin list 
+            # and target list, but the classes can remain the same. 
+            # If there's no change in the classses, then no_givin = True and no_target = True 
+
+            # If he gives up a class but didn't get the target nor he is with his buddy, then infinity 
+            if i.givin and i.target and i.alone and list(i.buddies): 
+                score = float('-inf')
                 break 
-            #case the person abdicates one class but doesn't get any in target
-            if not no_givin and no_target: 
+            # If he gives up a class but didn't get the target and did not choose a buddy 
+            if i.givin and not i.target and not list(i.buddies):
                 score = float('-inf')
                 break 
 
