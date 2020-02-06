@@ -55,7 +55,7 @@ class State:
 
             # Reading the method of gen states we have that it's just possible to trade classes in the givin list 
             # and target list, but the classes can remain the same. 
-            # If there's no change in the classses, then no_givin = True and no_target = True 
+            # If there's no change in the classses, then givin = False and target = False 
 
             # If he gives up a class but didn't get the target nor he is with his buddy, then infinity 
             if i.givin and i.target and i.alone and list(i.buddies): 
