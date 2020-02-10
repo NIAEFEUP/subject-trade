@@ -1,11 +1,11 @@
 class Student:
-    def __init__(self, student_id, subjects_and_classes, subject_targets, subject_give_ins, buddies, alone = True, givin = False, target= False ):
+    def __init__(self, student_id, subjects_and_classes, subject_targets, subject_give_ins, buddies, alone = True, gave_in = False, target= False ):
         self.student_id = student_id
         self.subjects_and_classes = subjects_and_classes 
         self.subject_targets = subject_targets
         self.subject_give_ins = subject_give_ins
         self.buddies = buddies
-        self.givin = givin 
+        self.gave_in = gave_in 
         self.alone = alone 
         self.target = target 
     

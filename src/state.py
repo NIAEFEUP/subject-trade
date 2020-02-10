@@ -14,57 +14,50 @@ class State:
 
     def get_score(self): 
         score = 0
-        #if traded the subject as expected get score
-        for i in self.students.values(): 
+        
+        for student in self.students.values(): 
 
             #checking buddies 
-            for numbers in set(list(i.buddies.values())):
-                    for classes in set(list(i.buddies.keys())): 
-                        if i.subjects_and_classes[classes] == self.students[numbers].subjects_and_classes[classes]: 
+            for numbers in set(list(student.buddies.values())):
+                    for a_class in set(list(student.buddies.keys())): 
+                        if student.subjects_and_classes[a_class] == self.students[numbers].subjects_and_classes[a_class]: 
                             score += 30         #the person is at the same class of his friend
-                            i.alone = False     #Flag-- 
+                            student.alone = False
                         else: 
                             score -= 20
                         
-            #checking target class
-            for position, j in enumerate(i.subjects_and_classes): 
-                if j in i.subject_targets.keys(): 
-                    if i.subjects_and_classes[j] in i.subject_targets[j]:  
-                        score += 40         #if the person got the target class 
-                        i.target = True     #Flag--
+            #checking if student got a target class
+            for position, j in enumerate(student.subjects_and_classes): 
+                if j in student.subject_targets.keys(): 
+                    if student.subjects_and_classes[j] in student.subject_targets[j]:  
+                        score += 40    
+                        student.target = True 
                     else: 
                         score -= 30
 
-                #checking givin classes 
-                if j in i.subject_give_ins.keys():
-                    if i.subjects_and_classes[j] in i.subject_give_ins[j]: 
-                        score -= 3          #if a class was abdicated
-                        i.givin = True    #Flag--
+                #checking if a student gave in any classes 
+                if j in student.subject_give_ins.keys():
+                    if student.subjects_and_classes[j] in student.subject_give_ins[j]: 
+                        score -= 3
+                        student.gave_in = True
                     else: 
                         score += 5
                      
 
-               #checking schedule conflicts. If two classes are incompatible then score = -inf 
-                for p in range(position+1, len(list(i.subjects_and_classes.keys()))):
-                    key = list(i.subjects_and_classes.keys())[p] 
-                    sched_1 = self.class_schedules[translate_subject_and_class(j,i.subjects_and_classes[j])]
-                    sched_2 = self.class_schedules[translate_subject_and_class(key, i.subjects_and_classes[key])] 
+               #checking for schedule conflicts.
+                for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
+                    key = list(student.subjects_and_classes.keys())[p] 
+                    sched_1 = self.class_schedules[translate_subject_and_class(j,student.subjects_and_classes[j])]
+                    sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
-                        score = float('-inf')
-                        break 
+                        return float('-inf')
 
-            # Reading the method of gen states we have that it's just possible to trade classes in the givin list 
-            # and target list, but the classes can remain the same. 
-            # If there's no change in the classses, then givin = False and target = False 
-
-            # If he gives up a class but didn't get the target nor he is with his buddy, then infinity 
-            if i.givin and i.target and i.alone and list(i.buddies): 
-                score = float('-inf')
-                break 
+            # If he gives up a class but didn't get the target nor he is with his buddy
+            if student.gave_in and student.target and student.alone and list(student.buddies): 
+                return float('-inf')
             # If he gives up a class but didn't get the target and did not choose a buddy 
-            if i.givin and not i.target and not list(i.buddies):
-                score = float('-inf')
-                break 
+            if student.gave_in and not student.target and not list(student.buddies):
+                return float('-inf')
 
         return score 
 
