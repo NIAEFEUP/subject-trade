@@ -29,9 +29,9 @@ subject_give_ins2 = {"LPOO": [3,7], "SINF": [2,4,1,7]}
 s2 = Student(201800149, subjects_and_classes2, subject_targets2, subject_give_ins2, {})
 
 
-s1.add_buddy("MDIS", [201800149])
-s2.add_buddy("LPOO",[201800175])
-s2.add_buddy("PLOG",[201800175])
+s1.add_buddies("MDIS", [201800149])
+s2.add_buddies("LPOO",[201800175])
+s2.add_buddies("PLOG",[201800175])
 print(s1.buddies)
 
 #Random schedule ------------------------------------------------------------------------------------ [STATE 1]
@@ -59,7 +59,7 @@ for number, subject in enumerate(["LPOO", "TCOM", "MDIS", "PLOG", "SINF"]):
         state_2.add_schedule(subject, j, hour_2, Hour(hour_2.hours, hour_2.hours + 9))
 
 # State that the students didn't make a trade. 
-# It's not with his buddy, neither target, neither any givin -------[STATE 3] 
+# It's not with his buddy, neither target, neither any gave_in -------[STATE 3] 
 
 subjects_and_classes1 = {"LPOO": 4,"TCOM": 1,"MDIS": 1,"PLOG": 1}
 subject_targets1 = {"LPOO": [2,3],"TCOM": [4,5]}
@@ -73,9 +73,9 @@ subject_give_ins2 = {"LPOO": [3,7], "SINF": [2,4,1,7]}
 
 s2 = Student(201800149, subjects_and_classes2, subject_targets2, subject_give_ins2, {})
 
-s1.add_buddy("MDIS", [201800149])
-s2.add_buddy("LPOO",[201800175])
-s2.add_buddy("PLOG",[201800175])
+s1.add_buddies("MDIS", [201800149])
+s2.add_buddies("LPOO",[201800175])
+s2.add_buddies("PLOG",[201800175])
 
 state_3 = State()
 state_3.add_student(s1)
@@ -95,6 +95,6 @@ for number, subject in enumerate(["LPOO", "TCOM", "MDIS", "PLOG", "SINF"]):
 #     print(state_1.class_schedules[i].end_hour.hours)
 
 
-print(state_1.get_score())
+#print(state_1.get_score())
 print(state_2.get_score())
-print(state_3.get_score())
+#print(state_3.get_score())

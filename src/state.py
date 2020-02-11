@@ -18,13 +18,14 @@ class State:
         for i in self.students.values(): 
 
             #checking buddies 
-            for numbers in set(list(i.buddies.values())):
+            for numbers_list in i.buddies.values():
                     for classes in set(list(i.buddies.keys())): 
-                        if i.subjects_and_classes[classes] == self.students[numbers].subjects_and_classes[classes]: 
-                            score += 30         #the person is at the same class of his friend
-                            i.alone = False     #Flag-- 
-                        else: 
-                            score -= 20
+                        for numbers in numbers_list: 
+                            if i.subjects_and_classes[classes] == self.students[numbers].subjects_and_classes[classes]: 
+                                score += 30         #the person is at the same class of his friend
+                                i.alone = False     #Flag-- 
+                            else: 
+                                score -= 20
                         
             #checking target class
             for position, j in enumerate(i.subjects_and_classes): 
@@ -35,11 +36,12 @@ class State:
                     else: 
                         score -= 30
 
-                #checking givin classes 
+                #checking gave_in classes 
                 if j in i.subject_give_ins.keys():
                     if i.subjects_and_classes[j] in i.subject_give_ins[j]: 
                         score -= 3          #if a class was abdicated
-                        i.givin = True    #Flag--
+                        print(i.subjects_and_classes[j], i.subject_give_ins[j] , j)
+                        i.gave_in = True    #Flag--
                     else: 
                         score += 5
                      
@@ -53,16 +55,14 @@ class State:
                         score = float('-inf')
                         break 
 
-            # Reading the method of gen states we have that it's just possible to trade classes in the givin list 
-            # and target list, but the classes can remain the same. 
-            # If there's no change in the classses, then givin = False and target = False 
+    
 
             # If he gives up a class but didn't get the target nor he is with his buddy, then infinity 
-            if i.givin and i.target and i.alone and list(i.buddies): 
+            if i.gave_in and not i.target and i.alone and list(i.buddies): 
                 score = float('-inf')
                 break 
             # If he gives up a class but didn't get the target and did not choose a buddy 
-            if i.givin and not i.target and not list(i.buddies):
+            if i.gave_in and not i.target and not list(i.buddies):
                 score = float('-inf')
                 break 
 

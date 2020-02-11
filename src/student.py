@@ -1,11 +1,11 @@
 class Student:
-    def __init__(self, student_id, subjects_and_classes, subject_targets, subject_give_ins, buddies, alone = True, givin = False, target= False ):
+    def __init__(self, student_id, subjects_and_classes, subject_targets, subject_give_ins, buddies, alone = True, gave_in = False, target= False ):
         self.student_id = student_id
         self.subjects_and_classes = subjects_and_classes 
         self.subject_targets = subject_targets
         self.subject_give_ins = subject_give_ins
         self.buddies = buddies
-        self.givin = givin 
+        self.gave_in = gave_in 
         self.alone = alone 
         self.target = target 
     
@@ -21,9 +21,11 @@ class Student:
     def add_subject_give_in(self, subject_name, class_number):
         self.subject_give_ins[subject_name].append(class_number)
 
-    def add_buddy(self, subject_name, buddies_up):
+    def add_buddies(self, subject_name, buddies_up):
         for buddy in buddies_up:
-            self.buddies[subject_name] = buddy
+            if subject_name in self.buddies.keys(): 
+                self.buddies[subject_name].append(buddy)
+            else: self.buddies[subject_name] = [buddy]
 
     def get_class_for_subject(self, subject):
         if subject in self.subjects_and_classes :
