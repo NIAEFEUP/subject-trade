@@ -22,13 +22,13 @@ class State:
             got_target = False
 
             #checking buddies 
-            for numbers in set(list(student.buddies.values())):
-                    for a_class in set(list(student.buddies.keys())): 
-                        if student.subjects_and_classes[a_class] == self.students[numbers].subjects_and_classes[a_class]: 
-                            score += 30         #the person is at the same class of his friend
-                            alone = False
-                        else: 
-                            score -= 20
+            for a_class in set(list(student.buddies.keys())): 
+                for numbers in set(student.buddies[a_class]): 
+                    if student.subjects_and_classes[a_class] == self.students[numbers].subjects_and_classes[a_class]: 
+                        score += 30         #the person is at the same class of his friend
+                        alone = False
+                    else: 
+                        score -= 20
                         
             #checking if student got a target class
             for position, j in enumerate(student.subjects_and_classes): 
@@ -38,6 +38,7 @@ class State:
                         got_target = True 
                     else: 
                         score -= 30
+                    print("Score", score)
 
                 #checking if a student gave in any classes 
                 if j in student.subject_give_ins.keys():
@@ -46,6 +47,7 @@ class State:
                         gave_in = True
                     else: 
                         score += 5
+                    print("in the end", score)
                      
 
                #checking for schedule conflicts.

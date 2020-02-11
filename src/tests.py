@@ -4,18 +4,6 @@ from hour import Hour
 from schedule import Schedule
 from random import randint 
 
-subjects_and_classes1 = {"LPOO": 1,"TCOM": 1,"MDIS": 1,"PLOG": 1}
-subject_targets1 = {"LPOO": [2,3],"TCOM": [4,5]}
-subject_give_ins1 = {"MDIS": [2,3],"PLOG": [4,5]}
-
-s1 = Student(201800175, subjects_and_classes1, subject_targets1, subject_give_ins1, {})
-
-subjects_and_classes2 = {"LPOO": 2, "TCOM": 7, "MDIS": 4, "PLOG": 1, "SINF": 1}
-subject_targets2 = {"MDIS": [1]}
-subject_give_ins2 = {"LPOO": [3,7], "SINF": [2,4,1,7]}
-
-s2 = Student(201800149, subjects_and_classes2, subject_targets2, subject_give_ins2, {})
-
 
 #Test with score for target and buddy
 subjects_and_classes1 = {"LPOO": 2,"TCOM": 1,"MDIS": 1,"PLOG": 1}
