@@ -20,7 +20,7 @@ class State:
             #checking buddies 
             for numbers_list in i.buddies.values():
                     for classes in set(list(i.buddies.keys())): 
-                        for numbers in numbers_list: 
+                        for numbers in set(numbers_list): 
                             if i.subjects_and_classes[classes] == self.students[numbers].subjects_and_classes[classes]: 
                                 score += 30         #the person is at the same class of his friend
                                 i.alone = False     #Flag-- 
@@ -55,7 +55,9 @@ class State:
                         score = float('-inf')
                         break 
 
-    
+            # Reading the method of gen states we have that it's just possible to trade classes in the gave_in list 
+            # and target list, but the classes can remain the same. 
+            # If there's no change in the classses, then gave_in = False and target = False 
 
             # If he gives up a class but didn't get the target nor he is with his buddy, then infinity 
             if i.gave_in and not i.target and i.alone and list(i.buddies): 
