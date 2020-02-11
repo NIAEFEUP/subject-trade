@@ -21,9 +21,9 @@ class Student:
     def add_subject_give_in(self, subject_name, class_number):
         self.subject_give_ins[subject_name].append(class_number)
 
-    def add_buddy(self, subject_name, buddies_up):
+    def add_buddies(self, subject_name, buddies_up):
         for buddy in buddies_up:
-            self.buddies[subject_name] = buddy
+            self.buddies[subject_name].append(buddy)
 
     def get_class_for_subject(self, subject):
         if subject in self.subjects_and_classes :
