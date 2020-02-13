@@ -14,24 +14,28 @@ class State:
 
     def get_score(self): 
         score = 0
-        
-        for student in self.students.values(): 
+
+        for student in self.students.values():
+
+            alone = True
+            gave_in = False
+            got_target = False
 
             #checking buddies 
-            for numbers in set(list(student.buddies.values())):
-                    for a_class in set(list(student.buddies.keys())): 
-                        if student.subjects_and_classes[a_class] == self.students[numbers].subjects_and_classes[a_class]: 
-                            score += 30         #the person is at the same class of his friend
-                            student.alone = False
-                        else: 
-                            score -= 20
+            for subject in set(list(student.buddies.keys())): 
+                for numbers in set(student.buddies[subject]): 
+                    if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
+                        score += 30
+                        alone = False
+                    else: 
+                        score -= 20
                         
             #checking if student got a target class
             for position, j in enumerate(student.subjects_and_classes): 
                 if j in student.subject_targets.keys(): 
                     if student.subjects_and_classes[j] in student.subject_targets[j]:  
                         score += 40    
-                        student.target = True 
+                        got_target = True 
                     else: 
                         score -= 30
 
@@ -39,7 +43,7 @@ class State:
                 if j in student.subject_give_ins.keys():
                     if student.subjects_and_classes[j] in student.subject_give_ins[j]: 
                         score -= 3
-                        student.gave_in = True
+                        gave_in = True
                     else: 
                         score += 5
                      
@@ -52,14 +56,12 @@ class State:
                     if (sched_1.conflicts(sched_2)):
                         return float('-inf')
 
-            # If he gives up a class but didn't get the target nor he is with his buddy
-            if student.gave_in and student.target and student.alone and list(student.buddies): 
-                return float('-inf')
-            # If he gives up a class but didn't get the target and did not choose a buddy 
-            if student.gave_in and not student.target and not list(student.buddies):
+            # If he gives up a class but didn't get the target nor he is with any of his buddies
+            if gave_in and not got_target and alone: 
                 return float('-inf')
 
         return score 
+
 
     def add_schedule(self, subject, class_number, start_hour, end_hour):
         self.class_schedules[translate_subject_and_class(subject, class_number)] = Schedule(start_hour, end_hour)
