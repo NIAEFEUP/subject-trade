@@ -1,4 +1,5 @@
 from copy import deepcopy
+from schedule import Schedule 
 
 def translate_subject_and_class(subject, class_number):
     return subject + str(class_number)
@@ -10,6 +11,57 @@ class State:
 
     def add_student(self, student):
         self.students[student.student_id] = student
+
+    def get_score(self): 
+        score = 0
+
+        for student in self.students.values():
+
+            alone = True
+            gave_in = False
+            got_target = False
+
+            #checking buddies 
+            for subject in set(list(student.buddies.keys())): 
+                for numbers in set(student.buddies[subject]): 
+                    if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
+                        score += 30
+                        alone = False
+                    else: 
+                        score -= 20
+                        
+            #checking if student got a target class
+            for position, j in enumerate(student.subjects_and_classes): 
+                if j in student.subject_targets.keys(): 
+                    if student.subjects_and_classes[j] in student.subject_targets[j]:  
+                        score += 40    
+                        got_target = True 
+                    else: 
+                        score -= 30
+
+                #checking if a student gave in any classes 
+                if j in student.subject_give_ins.keys():
+                    if student.subjects_and_classes[j] in student.subject_give_ins[j]: 
+                        score -= 3
+                        gave_in = True
+                    else: 
+                        score += 5
+                     
+
+               #checking for schedule conflicts.
+                for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
+                    key = list(student.subjects_and_classes.keys())[p] 
+                    sched_1 = self.class_schedules[translate_subject_and_class(j,student.subjects_and_classes[j])]
+                    sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
+                    if (sched_1.conflicts(sched_2)):
+                        return float('-inf')
+
+            # If he gives up a class but didn't get the target nor he is with any of his buddies
+            if gave_in and not got_target and alone: 
+                return float('-inf')
+
+        return score 
+
 
     def add_schedule(self, subject, class_number, start_hour, end_hour):
         self.class_schedules[translate_subject_and_class(subject, class_number)] = Schedule(start_hour, end_hour)
@@ -52,3 +104,6 @@ class State:
                             state_give_ins = deepcopy(self)
                             state_give_ins.trade_classes(student_id,trader_id,subject_name)
                             yield state_give_ins
+
+
+
