@@ -4,22 +4,28 @@ from state import State
 
 import random 
 
-# Func
+# Function that generates students objects
 def generator_students(n_students, subjects):
     generated_students = []
     for i in range(n_students+1):
         subject_classes ={}
         subject_target = {}
         subject_give_in = {}
-        number_classes = random.randint(1,7)
-        for _ in range(number_classes+1):                                    #generates the subject classes
-            subject = random.choice(subjects)
-            if subject not in subject_classes.keys(): 
-                subject_classes[subject] = random.randint(1,13)
-        print(subject_classes)       
+        number_classes = random.randint(4,7)
 
-            
-        #comment
+        for _ in range(number_classes+1):                                                           #generates the subject classes
+            subject = random.choice(subjects)
+            if subject not in subject_classes.keys():                                               #the subject can't be repeated
+                subject_classes[subject] = random.randint(1,13)
+
+        for _ in range(random.randint(1,len(subject_classes))): 
+            subject = random.choice(list(subject_classes.keys()))                                   #choose a class to change
+            target = [random.randint(1,13) for _ in range(random.randint(1,number_classes))]
+            target = list(set(filter(lambda x: x!= subject_classes[subject], target)))              #the target can't be in subject_classes 
+            subject_target[subject] = target            
+
+
+        
         #s = Student(20180000+i, subject_classes, subject_target, subject_give_in, {}) 
         #generated_students.append(s) 
     
