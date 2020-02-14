@@ -9,6 +9,15 @@ class State:
         self.students = {}
         self.class_schedules = {}
 
+    def set_score(self):
+        self.score = self.get_score()
+
+    # This comparison says a smaller object is bigger.
+    # This may seem weird, but the comparison is used in the priority queue, which gives more priority to smaller objects
+    # Since we want the bigger objects first in the PQ, I created the operator this way
+    def __lt__(self, other):
+        return self.score > other.score 
+
     def add_student(self, student):
         self.students[student.student_id] = student
 
