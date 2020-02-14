@@ -20,16 +20,29 @@ def generator_students(n_students, subjects):
 
         for _ in range(random.randint(1,len(subject_classes))): 
             subject = random.choice(list(subject_classes.keys()))                                   #choose a class to change
-            target = [random.randint(1,13) for _ in range(random.randint(1,number_classes))]
+            target = [random.randint(1,13) for _ in range(random.randint(1,5))]                     #class target number
             target = list(set(filter(lambda x: x!= subject_classes[subject], target)))              #the target can't be in subject_classes 
             subject_target[subject] = target            
 
 
-        
-        #s = Student(20180000+i, subject_classes, subject_target, subject_give_in, {}) 
-        #generated_students.append(s) 
+        for _ in range(random.randint(1,len(subject_classes) - len(subject_target))):               #the givin can't be a target
+            subject = random.choice(list(subject_classes.keys()))   
+            while(subject in list(subject_target.keys())):                                  
+                subject = random.choice(list(subject_classes.keys()))
+
+            givin = [random.randint(1,13) for _ in range(random.randint(1,5))]                      #givin classes 
+            givin = list(set(filter(lambda x: x!=subject_classes[subject], givin)))                 #the givin can't be the actual class
+            
+            subject_give_in[subject] = givin 
+
+        print("CLASSES", subject_classes)
+        print("TARGET", subject_target)
+        print("GIVIN", subject_give_in)
+
+        s = Student(20180000+i, subject_classes, subject_target, subject_give_in, {}) 
+        generated_students.append(s) 
     
-    #return generated_students 
+    return generated_students 
 
 
 # Function that generates the schedule for classes givin the list of classes and the state
