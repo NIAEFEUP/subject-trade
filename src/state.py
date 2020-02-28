@@ -63,11 +63,11 @@ class State:
                     sched_1 = self.class_schedules[translate_subject_and_class(j,student.subjects_and_classes[j])]
                     sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
-                        return float('-inf')
+                        score-= -5000
 
             # If he gives up a class but didn't get the target nor he is with any of his buddies
             if gave_in and not got_target and alone: 
-                return float('-inf')
+                score-= -5000
 
         return score 
 
