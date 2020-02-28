@@ -1,5 +1,7 @@
 from copy import deepcopy
+
 from schedule import Schedule 
+import macros
 
 def translate_subject_and_class(subject, class_number):
     return subject + str(class_number)
@@ -34,27 +36,27 @@ class State:
             for subject in set(list(student.buddies.keys())): 
                 for numbers in set(student.buddies[subject]): 
                     if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
-                        score += 30
+                        score += macros.positive_score
                         alone = False
                     else: 
-                        score -= 20
+                        score += macros.negative_score
                         
             #checking if student got a target class
             for position, j in enumerate(student.subjects_and_classes): 
                 if j in student.subject_targets.keys(): 
                     if student.subjects_and_classes[j] in student.subject_targets[j]:  
-                        score += 40    
+                        score += macros.positive_score  
                         got_target = True 
                     else: 
-                        score -= 30
+                        score += macros.negative_score
 
                 #checking if a student gave in any classes 
                 if j in student.subject_give_ins.keys():
                     if student.subjects_and_classes[j] in student.subject_give_ins[j]: 
-                        score -= 3
+                        score += macros.gave_in
                         gave_in = True
                     else: 
-                        score += 5
+                        score += macros.didnt_give_in
                      
 
                #checking for schedule conflicts.
@@ -63,11 +65,11 @@ class State:
                     sched_1 = self.class_schedules[translate_subject_and_class(j,student.subjects_and_classes[j])]
                     sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
-                        score-= -5000
+                        score += macros.constraint
 
             # If he gives up a class but didn't get the target nor he is with any of his buddies
             if gave_in and not got_target and alone: 
-                score-= -5000
+                score += macros.constraint
 
         return score 
 
