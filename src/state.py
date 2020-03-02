@@ -22,13 +22,11 @@ class State:
             got_target = False
 
             #checking buddies 
-            for subject in set(list(student.buddies.keys())): 
+            for subject in student.buddies: 
                 for numbers in set(student.buddies[subject]): 
                     if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
                         score += 30
-                        alone = False
-                    else: 
-                        score -= 20
+                        alone = FalseW
                         
             #checking if student got a target class
             for position, j in enumerate(student.subjects_and_classes): 
@@ -36,8 +34,7 @@ class State:
                     if student.subjects_and_classes[j] in student.subject_targets[j]:  
                         score += 40    
                         got_target = True 
-                    else: 
-                        score -= 30
+
 
                 #checking if a student gave in any classes 
                 if j in student.subject_give_ins.keys():
