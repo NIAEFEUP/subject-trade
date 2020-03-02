@@ -1,6 +1,7 @@
 from copy import deepcopy
 from schedule import Schedule 
 
+
 def translate_subject_and_class(subject, class_number):
     return subject + str(class_number)
 
@@ -13,6 +14,9 @@ class State:
         self.students[student.student_id] = student
 
     def get_score(self): 
+
+        MAX_SCORE = 100
+
         score = 0
 
         for student in self.students.values():
@@ -24,37 +28,45 @@ class State:
      
 
             #checking buddies 
+            scoreBuddies = 0.4 * MAX_SCORE  #Gives 40% of importance to the buddies
+
             for subject in student.buddies: 
-                scoreBuddies = 30
+                scoreEachBuddie = scoreBuddies//(len(student.buddies[subject]))  #Score to sum for each correct buddie
                 for numbers in student.buddies[subject]: 
                     if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
-                        score += scoreBuddies        # Adds points each time the buddie is in the same class
-                        scoreBuddies-=5              # Removes some points depending on the priority 
+                        score += scoreEachBuddie        # Adds points each time the buddie is in the same class
+                        scoreEachBuddie -= scoreEachBuddie//10          # Removes some points depending on the priority 
                         alone = False
                         
             #checking if student got a target class
-            for position, j in enumerate(student.subjects_and_classes): 
-                scoreTargetClass = 40
-                if j in student.subject_targets.keys(): 
-                    if student.subjects_and_classes[j] in student.subject_targets[j]:  
-                        score += scoreTargetClass    # Adds points each time it is in a target class
-                        scoreTargetClass-=5          # Removes some points depending on the priority
+
+            scoreTargetClass = 0.4 * MAX_SCORE  #Gives 40% of importance to the Target Classes
+            scoreEachTarget = scoreTargetClass//len(student.subjects_and_classes)
+
+            for position, subjectA in enumerate(student.subjects_and_classes): 
+
+                if subjectA in student.subject_targets.keys(): 
+                    if student.subjects_and_classes[subjectA] in student.subject_targets[subjectA]:  
+                        score += scoreEachTarget    # Adds points each time it is in a target class
+                        scoreTargetClass-=scoreEachTarget//10          # Removes some points depending on the priority
                         got_target = True 
 
 
-                scoreGiveIns = 5
+                scoreGiveIns = 0.2 * MAX_SCORE #Gives 40% of importance to the Give ins
+                scoreEachGiveIn = scoreGiveIns//len(student.subjects_and_classes)
+
                 #checking if a student gave in any classes 
-                if j in student.subject_give_ins.keys():
-                    if student.subjects_and_classes[j] in student.subject_give_ins[j]: 
-                        score -= scoreGiveIns     # Removes points each time the buddie had to give_in
-                        scoreGiveIns+= 1          # Gives less importance to the ones with least priority
+                if subjectA in student.subject_give_ins.keys():
+                    if student.subjects_and_classes[subjectA] in student.subject_give_ins[subjectA]: 
+                        score -= scoreEachGiveIn     # Removes points each time the buddie had to give_in
+                        scoreGiveIns+= scoreEachGiveIn//10          # Gives less importance to the ones with least priority
                         gave_in = True
                      
 
                #checking for schedule conflicts.
                 for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
                     key = list(student.subjects_and_classes.keys())[p] 
-                    sched_1 = self.class_schedules[translate_subject_and_class(j,student.subjects_and_classes[j])]
+                    sched_1 = self.class_schedules[translate_subject_and_class(subjectA,student.subjects_and_classes[subjectA])]
                     sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
                         return float('-inf')
