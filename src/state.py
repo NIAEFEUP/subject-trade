@@ -21,31 +21,34 @@ class State:
             gave_in = False
             got_target = False
 
+     
+
             #checking buddies 
-            for subject in set(list(student.buddies.keys())): 
-                for numbers in set(student.buddies[subject]): 
+            for subject in student.buddies: 
+                scoreBuddies = 30
+                for numbers in student.buddies[subject]: 
                     if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
-                        score += 30
+                        score += scoreBuddies        # Adds points each time the buddie is in the same class
+                        scoreBuddies-=5              # Removes some points depending on the priority 
                         alone = False
-                    else: 
-                        score -= 20
                         
             #checking if student got a target class
             for position, j in enumerate(student.subjects_and_classes): 
+                scoreTargetClass = 40
                 if j in student.subject_targets.keys(): 
                     if student.subjects_and_classes[j] in student.subject_targets[j]:  
-                        score += 40    
+                        score += scoreTargetClass    # Adds points each time it is in a target class
+                        scoreTargetClass-=5          # Removes some points depending on the priority
                         got_target = True 
-                    else: 
-                        score -= 30
 
+
+                scoreGiveIns = 5
                 #checking if a student gave in any classes 
                 if j in student.subject_give_ins.keys():
                     if student.subjects_and_classes[j] in student.subject_give_ins[j]: 
-                        score -= 3
+                        score -= scoreGiveIns     # Removes points each time the buddie had to give_in
+                        scoreGiveIns+= 1          # Gives less importance to the ones with least priority
                         gave_in = True
-                    else: 
-                        score += 5
                      
 
                #checking for schedule conflicts.
