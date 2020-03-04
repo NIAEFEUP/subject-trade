@@ -26,7 +26,7 @@ class State:
                 for numbers in set(student.buddies[subject]): 
                     if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
                         score += 30
-                        alone = FalseW
+                        alone = False
                         
             #checking if student got a target class
             for position, j in enumerate(student.subjects_and_classes): 
