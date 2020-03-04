@@ -1,5 +1,6 @@
 from copy import deepcopy
 from schedule import Schedule 
+import random
 
 def translate_subject_and_class(subject, class_number):
     return subject + str(class_number)
@@ -155,4 +156,48 @@ class State:
                 if success == True:
                     break
 
+    def random_neighbour(self):
+        list_students = []
+        for _,elem in self.students.items():
+            list_students.append(elem)
+        master_students = deepcopy(list_students)
+        used_master = []
+        while (len(used_master) != len(master_students)):
+            student_i = random.randrange(0,len(master_students))
+            if student_i in used_master:
+                continue
+            student = master_students[student_i]
+            student_classes = list(student.subjects_and_classes)
+            temp_students = deepcopy(list_students)
+            used_master.append(student_i)
+            used_child = [student_i,]
+            while (len(used_child)!=len(temp_students)):
+                success = False
+                trader_i = random.randrange(0,len(temp_students))
+                if trader_i in used_child:
+                    continue
+                used_child.append(trader_i)
+                trader = temp_students[trader_i]
+                trader_classes = list(trader.subjects_and_classes)
+                
+                deploy_state = deepcopy(self)
+                deploy_students = deepcopy(list_students)
+
+                for trade_class in student_classes:
+                    if trade_class in trader_classes:
+                        success = True
+
+                        deploy_students[student_i].subjects_and_classes[trade_class], deploy_students[trader_i].subjects_and_classes[trade_class] = deploy_students[trader_i].subjects_and_classes[trade_class], deploy_students[student_i].subjects_and_classes[trade_class]
+                        print("------",student_i, trader_i,trade_class,len(list_students)-len(used_master))
+                        
+                        deploy_dict = {}
+                        for elem in deploy_students:
+                            deploy_dict[elem.student_id] = elem
+
+                        deploy_state.students_list = deploy_dict
+
+                        yield deploy_state
+                        break
+                if success == True:
+                    break
 
