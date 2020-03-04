@@ -45,7 +45,7 @@ def generator_students(n_students, subjects):
         s = Student(20180000+i, subject_classes, subject_target, subject_give_in, {}) 
         for _ in range(random.randint(0,len(subject_classes))):                                     #number of subjects with buddies
             buddies = []
-            for i in range(1,4):                                                                    #number of buddies in a subject
+            for _ in range(1,4):                                                                    #number of buddies in a subject
                 buddy = random.randint(20180000, (20180000+n_students-1))
                 while(buddy == s.student_id):                                                       #avoid the buddy being him self
                     buddy = random.randint(20180000, (20180000+n_students-1))
