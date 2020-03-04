@@ -58,12 +58,14 @@ def generator_students(n_students, subjects):
 
             s.add_buddies(subject,list(set(buddies)))
 
-        print("------------------------------------------")
-        print("STUDENT", s.student_id)
-        print("CLASSES", subject_classes)
-        print("TARGET", subject_target)
-        print("GIVE_IN", subject_give_in)
-        print("BUDDIES",s.buddies)
+        
+        # print("------------------------------------------")
+        # print("STUDENT", s.student_id)
+        # print("CLASSES", subject_classes)
+        # print("TARGET", subject_target)
+        # print("GIVE_IN", subject_give_in)
+        # print("BUDDIES",s.buddies)
+        
         generated_students.append(s) 
     
     return generated_students 
