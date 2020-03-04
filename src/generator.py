@@ -14,11 +14,11 @@ def generator_students(n_students, subjects):
         number_classes = random.randint(4,7)
 
         #subject classes
-        for i in range(0, number_classes):                                                          
+        for j in range(0, number_classes):                                                          
             subject = random.choice(subjects)
             if subject not in subject_classes.keys():                                               #the subject can't be repeated
                 subject_classes[subject] = random.randint(1,13)
-            else: i -= 1
+            else: j -= 1
 
         #target classes
         for _ in range(random.randint(1,len(subject_classes))): 
@@ -79,5 +79,5 @@ def time_generator(subjects, state):
 
 state = State()
 time_generator(['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'], state)
-generator_students(1,['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'])
+generator_students(40,['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'])
 
