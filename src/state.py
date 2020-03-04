@@ -35,12 +35,13 @@ class State:
             #checking buddies 
             for subject in set(list(student.buddies.keys())): 
                 for numbers in set(student.buddies[subject]): 
-                    if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
-                        score += macros.positive_score
-                        alone = False
-                    else: 
-                        score += macros.negative_score
-                        
+                    if subject in self.students[numbers].subjects_and_classes.keys():
+                        if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
+                            score += macros.positive_score
+                            alone = False
+                        else: 
+                            score += macros.negative_score
+                            
             #checking if student got a target class
             for position, j in enumerate(student.subjects_and_classes): 
                 if j in student.subject_targets.keys(): 
@@ -62,6 +63,11 @@ class State:
                #checking for schedule conflicts.
                 for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
                     key = list(student.subjects_and_classes.keys())[p] 
+                    print("j", j)
+                    # lcom 
+                    print("key", key)
+                    print("OLHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n")
+                    
                     sched_1 = self.class_schedules[translate_subject_and_class(j,student.subjects_and_classes[j])]
                     sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
@@ -84,7 +90,8 @@ class State:
         students[student1_id].set_class_for_subject(subject_name, student2_class)
         students[student2_id].set_class_for_subject(subject_name, student1_class)
 
-
+    def get_schedule(self): 
+        return self.class_schedules 
 
     def generate_neighbour(self):
         for student_id,student in self.students.items(): # select a student
@@ -115,6 +122,13 @@ class State:
                             state_give_ins = deepcopy(self)
                             state_give_ins.trade_classes(student_id,trader_id,subject_name)
                             yield state_give_ins
+
+    def __str__(self):
+        st = ""
+        for student in self.students:
+            st += "--------------------------------------------------------------------------------------------"
+            st += "\nID: " + str(student.student_id) + "\nClasses: " + str(student.subjects_and_classes) + "\nTarget Classes: " + str(student.subject_targets) + "\nGive ins" + str(student.subject_give_ins)
+        return st
 
 
 
