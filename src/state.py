@@ -8,7 +8,6 @@ def translate_subject_and_class(subject, class_number):
 class State:
     def __init__(self):
         self.students = {}
-        self.students_list = []
         self.class_schedules = {}
 
     def add_student(self, student):
