@@ -7,6 +7,7 @@ from schedule import Schedule
 from student import Student
 import state as S
 import macros
+import generator as Gen
 
 def hill_climbing(students):
     state = S.State()
@@ -85,3 +86,14 @@ def simulated_annealing(students):
 
     return state
         
+        
+#print("olhaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n\n\olhaaaaaaaaaaaaaaaaaaaaaaaaaaaaolhaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n\nolhaaaaaaaaaaaaaaaaaaaaaaaaaaaaolhaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+state = S.State()
+Gen.time_generator(['TCOM', 'FIS', 'LCOM', 'MPCP'], state)
+students = Gen.generator_students(5,['TCOM', 'FIS', 'LCOM', 'MPCP'])
+
+for i in state.get_schedule(): 
+    print(i)
+#state = hill_climbing(students)
+
+#print(state)
