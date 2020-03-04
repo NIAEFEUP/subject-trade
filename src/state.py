@@ -31,35 +31,39 @@ class State:
             scoreBuddies = 0.4 * MAX_SCORE  #Gives 40% of importance to the buddies
 
             for subject in student.buddies: 
-                scoreEachBuddie = scoreBuddies//(len(student.buddies[subject]))  #Score to sum for each correct buddie
+                scoreEachBuddie = (2 * scoreBuddies)/(len(student.buddies[subject])*(1+len(student.buddies[subject])))
+                incrementBuddies = len(student.buddies[subject])
                 for numbers in student.buddies[subject]: 
                     if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
-                        score += scoreEachBuddie        # Adds points each time the buddie is in the same class
-                        scoreEachBuddie -= scoreEachBuddie//10          # Removes some points depending on the priority 
+                        score += scoreEachBuddie  *  incrementBuddies      # Adds points each time the buddie is in the same class
+                        incrementBuddies-= 1        # Removes some points depending on the priority 
                         alone = False
                         
             #checking if student got a target class
 
             scoreTargetClass = 0.4 * MAX_SCORE  #Gives 40% of importance to the Target Classes
-            scoreEachTarget = scoreTargetClass//len(student.subjects_and_classes)
+            scoreEachTarget = (2*scoreTargetClass)//((len(student.subjects_and_classes)+1)*len(student.subjects_and_classes))
+            incrementTargets =len(student.subjects_and_classes)
 
             for position, subjectA in enumerate(student.subjects_and_classes): 
+                
 
                 if subjectA in student.subject_targets.keys(): 
                     if student.subjects_and_classes[subjectA] in student.subject_targets[subjectA]:  
-                        score += scoreEachTarget    # Adds points each time it is in a target class
-                        scoreTargetClass-=scoreEachTarget//10          # Removes some points depending on the priority
+                        score += scoreEachTarget * incrementTargets   # Adds points each time it is in a target class
+                        incrementTargets-=1       # Removes some points depending on the priority
                         got_target = True 
 
 
                 scoreGiveIns = 0.2 * MAX_SCORE #Gives 40% of importance to the Give ins
-                scoreEachGiveIn = scoreGiveIns//len(student.subjects_and_classes)
+                scoreEachGiveIn = (scoreGiveIns)//(len(student.subjects_and_classes))
+            
+
 
                 #checking if a student gave in any classes 
                 if subjectA in student.subject_give_ins.keys():
                     if student.subjects_and_classes[subjectA] in student.subject_give_ins[subjectA]: 
                         score -= scoreEachGiveIn     # Removes points each time the buddie had to give_in
-                        scoreGiveIns+= scoreEachGiveIn//10          # Gives less importance to the ones with least priority
                         gave_in = True
                      
 
