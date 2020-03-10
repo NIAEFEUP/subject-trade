@@ -9,11 +9,7 @@ import state as S
 import macros
 import generator as Gen
 
-def hill_climbing(students):
-    state = S.State()
-    for student in students:
-        state.add_student(student)
-    
+def hill_climbing(state): 
     number_of_tries = 0
     state.set_score()
     while number_of_tries < macros.hill_climbing_tries:
@@ -27,13 +23,10 @@ def hill_climbing(students):
 
             if number_of_tries > macros.hill_climbing_tries:
                 break
-    
+        
     return state
 
-def steepest_ascent_hill_climbing(students):
-    state = S.State()
-    for student in students:
-        state.add_student(student)
+def steepest_ascent_hill_climbing(state):
     
     number_of_tries = 0
     while number_of_tries < macros.steepest_ascent_tries:
@@ -60,10 +53,7 @@ def steepest_ascent_hill_climbing(students):
 
     return state
 
-def simulated_annealing(students):
-    state = S.State()
-    for student in students:
-        state.add_student(student)
+def simulated_annealing(state):
     
     temperature = 1
     number_of_tries = 0
@@ -87,13 +77,10 @@ def simulated_annealing(students):
     return state
         
         
-#print("olhaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n\n\olhaaaaaaaaaaaaaaaaaaaaaaaaaaaaolhaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n\nolhaaaaaaaaaaaaaaaaaaaaaaaaaaaaolhaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
 state = S.State()
-Gen.time_generator(['TCOM', 'FIS', 'LCOM', 'MPCP'], state)
+state = Gen.time_generator(['TCOM', 'FIS', 'LCOM', 'MPCP'], state)
 students = Gen.generator_students(5,['TCOM', 'FIS', 'LCOM', 'MPCP'])
+state = hill_climbing(state)
 
-for i in state.get_schedule(): 
-    print(i)
-#state = hill_climbing(students)
-
-#print(state)
+print(state)
