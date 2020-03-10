@@ -63,9 +63,6 @@ class State:
                #checking for schedule conflicts.
                 for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
                     key = list(student.subjects_and_classes.keys())[p] 
-                    print("OLHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n")
-                    print("CLASS SCHEDULES", self.class_schedules.keys()) 
-
                     sched_1 = self.class_schedules[translate_subject_and_class(j,student.subjects_and_classes[j])]
                     sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
