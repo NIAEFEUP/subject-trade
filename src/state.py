@@ -1,8 +1,7 @@
 from copy import deepcopy
-from schedule import Schedule 
 import student
+from schedule import Schedule 
 import random
-
 
 def translate_subject_and_class(subject, class_number):
     return subject + str(class_number)
@@ -14,9 +13,8 @@ class State:
     
     def __str__(self):
         st = ""
-        for i, student in enumerate(self.students):
-            print("Student number:", i, "\n")
-            print(student, '\n\n')
+        for i, student in self.students.items():
+            print(i, student)
         return st 
 
     def add_student(self, student):
@@ -122,7 +120,6 @@ class State:
         list_students = []
         for _,elem in self.students.items():
             list_students.append(elem)
-
         for student_i, student in enumerate(list_students):            #go through every student; chooses 1st student
             
             student_classes = list(student.subjects_and_classes)                # *1 what are the subjects the 1st student attend to - student_classes should be student_subjects per say
@@ -148,14 +145,15 @@ class State:
                        
                         success = True
                         
-                        deploy_students[student_i].subjects_and_classes[trade_class], deploy_students[trader_i].subjects_and_classes[trade_class] = deploy_students[trader_i].subjects_and_classes[trade_class], deploy_students[student_i].subjects_and_classes[trade_class] 
+                        deploy_students[student_i].subjects_and_classes[trade_class], deploy_students[trader_i].subjects_and_classes[trade_class] = deploy_students[trader_i].subjects_and_classes[trade_class], deploy_students[student_i].subjects_and_classes[trade_class]
+                        
+                        #print("------",student_i, trader_i,trade_class) 
                         
                         deploy_dict = {}
                         for elem in deploy_students:
                             deploy_dict[elem.student_id] = elem
                         
-                        deploy_state.students_list = deploy_dict
-                        
+                        deploy_state.students = deploy_dict
                         yield deploy_state
                         break
                 
@@ -200,21 +198,11 @@ class State:
                         for elem in deploy_students:
                             deploy_dict[elem.student_id] = elem
 
-                        deploy_state.students_list = deploy_dict
+                        deploy_state.students = deploy_dict
 
                         yield deploy_state
                         break
                 if success == True:
                     break
 
-s = State()
-s1 = student.Student(1, {"tcom": 1, "amat": 2}, {}, {}, {})
-s2 = student.Student(1, {"tcom": 3, "amat": 4}, {}, {}, {})
-s3 = student.Student(1, {"tcom": 2, "amat": 1}, {}, {}, {})
-
-s.add_student(s1)
-s.add_student(s2)
-s.add_student(s3)
-
-for state in s.generate_neighbour():
-    print(state)
+    
