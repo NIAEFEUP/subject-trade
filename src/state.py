@@ -1,6 +1,8 @@
 from copy import deepcopy
 from schedule import Schedule 
+import student
 import random
+
 
 def translate_subject_and_class(subject, class_number):
     return subject + str(class_number)
@@ -9,6 +11,13 @@ class State:
     def __init__(self):
         self.students = {}
         self.class_schedules = {}
+    
+    def __str__(self):
+        st = ""
+        for i, student in enumerate(self.students):
+            print("Student number:", i, "\n")
+            print(student, '\n\n')
+        return st 
 
     def add_student(self, student):
         self.students[student.student_id] = student
@@ -139,9 +148,7 @@ class State:
                        
                         success = True
                         
-                        deploy_students[student_i].subjects_and_classes[trade_class], deploy_students[trader_i].subjects_and_classes[trade_class] = deploy_students[trader_i].subjects_and_classes[trade_class], deploy_students[student_i].subjects_and_classes[trade_class]
-                        
-                        #print("------",student_i, trader_i,trade_class) 
+                        deploy_students[student_i].subjects_and_classes[trade_class], deploy_students[trader_i].subjects_and_classes[trade_class] = deploy_students[trader_i].subjects_and_classes[trade_class], deploy_students[student_i].subjects_and_classes[trade_class] 
                         
                         deploy_dict = {}
                         for elem in deploy_students:
@@ -200,3 +207,14 @@ class State:
                 if success == True:
                     break
 
+s = State()
+s1 = student.Student(1, {"tcom": 1, "amat": 2}, {}, {}, {})
+s2 = student.Student(1, {"tcom": 3, "amat": 4}, {}, {}, {})
+s3 = student.Student(1, {"tcom": 2, "amat": 1}, {}, {}, {})
+
+s.add_student(s1)
+s.add_student(s2)
+s.add_student(s3)
+
+for state in s.generate_neighbour():
+    print(state)
