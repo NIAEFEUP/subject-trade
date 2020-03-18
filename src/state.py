@@ -39,33 +39,33 @@ class State:
                         alone = False
                         
             #checking if student got a target class
-            scoreTargetClass = 0.4 * MAX_SCORE  #Gives 40% of importance to the Target Classes
-            scoreEachTarget = (2*scoreTargetClass)//((len(student.subjects_and_classes)+1)*len(student.subjects_and_classes))
-            incrementTargets = len(student.subjects_and_classes)
+            score_target_class = 0.4 * MAX_SCORE  #Gives 40% of importance to the Target Classes
+            score_each_target = (2*score_target_class)//((len(student.subjects_and_classes)+1)*len(student.subjects_and_classes))
+            increment_targets = len(student.subjects_and_classes)
 
-            for position, subjectA in enumerate(student.subjects_and_classes): 
+            for position, subject_A in enumerate(student.subjects_and_classes): 
                 
-                if subjectA in student.subject_targets.keys(): 
-                    if student.subjects_and_classes[subjectA] in student.subject_targets[subjectA]:  
-                        score += scoreEachTarget * incrementTargets   # Adds points each time it is in a target class
-                        incrementTargets-=1       # Removes some points depending on the priority
+                if subject_A in student.subject_targets.keys(): 
+                    if student.subjects_and_classes[subject_A] in student.subject_targets[subject_A]:  
+                        score += score_each_target * increment_targets   # Adds points each time it is in a target class
+                        increment_targets-=1       # Removes some points depending on the priority
                         got_target = True 
 
 
-                scoreGiveIns = 0.2 * MAX_SCORE #Gives 40% of importance to the Give ins
-                scoreEachGiveIn = (scoreGiveIns)//(len(student.subjects_and_classes))
+                score_give_ins = 0.2 * MAX_SCORE #Gives 40% of importance to the Give ins
+                score_each_give_in = (score_give_ins)//(len(student.subjects_and_classes))
 
                 #checking if a student gave in any classes 
-                if subjectA in student.subject_give_ins.keys():
-                    if student.subjects_and_classes[subjectA] in student.subject_give_ins[subjectA]: 
-                        score -= scoreEachGiveIn     # Removes points each time the buddie had to give_in
+                if subject_A in student.subject_give_ins.keys():
+                    if student.subjects_and_classes[subject_A] in student.subject_give_ins[subject_A]: 
+                        score -= score_each_give_in     # Removes points each time the buddie had to give_in
                         gave_in = True
                      
 
                #checking for schedule conflicts.
                 for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
                     key = list(student.subjects_and_classes.keys())[p] 
-                    sched_1 = self.class_schedules[translate_subject_and_class(subjectA,student.subjects_and_classes[subjectA])]
+                    sched_1 = self.class_schedules[translate_subject_and_class(subject_A,student.subjects_and_classes[subject_A])]
                     sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
                         return float('-inf')
