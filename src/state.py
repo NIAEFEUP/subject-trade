@@ -33,14 +33,12 @@ class State:
             got_target = False
 
             #checking buddies 
-            for subject in set(list(student.buddies.keys())): 
+            for subject in student.buddies: 
                 for numbers in set(student.buddies[subject]): 
                     if subject in self.students[numbers].subjects_and_classes.keys():
                         if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
                             score += macros.positive_score
                             alone = False
-                        else: 
-                            score += macros.negative_score
                             
             #checking if student got a target class
             for position, j in enumerate(student.subjects_and_classes): 
@@ -48,8 +46,6 @@ class State:
                     if student.subjects_and_classes[j] in student.subject_targets[j]:  
                         score += macros.positive_score  
                         got_target = True 
-                    else: 
-                        score += macros.negative_score
 
                 #checking if a student gave in any classes 
                 if j in student.subject_give_ins.keys():
