@@ -34,7 +34,7 @@ class State:
             got_target = False
 
             #checking buddies 
-            score_buddies = 0.4 * MAX_SCORE  #Gives 40% of importance to the buddies
+            score_buddies = 0.5 * MAX_SCORE  #Gives 50% of importance to the buddies
             
             for subject in student.buddies: 
                 n = len(student.buddies[subject])
@@ -47,7 +47,7 @@ class State:
                         alone = False
                         
             #checking if student got a target class
-            score_target_class = 0.4 * MAX_SCORE  #Gives 40% of importance to the Target Classes
+            score_target_class = 0.5 * MAX_SCORE  #Gives 50% of importance to the Target Classes
             score_each_target = (2*score_target_class)//((len(student.subjects_and_classes)+1)*len(student.subjects_and_classes))
             increment_targets = len(student.subjects_and_classes)
 
@@ -60,7 +60,7 @@ class State:
                         got_target = True 
 
 
-                score_give_ins = 0.2 * MAX_SCORE #Gives 40% of importance to the Give ins
+                score_give_ins = 0.2 * MAX_SCORE #Gives 20% of importance to the Give ins
                 score_each_give_in = (score_give_ins)//(len(student.subjects_and_classes))
 
                 #checking if a student gave in any classes 
