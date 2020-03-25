@@ -41,8 +41,6 @@ def generator_students(n_students, subjects):
             
             subject_give_in[subject] = give_in 
 
-
-
         s = Student(20180000+i, subject_classes, subject_target, subject_give_in, {}) 
         for _ in range(random.randint(0,len(subject_classes))):                                     #number of subjects with buddies
             buddies = []

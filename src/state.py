@@ -3,6 +3,7 @@ import student
 from schedule import Schedule 
 import random
 
+
 def translate_subject_and_class(subject, class_number):
     return subject + str(class_number)
 
@@ -21,6 +22,9 @@ class State:
         self.students[student.student_id] = student
 
     def get_score(self): 
+
+        MAX_SCORE = 100
+
         score = 0
 
         for student in self.students.values():
@@ -30,33 +34,46 @@ class State:
             got_target = False
 
             #checking buddies 
+            score_buddies = 0.5 * MAX_SCORE  #Gives 50% of importance to the buddies
+            
             for subject in student.buddies: 
-                for numbers in set(student.buddies[subject]): 
+                n = len(student.buddies[subject])
+                score_each_buddy = (2 * score_buddies)/(n * (n + 1))
+                increment_buddies = n
+                for numbers in student.buddies[subject]: 
                     if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
-                        score += 30
+                        score += score_each_buddy * increment_buddies      # Adds points each time the buddie is in the same class
+                        increment_buddies -= 1        # Removes some points depending on the priority 
                         alone = False
                         
             #checking if student got a target class
-            for position, j in enumerate(student.subjects_and_classes): 
-                if j in student.subject_targets.keys(): 
-                    if student.subjects_and_classes[j] in student.subject_targets[j]:  
-                        score += 40    
+            score_target_class = 0.5 * MAX_SCORE  #Gives 50% of importance to the Target Classes
+            score_each_target = (2*score_target_class)//((len(student.subjects_and_classes)+1)*len(student.subjects_and_classes))
+            increment_targets = len(student.subjects_and_classes)
+
+            for position, subject_A in enumerate(student.subjects_and_classes): 
+                
+                if subject_A in student.subject_targets.keys(): 
+                    if student.subjects_and_classes[subject_A] in student.subject_targets[subject_A]:  
+                        score += score_each_target * increment_targets   # Adds points each time it is in a target class
+                        increment_targets-=1       # Removes some points depending on the priority
                         got_target = True 
 
 
+                score_give_ins = 0.2 * MAX_SCORE #Gives 20% of importance to the Give ins
+                score_each_give_in = (score_give_ins)//(len(student.subjects_and_classes))
+
                 #checking if a student gave in any classes 
-                if j in student.subject_give_ins.keys():
-                    if student.subjects_and_classes[j] in student.subject_give_ins[j]: 
-                        score -= 3
+                if subject_A in student.subject_give_ins.keys():
+                    if student.subjects_and_classes[subject_A] in student.subject_give_ins[subject_A]: 
+                        score -= score_each_give_in     # Removes points each time the buddie had to give_in
                         gave_in = True
-                    else: 
-                        score += 5
                      
 
                #checking for schedule conflicts.
                 for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
                     key = list(student.subjects_and_classes.keys())[p] 
-                    sched_1 = self.class_schedules[translate_subject_and_class(j,student.subjects_and_classes[j])]
+                    sched_1 = self.class_schedules[translate_subject_and_class(subject_A,student.subjects_and_classes[subject_A])]
                     sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
                         return float('-inf')
