@@ -26,7 +26,7 @@ A and B happen in the same day.
 '''
 
 class test_schedule(unittest.TestCase):
-    def conflict_case(self):
+    def test_conflict_case(self):
         h1 = Hour(10,20)
         h2 = Hour(12,20)
         h3 = Hour(12,21)
@@ -40,7 +40,7 @@ class test_schedule(unittest.TestCase):
         self.assertTrue(s2.conflicts(s1))
         self.assertTrue(s1.conflicts(s1))
 
-    def non_conflict(self):
+    def test_non_conflict(self):
         h1 = Hour(10,20)
         h2 = Hour(12,20)
         h3 = Hour(12,21)
@@ -52,7 +52,7 @@ class test_schedule(unittest.TestCase):
         s2 = Schedule(h2, h4, day1)
         s3 = Schedule(h3, h4, day1)
         s4 = Schedule(h1, h4, day2)
-
+        
         self.assertFalse(s1.conflicts(s2))
         self.assertFalse(s2.conflicts(s1))
         self.assertFalse(s1.conflicts(s3))
@@ -61,5 +61,5 @@ class test_schedule(unittest.TestCase):
         self.assertFalse(s4.conflicts(s2))
         self.assertFalse(s4.conflicts(s2))
 
-    if __name__ == '__main__':
-        unittest.main() 
+if __name__ == '__main__':
+    unittest.main() 
