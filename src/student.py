@@ -11,7 +11,12 @@ class Student:
             self.subjects_and_classes[subject_name] = class_number
 
     def add_subject_target(self, subject_name, class_number):
-        self.subject_targets[subject_name].append(class_number)
+        if subject_name in self.subjects_and_classes:
+            if subject_name not in self.subject_targets:
+                self.subject_targets[subject_name] = [class_number]
+            else:
+                self.subject_targets[subject_name].append(class_number)
+
 
     def remove_subject_target(self,subject_name):
         del self.subject_targets[subject_name]
