@@ -7,22 +7,65 @@ class Student:
         self.buddies = buddies   #Dictionary where for each subject (key) there is a list of ups ordered by their priority
     
     def add_subject_and_class(self, subject_name, class_number):
-        self.subjects_and_classes[subject_name] = class_number
+        if len(self.subjects_and_classes) < 7:
+            self.subjects_and_classes[subject_name] = class_number
 
     def add_subject_target(self, subject_name, class_number):
-        self.subject_targets[subject_name].append(class_number)
+        if subject_name in self.subjects_and_classes:
+            if subject_name not in self.subject_targets:
+                self.subject_targets[subject_name] = [class_number]
+            else:
+                self.subject_targets[subject_name].append(class_number)
+
 
     def remove_subject_target(self,subject_name):
-        del self.subject_targets[subject_name]
+        if subject_name in self.subject_targets:
+            del self.subject_targets[subject_name]
+    
+    def remove_subject_target_class(self,subject_name,class_number):
+        if subject_name in self.subject_targets and class_number in self.subject_targets[subject_name]:
+            self.subject_targets[subject_name].remove(class_number)
 
     def add_subject_give_in(self, subject_name, class_number):
-        self.subject_give_ins[subject_name].append(class_number)
+
+        if subject_name in self.subjects_and_classes:
+            if subject_name not in self.subject_give_ins:
+                self.subject_give_ins[subject_name] = [class_number]
+            else:
+                self.subject_give_ins[subject_name].append(class_number)
+
+    def remove_subject_give_in(self,subject_name):
+        if subject_name in self.subject_give_ins:
+            del self.subject_give_ins[subject_name]
+
+    def remove_subject_give_in_class(self,subject_name,class_number):
+        if subject_name in self.subject_give_ins and class_number in self.subject_give_ins[subject_name]:
+            self.subject_give_ins[subject_name].remove(class_number)
+
+    def add_buddie(self, subject_name, buddie_up):
+        if subject_name in self.subjects_and_classes:
+            if subject_name not in self.buddies:
+                self.buddies[subject_name] = [buddie_up]
+            else:
+                self.buddies[subject_name].append(buddie_up)
+
+    def remove_buddie(self,subject_name):
+        if subject_name in self.buddies:
+            del self.buddies[subject_name]
+    
+    def remove_buddie_class(self,subject_name,buddie_up):
+        if subject_name in self.buddies and buddie_up in self.buddies[subject_name]:
+            self.buddies[subject_name].remove(buddie_up)
+
 
     def add_buddies(self, subject_name, buddies_up):
-        for buddy in buddies_up:
-            if subject_name in self.buddies.keys(): 
-                self.buddies[subject_name].append(buddy)
-            else: self.buddies[subject_name] = [buddy]
+        if subject_name in self.subjects_and_classes:
+            if subject_name in self.buddies:
+                for buddy in buddies_up:
+                    if buddy not in self.buddies[subject_name]: 
+                        self.buddies[subject_name].append(buddy)
+
+            else: self.buddies[subject_name] = buddies_up
 
     def get_class_for_subject(self, subject):
         if subject in self.subjects_and_classes :
