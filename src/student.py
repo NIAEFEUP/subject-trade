@@ -7,7 +7,8 @@ class Student:
         self.buddies = buddies   #Dictionary where for each subject (key) there is a list of ups ordered by their priority
     
     def add_subject_and_class(self, subject_name, class_number):
-        self.subjects_and_classes[subject_name] = class_number
+        if len(self.subjects_and_classes) < 7:
+            self.subjects_and_classes[subject_name] = class_number
 
     def add_subject_target(self, subject_name, class_number):
         self.subject_targets[subject_name].append(class_number)
