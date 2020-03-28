@@ -41,8 +41,6 @@ def generator_students(n_students, subjects):
             
             subject_give_in[subject] = give_in 
 
-
-
         s = Student(20180000+i, subject_classes, subject_target, subject_give_in, {}) 
         for _ in range(random.randint(0,len(subject_classes))):                                     #number of subjects with buddies
             buddies = []
@@ -58,12 +56,14 @@ def generator_students(n_students, subjects):
 
             s.add_buddies(subject,list(set(buddies)))
 
-        print("------------------------------------------")
-        print("STUDENT", s.student_id)
-        print("CLASSES", subject_classes)
-        print("TARGET", subject_target)
-        print("GIVE_IN", subject_give_in)
-        print("BUDDIES",s.buddies)
+        
+        # print("------------------------------------------")
+        # print("STUDENT", s.student_id)
+        # print("CLASSES", subject_classes)
+        # print("TARGET", subject_target)
+        # print("GIVE_IN", subject_give_in)
+        # print("BUDDIES",s.buddies)
+        
         generated_students.append(s) 
     
     return generated_students 
