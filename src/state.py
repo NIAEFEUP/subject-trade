@@ -15,7 +15,8 @@ class State:
     def __str__(self):
         st = ""
         for i, student in self.students.items():
-            print(i, student)
+            for subject, clas in student.subjects_and_classes:
+                st += subject + str(clas)
         return st 
 
     def add_student(self, student):
