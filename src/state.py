@@ -16,16 +16,7 @@ class State:
         st = ""
         for i, student in self.students.items():
             print(i, student)
-        return st 
-
-    def set_score(self):
-        self.score = self.get_score()
-
-    # This comparison says a smaller object is bigger.
-    # This may seem weird, but the comparison is used in the priority queue, which gives more priority to smaller objects
-    # Since we want the bigger objects first in the PQ, I created the operator this way
-    def __lt__(self, other):
-        return self.score > other.score 
+        return st
 
     def add_student(self, student):
         self.students[student.student_id] = student
@@ -85,11 +76,11 @@ class State:
                     sched_1 = self.class_schedules[translate_subject_and_class(subject_A,student.subjects_and_classes[subject_A])]
                     sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
-                        score += macros.constraint
+                        score -= 10000 
 
             # If he gives up a class but didn't get the target nor he is with any of his buddies
             if gave_in and not got_target and alone: 
-                score += macros.constraint
+                score -= 10000
 
         return score 
 
