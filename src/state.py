@@ -84,8 +84,8 @@ class State:
 
         return score 
 
-    def add_schedule(self, subject, class_number, start_hour, end_hour):
-        self.class_schedules[translate_subject_and_class(subject, class_number)] = Schedule(start_hour, end_hour)
+    def add_schedule(self, subject, class_number, start_hour, end_hour, day):
+        self.class_schedules[translate_subject_and_class(subject, class_number)] = Schedule(start_hour, end_hour, day)
 
     def trade_classes(self,student1_id,student2_id,subject_name):
         students = self.students
