@@ -74,7 +74,7 @@ def time_generator(subjects, state):
     for number, subject in enumerate(subjects):
         for j in range(14): 
             hour_2 = Hour(number, j*2)
-            state.add_schedule(subject, j, hour_2, Hour(hour_2.hours, j*2+1))
+            state.add_schedule(subject, j, hour_2, Hour(hour_2.hours, j*2+1), "monday")
     return state 
 
 state = State()
