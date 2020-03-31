@@ -33,21 +33,21 @@ class Test_Student(unittest.TestCase):
         student_too_many_classes = student.Student(200000000, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1, "CGRA" : 1, "BDAD" : 1, "PLOG": 1, "IART" : 1}, {}, {}, {})
 
         # Add normal class
-        self.student1.add_subject_and_class("CAL" , 5)
+        self.assertEqual(self.student1.add_subject_and_class("CAL" , 5),True)
         self.assertEqual(self.student1.subjects_and_classes,{"LPOO" : 1, "CAL" : 5})
         self.assertNotEqual(self.student1.subjects_and_classes,{"LPOO" : 1})
 
         #Add class to students that does not have any
-        self.studentEmpty.add_subject_and_class("CAL" , 5)
+        self.assertEqual(self.studentEmpty.add_subject_and_class("CAL" , 5),True)
         self.assertEqual(self.studentEmpty.subjects_and_classes,{"CAL" : 5})
 
         #Add repeated class
-        self.student1.add_subject_and_class("CAL" , 5)
+        self.assertEqual(self.student1.add_subject_and_class("CAL" , 5),True)
         self.assertEqual(self.student1.subjects_and_classes,{"LPOO" : 1, "CAL" : 5})
 
         
         #Try to add more than 7 classes
-        student_too_many_classes.add_subject_and_class("PROG" , 1)
+        self.assertEqual(student_too_many_classes.add_subject_and_class("PROG" , 1),False)
         self.assertEqual(student_too_many_classes.subjects_and_classes,{"LPOO" : 1, "CAL" : 1, "SOPE" : 1, "CGRA" : 1, "BDAD" : 1, "PLOG": 1, "IART" : 1})
 
     def test_add_subject_target(self):
@@ -55,15 +55,15 @@ class Test_Student(unittest.TestCase):
         #Should we verify if is trying to add target class he is already in?
     
         # Add subject
-        self.student_no_target.add_subject_target("CAL" , 5)
+        self.assertEqual(self.student_no_target.add_subject_target("CAL" , 5),True)
         self.assertEqual(self.student_no_target.subject_targets,{"CAL" : [5]})
 
         #Add class to a subject
-        self.student_no_target.add_subject_target("CAL" , 4)
+        self.assertEqual(self.student_no_target.add_subject_target("CAL" , 4),True)
         self.assertEqual(self.student_no_target.subject_targets,{"CAL" : [5,4]})
 
         #Try to add class that he does not belong too
-        self.student_no_target.add_subject_target("ZZZ" , 5)
+        self.assertEqual(self.student_no_target.add_subject_target("ZZZ" , 5),False)
         self.assertNotEqual(self.student_no_target.subject_targets,{"CAL" : [5,4], "ZZZ" : 5})
         self.assertEqual(self.student_no_target.subject_targets,{"CAL" : [5,4]})
 
@@ -73,23 +73,23 @@ class Test_Student(unittest.TestCase):
         student2 = student.Student(2000000000, {"LPOO" : 1}, {"LPOO" : [1,2,3,4]}, {}, {})
         
         # Remove subject target
-        self.perfectStudent.remove_subject_target("CAL")
+        self.assertEqual(self.perfectStudent.remove_subject_target("CAL"),True)
         self.assertEqual(self.perfectStudent.subject_targets,{"LPOO" : [1], "SOPE" : [1]})
 
         # Remove subject target that does not exist
-        self.perfectStudent.remove_subject_target("ZZZ")
+        self.assertEqual(self.perfectStudent.remove_subject_target("ZZZ"),False)
         self.assertEqual(self.perfectStudent.subject_targets,{"LPOO" : [1], "SOPE" : [1]})
 
         #Remove subject class 
-        student2.remove_subject_target_class("LPOO",3)
+        self.assertEqual(student2.remove_subject_target_class("LPOO",3),True)
         self.assertEqual(student2.subject_targets,{"LPOO" : [1,2,4]})
 
         #Remove subject class that does not exist
-        student2.remove_subject_target_class("LPOO",3)
+        self.assertEqual(student2.remove_subject_target_class("LPOO",3),False)
         self.assertEqual(student2.subject_targets,{"LPOO" : [1,2,4]})
 
         #Remove subject that does not exist
-        student2.remove_subject_target_class("CAL",3)
+        self.assertEqual(student2.remove_subject_target_class("CAL",3),False)
         self.assertEqual(student2.subject_targets,{"LPOO" : [1,2,4]})
 
 
@@ -98,15 +98,15 @@ class Test_Student(unittest.TestCase):
         #Should we verify if is trying to add target class he is already in?
     
         # Add subject
-        self.student_no_giveIn.add_subject_give_in("CAL" , 5)
+        self.assertEqual(self.student_no_giveIn.add_subject_give_in("CAL" , 5),True)
         self.assertEqual(self.student_no_giveIn.subject_give_ins,{"CAL" : [5]})
 
         #Add class to a subject
-        self.student_no_giveIn.add_subject_give_in("CAL" , 4)
+        self.assertEqual(self.student_no_giveIn.add_subject_give_in("CAL" , 4),True)
         self.assertEqual(self.student_no_giveIn.subject_give_ins,{"CAL" : [5,4]})
 
         #Try to add class that he does not belong too
-        self.student_no_giveIn.add_subject_give_in("ZZZ" , 5)
+        self.assertEqual(self.student_no_giveIn.add_subject_give_in("ZZZ" , 5),False)
         self.assertNotEqual(self.student_no_giveIn.subject_give_ins,{"CAL" : [5,4], "ZZZ" : 5})
         self.assertEqual(self.student_no_giveIn.subject_give_ins,{"CAL" : [5,4]})
 
@@ -116,37 +116,38 @@ class Test_Student(unittest.TestCase):
         student2 = student.Student(2000000000, {"LPOO" : 1}, {}, {"LPOO" : [1,2,3,4] , "CAL" : [1]}, {})
         
         # Remove subject target
-        student2.remove_subject_give_in("CAL")
+        self.assertEqual(student2.remove_subject_give_in("CAL"),True)
         self.assertEqual(student2.subject_give_ins,{"LPOO" : [1,2,3,4] })
 
         # Remove subject target that does not exist
-        student2.remove_subject_give_in("ZZZ")
+        self.assertEqual(student2.remove_subject_give_in("ZZZ"),False)
         self.assertEqual(student2.subject_give_ins,{"LPOO" : [1,2,3,4] })
 
         #Remove subject class 
-        student2.remove_subject_give_in_class("LPOO",3)
+        self.assertEqual(student2.remove_subject_give_in_class("LPOO",3),True)
         self.assertEqual(student2.subject_give_ins,{"LPOO" : [1,2,4]})
 
         #Remove subject class that does not exist
-        student2.remove_subject_give_in_class("LPOO",3)
+        self.assertEqual(student2.remove_subject_give_in_class("LPOO",3),False)
         self.assertEqual(student2.subject_give_ins,{"LPOO" : [1,2,4]})
 
         #Remove subject that does not exist
-        student2.remove_subject_give_in_class("CAL",3)
+        self.assertEqual(student2.remove_subject_give_in_class("CAL",3),False)
         self.assertEqual(student2.subject_give_ins,{"LPOO" : [1,2,4]})
 
     def test_add_buddies(self):
        
         # Add buddie
-        self.student_no_buddies.add_buddie("LPOO" , 200000000)
-        self.assertEqual(self.student_no_buddies.buddies,{"LPOO" : [200000000]})
+        self.assertEqual(self.student_no_buddies.add_buddie("LPOO" , 200000000),True)
+        self.assertEqual(self.student_no_buddies.buddies, {"LPOO": [200000000]})
+        
 
         #Add buddie to a subject
-        self.student_no_buddies.add_buddie("LPOO" , 200000001)
+        self.assertEqual(self.student_no_buddies.add_buddie("LPOO" , 200000001),True)
         self.assertEqual(self.student_no_buddies.buddies,{"LPOO" : [200000000,200000001]})
 
         #Try to add class that he does not belong too
-        self.student_no_buddies.add_buddie("ZZZ" , 200000005)
+        self.assertEqual(self.student_no_buddies.add_buddie("ZZZ" , 200000005),False)
         self.assertNotEqual(self.student_no_buddies.buddies,{"LPOO" : [200000000,200000001], "ZZZ" : 200000005})
         self.assertEqual(self.student_no_buddies.buddies,{"LPOO" : [200000000,200000001]})
 
