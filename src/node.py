@@ -1,4 +1,4 @@
-import random
+from random import randint
 
 class Node:
     def __init__(self, state, id):
@@ -11,6 +11,12 @@ class Node:
         if str(edge) not in self.edges:
             self.edges[str(edge)] = edge
 
+    def get_nodes(self):
+        l = []
+        for edge in self.edges.values():
+            l.append(edge.get_other(self))
+        return l
+        
     def get_heuristic(self): # To be replaced by state.get_score
         return self.state
 
@@ -26,7 +32,7 @@ class Node:
         return s
 
     def return_new_state(self): # To be replaced by random_neighbour
-        return random.randint(0, 100)
+        return randint(0, 100)
 
     def __str__(self):
         return 'Node: ' + str(self.state)
