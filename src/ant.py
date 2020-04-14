@@ -1,4 +1,5 @@
-import random
+from random import random
+from random import randint
 
 from node import Node
 
@@ -13,15 +14,15 @@ class Ant:
         self.evaporation_level = 1
         self.graph = graph
 
-    def chooses_path(self, current_node):
-        s = current_node.get_sum(self.alpha, self.beta)
+    def chooses_path(self):
+        s = self.current_node.get_sum(self.alpha, self.beta)
 
         if s - 1 > 0:
-            rand_val = random.randint(1, s)
+            rand_val = randint(1, s)
         else: rand_val = 0
         
         edges = []
-        for _, b in current_node.edges.items():
+        for _, b in self.current_node.edges.items():
             edges.append(b)
 
         #probabilities range
@@ -29,7 +30,7 @@ class Ant:
         for i, edge in enumerate(edges):
 
             other_node = None
-            if edge.node_1.id != current_node.id:
+            if edge.node_1.id != self.current_node.id:
                 other_node = edge.node_1
             else: other_node = edge.node_2
 
@@ -42,11 +43,12 @@ class Ant:
             if rand_val <= element:
 
                 other_node = None
-                if edges[i].node_1.id != current_node.id:
+                if edges[i].node_1.id != self.current_node.id:
                     other_node = edges[i].node_1
                 else: other_node = edges[i].node_2
                 
-                return (other_node, edges[i])
+                self.edges_path.append(edges[i])
+                self.update_node(other_node)
 
     def update_node(self, new_node):
         self.current_node = new_node
@@ -54,20 +56,30 @@ class Ant:
     def deposit_pheromones(self):
         for _, node in self.graph.nodes.items():
             for _, edge in node.edges.items():
-                edge.pheromones -= self.evaporation_level
+                if edge.pheromones - self.evaporation_level > 0:
+                    edge.pheromones -= self.evaporation_level
+                else:
+                    edge.pheromones = 0
 
             for e in self.edges_path:
                 if str(e) in node.edges:
                     node.edges[str(e)].pheromones += self.deposit_level
 
-    def explore(self):
+    def explore(self):     # TODO make this work
         if self.graph.id == 1:
             p = 1
         else:
-            a = self.graph.id / 200
+            a = self.graph.id / 50
+            if a == 1: a = 0.95
             p = 1 / (1-a)
+        
+        r = random()
+        if r < p:
+            return True
+        else:
+            return False
 
     def expand_node(self):
         node = Node(self.current_node.return_new_state(), self.graph.get_id())
-
         self.graph.add_node(self.current_node, node)
+        return node
