@@ -11,14 +11,24 @@ g = Graph()
 g.add_root(Node(1,g.get_id()))
 
 current_ant = Ant(1,1,g.root,g)
-current_ant.expand_node()
-print(str(g))
+ret_node = current_ant.expand_node()
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # current_ant.update_node(ret_node)
+# # # # # # # # # # # # # # # # # # # # # # # # # # current_ant.expand_node()
+# # # # # # # # # # # # # # # # # # # # # # # # # # print(str(g))
 # Gerar ants
 
+for i in range(0,1000):
+    current_ant = Ant(1,1,g.root,g)
+    while not current_ant.explore():
+        if len(current_ant.current_node.get_nodes()) == 0:
+            break
+        else:
+            current_ant.chooses_path()
 
+        
+    current_ant.deposit_pheromones()
+    ret_node = current_ant.expand_node()
 
-# Cada ant tem de decidir a ação
-
-# Se expandir nó, acaba ant
-
-# Se não, tem de escolher um nó para viajar, depositar as feromonas e dar update do node e voltar a decidir ação.
+print(g)
