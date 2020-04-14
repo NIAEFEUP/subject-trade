@@ -7,6 +7,7 @@ class Graph:
 
     def add_root(self, root):
         self.nodes[str(root.state)] = root
+        self.root = root
 
     def add_node(self, incoming, node):
         e = edge.Edge(incoming, node)
@@ -18,3 +19,11 @@ class Graph:
         a = self.id
         self.id += 1
         return a
+
+    def __str__(self):
+        st = ''
+        for n in self.nodes.values():
+            for edge in n.edges.values():
+                st += '\n' + str(edge) + '\n' + str(edge.pheromones) + '\n'
+
+        return st
