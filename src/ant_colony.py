@@ -1,43 +1,24 @@
-import graph
-import node
-import edge
-import ant
+from graph import Graph
+from node  import Node
+from edge import Edge
+from ant import Ant
 
 
-def f(g):
-    for _, n in g.nodes.items():
-        for _, edge in n.edges.items():
-            print(edge)
-            print(edge.pheromones)
-            print()
+# Create graph
+g = Graph()
 
-g = graph.Graph()
+# Add initial node
+g.add_root(Node(1,g.get_id()))
 
-n1 = node.Node(1, g.get_id())
-n2 = node.Node(2, g.get_id())
-n3 = node.Node(5, g.get_id())
-n4 = node.Node(10, g.get_id())
-n5 = node.Node(1, g.get_id())
-
-g.add_root(n1)
-g.add_node(n1, n2)
-g.add_node(n1, n3)
-g.add_node(n1, n4)
-g.add_node(n1, n5)
-
-a1 = ant.Ant(1, 1, n1, g)
-n2, edge = a1.chooses_path(a1.node)
-
-a2 = ant.Ant(1, 1, n2, g)
-
-a2.edges_path.append(edge)
-a2.deposit_pheromones()
-
-_, edge = a2.chooses_path(a1.node)
-a2.edges_path.append(edge)
-a2.deposit_pheromones()
-
-f(g)
+current_ant = Ant(1,1,g.root,g)
+current_ant.expand_node()
+print(str(g))
+# Gerar ants
 
 
 
+# Cada ant tem de decidir a ação
+
+# Se expandir nó, acaba ant
+
+# Se não, tem de escolher um nó para viajar, depositar as feromonas e dar update do node e voltar a decidir ação.
