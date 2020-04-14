@@ -1,3 +1,5 @@
+import random
+
 class Node:
     def __init__(self, state, id):
         self.state = state
@@ -9,7 +11,7 @@ class Node:
         if str(edge) not in self.edges:
             self.edges[str(edge)] = edge
 
-    def get_heuristic(self):
+    def get_heuristic(self): # To be replaced by state.get_score
         return self.state
 
     def get_sum(self, alpha, beta):
@@ -21,8 +23,10 @@ class Node:
             else: other_node = edge.node_2
 
             s += (edge.pheromones ** alpha) * (other_node.heuristic ** beta)
-
         return s
+
+    def return_new_state(self): # To be replaced by random_neighbour
+        return random.randint(0, 100)
 
     def __str__(self):
         return 'Node: ' + str(self.state)
