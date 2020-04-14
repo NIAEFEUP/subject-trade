@@ -4,6 +4,14 @@ class Edge:
         self.node_2 = node_2
         self.pheromones = 1
 
+    def get_other(self, node):
+        if node.id == self.node_1.id:
+            return self.node_2
+        elif node.id == self.node_2.id:
+            return self.node_1
+        else:
+            raise Exception('Error, node is not equal to neither of the nodes in the edge.')
+
     def __str__(self):
         if self.node_1.id < self.node_2.id:
             return 'Edge: ' + str(self.node_1) + ' ' + str(self.node_2)
