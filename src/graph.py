@@ -22,8 +22,12 @@ class Graph:
 
     def __str__(self):
         st = ''
+        set1 = set()
         for n in self.nodes.values():
             for edge in n.edges.values():
-                st += '\n' + str(edge) + '\n' + str(edge.pheromones) + '\n'
+                line = '\n' + str(edge) + '\n' + str(edge.pheromones) + '\n'
+                if line not in set1:
+                    set1.add(line)
+                    st += line
 
         return st
