@@ -19,14 +19,14 @@ ret_node = current_ant.expand_node()
 # # # # # # # # # # # # # # # # # # # # # # # # # # print(str(g))
 # Gerar ants
 
-for i in range(0,1000):
+for i in range(0,50):
     current_ant = Ant(1,1,g.root,g)
+
     while not current_ant.explore():
-        if len(current_ant.current_node.get_nodes()) == 0:
+        if len(current_ant.get_curr_node_new_neighbours()) == 0:
             break
         else:
             current_ant.chooses_path()
-
         
     current_ant.deposit_pheromones()
     ret_node = current_ant.expand_node()
