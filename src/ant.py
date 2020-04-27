@@ -67,14 +67,10 @@ class Ant:
 
     def explore(self):     # TODO make this work
         if self.graph.id == 1:
-            p = 1
-        else:
-            a = self.graph.id / 50
-            if a == 1: a = 0.95
-            p = 1 / (1-a)
+            return True
         
         r = random()
-        if r < p:
+        if r > 0.8:
             return True
         else:
             return False
@@ -83,3 +79,6 @@ class Ant:
         node = Node(self.current_node.return_new_state(), self.graph.get_id())
         self.graph.add_node(self.current_node, node)
         return node
+
+    def get_curr_node_new_neighbours(self):
+        return [node for node in self.current_node.get_nodes() if node not in self.visited_nodes]
