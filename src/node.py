@@ -42,3 +42,9 @@ class Node:
             return True
         else:
             return False
+
+    def __lt__(self, other):
+        if self.heuristic > other.heuristic:
+            return self
+        else:
+            return other
