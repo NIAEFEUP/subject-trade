@@ -37,6 +37,9 @@ class Node:
     def __str__(self):
         return 'Node: ' + str(self.state)
 
+    def __repr__(self):
+        return 'Node: ' + str(self.state)
+
     def __eq__(self, other):
         if str(self) == str(other):
             return True
@@ -44,7 +47,7 @@ class Node:
             return False
 
     def __lt__(self, other):
-        if self.heuristic > other.heuristic:
+        if self.heuristic < other.heuristic:
             return self
         else:
             return other
