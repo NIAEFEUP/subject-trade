@@ -13,11 +13,12 @@ class State:
         self.class_schedules = {}
     
     def __str__(self):
-        st = ""
-        for i, student in self.students.items():
-            for subject, clas in student.subjects_and_classes.items():
-                st += subject + str(clas)
-        return st 
+        return str(self.heuristic)
+        # st = ""
+        # for i, student in self.students.items():
+        #     for subject, clas in student.subjects_and_classes.items():
+        #         st += subject + str(clas)
+        # return st 
 
     def add_student(self, student):
         self.students[student.student_id] = student
@@ -86,9 +87,7 @@ class State:
             if gave_in and not got_target and alone: 
                 score -= 10000
 
-
-
-
+        self.heuristic = score
         return score 
 
     def add_schedule(self, subject, class_number, start_hour, end_hour, day):
