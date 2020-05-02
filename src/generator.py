@@ -17,7 +17,7 @@ def generator_students(n_students, subjects):
         for j in range(0, number_classes):                                                          
             subject = random.choice(subjects)
             if subject not in subject_classes.keys():                                               #the subject can't be repeated
-                subject_classes[subject] = random.randint(1,13)
+                subject_classes[subject] = random.randint(1,5)
             else: j -= 1
 
         #target classes
@@ -79,9 +79,16 @@ def time_generator(subjects, state):
             state.add_schedule(subject, j, hour_1, hour_2, random.sample(days_of_the_week, 1)[0])
     return state 
 
-state = State()
-time_generator(['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'], state)
-#generator_students(40,['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'])
+def get_random_state(list_of_subjects, number_students):
+    state = State()
+    time_generator(list_of_subjects, state)
+    
+    for student in generator_students(number_students, list_of_subjects):
+        state.add_student(student)
 
-print(state.class_schedules)
+    return state
+    
+# state = State()
+# time_generator(['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'], state)
+# generator_students(40,['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'])
 

@@ -15,7 +15,7 @@ class State:
     def __str__(self):
         st = ""
         for i, student in self.students.items():
-            for subject, clas in student.subjects_and_classes:
+            for subject, clas in student.subjects_and_classes.items():
                 st += subject + str(clas)
         return st 
 
@@ -42,10 +42,11 @@ class State:
                 score_each_buddy = (2 * score_buddies)/(n * (n + 1))
                 increment_buddies = n
                 for numbers in student.buddies[subject]: 
-                    if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
-                        score += score_each_buddy * increment_buddies      # Adds points each time the buddie is in the same class
-                        increment_buddies -= 1        # Removes some points depending on the priority 
-                        alone = False
+                    if subject in self.students[numbers].subjects_and_classes:
+                        if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
+                            score += score_each_buddy * increment_buddies      # Adds points each time the buddie is in the same class
+                            increment_buddies -= 1        # Removes some points depending on the priority 
+                            alone = False
                         
             #checking if student got a target class
             score_target_class = 0.5 * MAX_SCORE  #Gives 50% of importance to the Target Classes
@@ -74,10 +75,12 @@ class State:
                #checking for schedule conflicts.
                 for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
                     key = list(student.subjects_and_classes.keys())[p] 
-                    sched_1 = self.class_schedules[translate_subject_and_class(subject_A,student.subjects_and_classes[subject_A])]
-                    sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
-                    if (sched_1.conflicts(sched_2)):
-                        score -= 10000
+                    if translate_subject_and_class(subject_A,student.subjects_and_classes[subject_A]) in self.class_schedules:
+                        if translate_subject_and_class(key, student.subjects_and_classes[key]) in self.class_schedules:
+                            sched_1 = self.class_schedules[translate_subject_and_class(subject_A,student.subjects_and_classes[subject_A])]
+                            sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
+                            if (sched_1.conflicts(sched_2)):
+                                score -= 10000
 
             # If he gives up a class but didn't get the target nor he is with any of his buddies
             if gave_in and not got_target and alone: 
@@ -178,9 +181,9 @@ class State:
                 if success == True:
                     break
 
-    def random_neighbour(self):
+    def random_neighbour(self): # To review, if need be
         list_students = []
-        for _,elem in self.students.items():
+        for elem in self.students.values():
             list_students.append(elem)
         master_students = deepcopy(list_students)
         used_master = []
@@ -210,7 +213,7 @@ class State:
                         success = True
 
                         deploy_students[student_i].subjects_and_classes[trade_class], deploy_students[trader_i].subjects_and_classes[trade_class] = deploy_students[trader_i].subjects_and_classes[trade_class], deploy_students[student_i].subjects_and_classes[trade_class]
-                        print("------",student_i, trader_i,trade_class,len(list_students)-len(used_master))
+                        #print("------",student_i, trader_i,trade_class,len(list_students)-len(used_master))
                         
                         deploy_dict = {}
                         for elem in deploy_students:
@@ -218,7 +221,7 @@ class State:
 
                         deploy_state.students = deploy_dict
 
-                        yield deploy_state
+                        return deploy_state
                         break
                 if success == True:
                     break

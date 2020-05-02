@@ -18,7 +18,8 @@ class Node:
         return l
         
     def get_heuristic(self): # To be replaced by state.get_score
-        return self.state
+        # return self.state
+        return self.state.get_score()
 
     def get_sum(self, alpha, beta):
         s = 0
@@ -32,7 +33,8 @@ class Node:
         return s
 
     def return_new_state(self): # To be replaced by random_neighbour
-        return randint(0, 100)
+        # return randint(0, 100)
+        return self.state.random_neighbour()
 
     def __str__(self):
         return 'Node: ' + str(self.state)

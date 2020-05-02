@@ -4,22 +4,36 @@ from graph import Graph
 from node  import Node
 from edge import Edge
 from ant import Ant
+from state import State
 
+from generator import get_random_state
+
+
+subjects = ['BDAD', 'LPOO', 'LGP']
+n_students = 50
 
 def calculate_if_rose(new, old):
-    if new/old > 1.1:
+    if new > 0 and old > 0 and new/old > 1.1:
         return True
+    
+    if new > 0 and old < 0 and abs(new/old) > 1.1:
+        return True
+
+    if new < 0 and old < 0 and new/old <= 0.5:
+        return True
+    
     return False
 
 def ant_colony():
-    iterations_total = 50
+    iterations_total = 10
     iterator = iterations_total
     percentage = 0.1
     best_10 = []
+    root_state = get_random_state(subjects, n_students)
 
 
     g = Graph()
-    g.add_root(Node(1,g.get_id()))
+    g.add_root(Node(root_state, g.get_id()))
 
     maximum = g.root
     best_10.append(g.root)
