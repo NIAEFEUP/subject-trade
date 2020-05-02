@@ -77,16 +77,19 @@ class State:
                     sched_1 = self.class_schedules[translate_subject_and_class(subject_A,student.subjects_and_classes[subject_A])]
                     sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
                     if (sched_1.conflicts(sched_2)):
-                        return float('-inf')
+                        score -= 10000
 
             # If he gives up a class but didn't get the target nor he is with any of his buddies
             if gave_in and not got_target and alone: 
-                return float('-inf')
+                score -= 10000
+
+
+
 
         return score 
 
-    def add_schedule(self, subject, class_number, start_hour, end_hour):
-        self.class_schedules[translate_subject_and_class(subject, class_number)] = Schedule(start_hour, end_hour)
+    def add_schedule(self, subject, class_number, start_hour, end_hour, day):
+        self.class_schedules[translate_subject_and_class(subject, class_number)] = Schedule(start_hour, end_hour, day)
 
     def trade_classes(self,student1_id,student2_id,subject_name):
         students = self.students
