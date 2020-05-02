@@ -71,13 +71,17 @@ def generator_students(n_students, subjects):
 
 # Function that generates the schedule for each classes given the list of classes
 def time_generator(subjects, state): 
-    for number, subject in enumerate(subjects):
-        for j in range(14): 
-            hour_2 = Hour(number, j*2)
-            state.add_schedule(subject, j, hour_2, Hour(hour_2.hours, j*2+1))
+    days_of_the_week = {'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'}
+    for number, subject in enumerate(subjects, start=1):
+        for j in range(5):
+            hour_1 = Hour(7, 0) + Hour(j*2, 0)
+            hour_2 = hour_1 + Hour(2, 0)
+            state.add_schedule(subject, j, hour_1, hour_2, random.sample(days_of_the_week, 1)[0])
     return state 
 
 state = State()
 time_generator(['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'], state)
-generator_students(40,['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'])
+#generator_students(40,['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'])
+
+print(state.class_schedules)
 
