@@ -4,13 +4,16 @@ from schedule import Schedule
 import random
 
 
-def translate_subject_and_class(subject, class_number):
+def translate_subjects_and_classes(subject, class_number):
     return subject + str(class_number)
 
 class State:
     def __init__(self):
         self.students = {}
         self.class_schedules = {}
+        self.conflicts = 0
+        self.didnt_get = 0
+        self.student_num = 0
     
     def __str__(self):
         return str(self.heuristic)
@@ -22,9 +25,11 @@ class State:
 
     def add_student(self, student):
         self.students[student.student_id] = student
+        self.student_num += 1
 
     def get_score(self): 
-
+        self.conflicts = 0
+        self.didnt_get = 0
         MAX_SCORE = 100
 
         score = 0
@@ -54,10 +59,10 @@ class State:
             score_each_target = (2*score_target_class)//((len(student.subjects_and_classes)+1)*len(student.subjects_and_classes))
             increment_targets = len(student.subjects_and_classes)
 
-            for position, subject_A in enumerate(student.subjects_and_classes): 
+            for position, subject_1 in enumerate(student.subjects_and_classes): 
                 
-                if subject_A in student.subject_targets.keys(): 
-                    if student.subjects_and_classes[subject_A] in student.subject_targets[subject_A]:  
+                if subject_1 in student.subject_targets.keys(): 
+                    if student.subjects_and_classes[subject_1] in student.subject_targets[subject_1]:  
                         score += score_each_target * increment_targets   # Adds points each time it is in a target class
                         increment_targets-=1       # Removes some points depending on the priority
                         got_target = True 
@@ -67,8 +72,8 @@ class State:
                 score_each_give_in = (score_give_ins)//(len(student.subjects_and_classes))
 
                 #checking if a student gave in any classes 
-                if subject_A in student.subject_give_ins.keys():
-                    if student.subjects_and_classes[subject_A] in student.subject_give_ins[subject_A]: 
+                if subject_1 in student.subject_give_ins.keys():
+                    if student.subjects_and_classes[subject_1] in student.subject_give_ins[subject_1]: 
                         score -= score_each_give_in     # Removes points each time the buddie had to give_in
                         gave_in = True
                      
@@ -76,22 +81,24 @@ class State:
                #checking for schedule conflicts.
                 for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
                     key = list(student.subjects_and_classes.keys())[p] 
-                    if translate_subject_and_class(subject_A,student.subjects_and_classes[subject_A]) in self.class_schedules:
-                        if translate_subject_and_class(key, student.subjects_and_classes[key]) in self.class_schedules:
-                            sched_1 = self.class_schedules[translate_subject_and_class(subject_A,student.subjects_and_classes[subject_A])]
-                            sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
+                    if translate_subjects_and_classes(subject_1,student.subjects_and_classes[subject_1]) in self.class_schedules:
+                        if translate_subjects_and_classes(key, student.subjects_and_classes[key]) in self.class_schedules:
+                            sched_1 = self.class_schedules[translate_subjects_and_classes(subject_1,student.subjects_and_classes[subject_1])]
+                            sched_2 = self.class_schedules[translate_subjects_and_classes(key, student.subjects_and_classes[key])] 
                             if (sched_1.conflicts(sched_2)):
                                 score -= 10000
+                                self.conflicts += 1
 
             # If he gives up a class but didn't get the target nor he is with any of his buddies
             if gave_in and not got_target and alone: 
                 score -= 10000
+                self.didnt_get += 1
 
         self.heuristic = score
         return score 
 
     def add_schedule(self, subject, class_number, start_hour, end_hour, day):
-        self.class_schedules[translate_subject_and_class(subject, class_number)] = Schedule(start_hour, end_hour, day)
+        self.class_schedules[translate_subjects_and_classes(subject, class_number)] = Schedule(start_hour, end_hour, day)
 
     def trade_classes(self,student1_id,student2_id,subject_name):
         students = self.students
