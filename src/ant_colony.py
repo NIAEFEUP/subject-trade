@@ -10,7 +10,7 @@ from generator import get_random_state
 
 
 subjects = ['BDAD', 'LPOO', 'LGP']
-n_students = 50
+n_students = 10
 
 def calculate_if_rose(new, old):
     if new > 0 and old > 0 and new/old > 1.1:
@@ -25,7 +25,7 @@ def calculate_if_rose(new, old):
     return False
 
 def ant_colony():
-    iterations_total = 10
+    iterations_total = 10000
     iterator = iterations_total
     percentage = 0.1
     best_10 = []
@@ -51,7 +51,9 @@ def ant_colony():
         current_ant.deposit_pheromones()
         ret_node = current_ant.expand_node()
 
-        best_10.append(ret_node)
+        if ret_node not in best_10:
+            best_10.append(ret_node)
+        # best_10.append(ret_node)
         best_10.sort(reverse=True, key=lambda node: node.heuristic)
 
         if len(best_10) > 10:
@@ -69,5 +71,8 @@ def ant_colony():
 
     
 
-g = ant_colony()
-print(g)
+best = ant_colony()
+for b in best:
+    print(b, "student_num", b.state.student_num, "conflicts", b.state.conflicts, "didn't get", b.state.didnt_get)
+    # for student in b.state.students.values():
+    #     print(student.student.subject_)
