@@ -43,10 +43,27 @@ class Node:
         return 'Node: ' + str(self.state)
 
     def __eq__(self, other):
-        if str(self) == str(other):
+        try:
+            if len(self.state.students) == len(other.state.students):
+                for student, student_class in self.state.students.items():
+                    if student in other.state.students.keys():   
+                        for subject, clas in student_class.subjects_and_classes.items():
+                            if other.state.students[student].subjects_and_classes[subject] == clas:
+                                pass
+                            else: 
+                                return False
+                    else: 
+                        return False
+            else: 
+                return False
             return True
-        else:
-            return False
+
+        except:
+           return False
+        # if str(self) == str(other):
+        #     return True
+        # else:
+        #     return False
 
     def __lt__(self, other):
         if self.heuristic < other.heuristic:
