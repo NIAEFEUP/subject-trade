@@ -32,6 +32,9 @@ def ant_colony():
     root_state = get_random_state(subjects, n_students)
 
 
+    for stu in root_state.students:
+        print("initial student:", root_state.students[stu])
+
     g = Graph()
     g.add_root(Node(root_state, g.get_id()))
 
@@ -73,6 +76,8 @@ def ant_colony():
 
 best = ant_colony()
 for b in best:
-    print(b, "student_num", b.state.student_num, "conflicts", b.state.conflicts, "didn't get", b.state.didnt_get)
+    #print(b, "student_num", b.state.student_num, "conflicts", b.state.conflicts, "didn't get", b.state.didnt_get)
+    for stu in b.state.students:
+        print("student end:", b.state.students[stu])
     # for student in b.state.students.values():
     #     print(student.student.subject_)

@@ -1,5 +1,6 @@
 from random import random
 from random import randint
+from random import uniform
 
 from node import Node
 
@@ -18,7 +19,7 @@ class Ant:
         s = self.current_node.get_sum(self.alpha, self.beta)
 
         if s - 1 > 0:
-            rand_val = randint(1, s)
+            rand_val = uniform(1, s)
         else: rand_val = 0
         
         edges = []
