@@ -6,14 +6,14 @@ from genetic_state import GeneticState
 
 INITIAL_POPULATION_SIZE = 4
 STATE_SIZE = 10
-MAX_ELEMENTS = 50
+MAX_ELEMENTS = 300
 
 population = [GeneticState(GeneticState.gen_binary(STATE_SIZE)) for _ in range(INITIAL_POPULATION_SIZE)]
 
 
 def genetic_algorithm(population):
     new_population = population
-    
+
     while new_population[0].int() != ((2 ** STATE_SIZE) - 1):
         new_population = deepcopy(population)
         
@@ -31,7 +31,6 @@ def genetic_algorithm(population):
 
             off_spring1, off_spring2 = dad[1].gen_off_spring(mum[1])
 
-            
             off_spring1.mutate()
             off_spring2.mutate()
 
@@ -46,4 +45,3 @@ def genetic_algorithm(population):
     return new_population[0]
         
 print(genetic_algorithm(population))
-
