@@ -8,12 +8,20 @@ def translate_subjects_and_classes(subject, class_number):
     return subject + str(class_number)
 
 class State:
-    def __init__(self):
-        self.students = {}
-        self.class_schedules = {}
-        self.conflicts = 0
-        self.didnt_get = 0
-        self.student_num = 0
+    def __init__(self, state=None):
+        if state is None:
+            self.students = {}
+            self.class_schedules = {}
+            self.conflicts = 0
+            self.didnt_get = 0
+            self.student_num = 0
+        else:
+            self.students = state.students
+            self.class_schedules = state.class_schedules
+            self.conflicts = 0
+            self.didnt_get = 0
+            self.student_num = 0
+            self.heuristic = self.get_score()
     
     def __str__(self):
         return str(self.heuristic)
@@ -187,7 +195,7 @@ class State:
                 if success == True:
                     break
 
-    def random_neighbour(self): # To review, if need be
+    def random_neighbour(self):
         list_students = []
         for elem in self.students.values():
             list_students.append(elem)
