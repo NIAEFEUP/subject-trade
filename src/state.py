@@ -24,12 +24,14 @@ class State:
             self.heuristic = self.get_score()
     
     def __str__(self):
-        return str(self.heuristic)
-        # st = ""
-        # for i, student in self.students.items():
-        #     for subject, clas in student.subjects_and_classes.items():
-        #         st += subject + str(clas)
-        # return st 
+        #return str(self.heuristic)
+        st = ""
+        for i, student in self.students.items():
+            st += 'Student {0} has:'.format(student.student_id)
+            for subject, clas in student.subjects_and_classes.items():
+                st += ' Class {0} in the subject {1}/'.format(str(clas), subject)
+            st += '\n'
+        return st 
 
     def add_student(self, student):
         self.students[student.student_id] = student
