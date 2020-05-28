@@ -4,6 +4,7 @@ from random import sample
 
 
 from generator import GenerateState
+from data_bank import DataBank
 
 class NewDict:
     def __init__(self, dictionary):
@@ -46,7 +47,7 @@ class GeneticState:
         
         return GeneticState(state)
 
-    def gen_off_spring(self, other): # TODO - Test this statement by creating 2 hard coded states
+    def gen_off_spring(self, other):
         '''
         Consider self mum and other dad
 
@@ -60,10 +61,10 @@ class GeneticState:
         # Cycle to create daughter
         for subject, new_d in daughter.genetic_state.items():
             for class_, students in new_d.dictionary.items():
-                student = sample(students, 1) # A student from this class.
+                student = sample(students, 1)[0] # A student from this class.
 
                 # Chooses random student from that same class but in the dad state
-                other_student = sample(other.genetic_state[subject].dictionary[class_], 1)
+                other_student = sample(other.genetic_state[subject].dictionary[class_], 1)[0]
 
                 # Removes student and puts the other student there
                 new_d.dictionary[class_].remove(student)
@@ -76,13 +77,13 @@ class GeneticState:
                             new_d.dictionary[class_2].remove(other_student)
                             new_d.dictionary[class_2].append(student)
 
-        # Cycle to create daughter
+        # Cycle to create son
         for subject, new_d in son.genetic_state.items():
             for class_, students in new_d.dictionary.items():
-                student = sample(students, 1) # A student from this class.
+                student = sample(students, 1)[0] # A student from this class.
 
                 # Chooses random student from that same class but in the dad state
-                other_student = sample(self.genetic_state[subject].dictionary[class_], 1)
+                other_student = sample(self.genetic_state[subject].dictionary[class_], 1)[0]
 
                 # Removes student and puts the other student there
                 new_d.dictionary[class_].remove(student)
@@ -95,20 +96,50 @@ class GeneticState:
                             new_d.dictionary[class_2].remove(other_student)
                             new_d.dictionary[class_2].append(student)
 
-        return (son, daughter)
+        return (GeneticState.convert_to_normal_state(daughter.state, daughter.genetic_state),
+                GeneticState.convert_to_normal_state(son.state, son.genetic_state))
 
             
-    def mutate(self): # TODO replace with something else
-        pass
+    def mutate(self):
+        self.state = self.state.random_neighbour()
 
 
-random_state = GenerateState.get_random_state(['Science', 'Bitch'], 5)
-random_state.get_score()
-genetic_state = GeneticState(random_state)
+#random_state = GenerateState.get_random_state(['Science', 'Bitch'], 5)
+#random_state.get_score()
+#genetic_state = GeneticState(random_state)
 
-genetic_state.convert_to_genetic_state()
-genetic_state.gen_off_spring(1)
+#print(random_state)
+#print(genetic_state.genetic_state)
 
-print(random_state)
-print(genetic_state.genetic_state)
+s0 = DataBank.get_state_0()
+s1 = DataBank.get_state_1()
+
+s0.get_score()
+s1.get_score()
+
+g_s0 = GeneticState(s0)
+g_s1 = GeneticState(s1)
+
+g_s0.convert_to_genetic_state()
+g_s1.convert_to_genetic_state()
+
+print('BEFORE OFFSPRING')
+print('S0\n\n')
+print(s0)
+print('S1\n\n')
+print(s1)
+
+# print('AFTER OFFSPRING')
+# print('S0\n\n')
+# print(s0)
+# print('S1\n\n')
+# print(s1)
+
+daughter, son = g_s0.gen_off_spring(g_s1)
+
+print('OFFSPRING')
+print('Daughter')
+print(daughter.state)
+print('Son')
+print(son.state)
 
