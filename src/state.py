@@ -229,8 +229,7 @@ class State:
                         success = True
 
                         deploy_students[student_i].subjects_and_classes[trade_class], deploy_students[trader_i].subjects_and_classes[trade_class] = deploy_students[trader_i].subjects_and_classes[trade_class], deploy_students[student_i].subjects_and_classes[trade_class]
-                        #print("------",student_i, trader_i,trade_class,len(list_students)-len(used_master))
-                        
+                
                         deploy_dict = {}
                         for elem in deploy_students:
                             deploy_dict[elem.student_id] = elem

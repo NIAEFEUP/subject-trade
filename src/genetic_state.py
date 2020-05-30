@@ -1,6 +1,6 @@
 from copy import deepcopy
 from math import ceil
-from random import sample
+from random import sample, randint
 
 
 from generator import GenerateState
@@ -23,6 +23,7 @@ class GeneticState:
         self.genetic_state = {}
 
     def heuristic(self):
+        self.state.get_score()
         return self.state.heuristic
 
     def convert_to_genetic_state(self):
@@ -96,50 +97,13 @@ class GeneticState:
                             new_d.dictionary[class_2].remove(other_student)
                             new_d.dictionary[class_2].append(student)
 
-        return (GeneticState.convert_to_normal_state(daughter.state, daughter.genetic_state),
-                GeneticState.convert_to_normal_state(son.state, son.genetic_state))
+        d = GeneticState.convert_to_normal_state(daughter.state, daughter.genetic_state)
+        s = GeneticState.convert_to_normal_state(son.state, son.genetic_state)
+        return (d, s)
 
             
     def mutate(self):
-        self.state = self.state.random_neighbour()
-
-
-#random_state = GenerateState.get_random_state(['Science', 'Bitch'], 5)
-#random_state.get_score()
-#genetic_state = GeneticState(random_state)
-
-#print(random_state)
-#print(genetic_state.genetic_state)
-
-s0 = DataBank.get_state_0()
-s1 = DataBank.get_state_1()
-
-s0.get_score()
-s1.get_score()
-
-g_s0 = GeneticState(s0)
-g_s1 = GeneticState(s1)
-
-g_s0.convert_to_genetic_state()
-g_s1.convert_to_genetic_state()
-
-print('BEFORE OFFSPRING')
-print('S0\n\n')
-print(s0)
-print('S1\n\n')
-print(s1)
-
-# print('AFTER OFFSPRING')
-# print('S0\n\n')
-# print(s0)
-# print('S1\n\n')
-# print(s1)
-
-daughter, son = g_s0.gen_off_spring(g_s1)
-
-print('OFFSPRING')
-print('Daughter')
-print(daughter.state)
-print('Son')
-print(son.state)
+        n = randint(1, 30)
+        if n == 1:
+            self.state = self.state.random_neighbour()
 

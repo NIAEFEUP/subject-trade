@@ -2,7 +2,9 @@ from student import Student
 from hour import Hour 
 from state import State 
 
-import random 
+import random
+
+MAXIMUM_CLASSES = 7
 
 class GenerateState:
     # Function that generates students objects
@@ -13,7 +15,7 @@ class GenerateState:
             subject_classes ={}
             subject_target = {}
             subject_give_in = {}
-            number_classes = random.randint(4,7)
+            number_classes = random.randint(4,6)
 
             #subject classes
             for j in range(0, number_classes):                                                          
@@ -25,7 +27,7 @@ class GenerateState:
             #target classes
             for _ in range(random.randint(1,len(subject_classes))): 
                 subject = random.choice(list(subject_classes.keys()))                                   #choose a class to change
-                target = [random.randint(1,13) for _ in range(random.randint(1,5))]                     #class target number
+                target = [random.randint(1, MAXIMUM_CLASSES) for _ in range(random.randint(1,5))]                     #class target number
                 target = list(set(filter(lambda x: x != subject_classes[subject], target)))              #the target can't be in subject_classes 
                 subject_target[subject] = target            
 
@@ -37,7 +39,7 @@ class GenerateState:
                 
                 give_in = []
                 while (give_in == list()):                                                                #if there's a give_in, the list can't be empty
-                    give_in = [random.randint(1,13) for _ in range(random.randint(1,5))]                  #give_in classes 
+                    give_in = [random.randint(1, MAXIMUM_CLASSES) for _ in range(random.randint(1,5))]                  #give_in classes 
                     give_in = list(set(filter(lambda x: x!=subject_classes[subject], give_in)))             #the give_in can't be the actual class
             
                 
