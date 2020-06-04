@@ -51,7 +51,7 @@ class State:
             got_target = False
 
             #checking buddies 
-            score_buddies = 0.5 * MAX_SCORE  #Gives 50% of importance to the buddies
+            score_buddies = 0.5 * MAX_SCORE  # Gives 50% of importance to the buddies
             
             for subject in student.buddies: 
                 n = len(student.buddies[subject])
@@ -77,14 +77,9 @@ class State:
                         increment_targets-=1       # Removes some points depending on the priority
                         got_target = True 
 
-
-                score_give_ins = 0.2 * MAX_SCORE #Gives 20% of importance to the Give ins
-                score_each_give_in = (score_give_ins)//(len(student.subjects_and_classes))
-
                 #checking if a student gave in any classes 
                 if subject_1 in student.subject_give_ins.keys():
                     if student.subjects_and_classes[subject_1] in student.subject_give_ins[subject_1]: 
-                        score -= score_each_give_in     # Removes points each time the buddie had to give_in
                         gave_in = True
                      
 
