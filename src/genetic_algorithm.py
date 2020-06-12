@@ -6,9 +6,9 @@ from random import randint
 from genetic_state import GeneticState
 from data_bank import DataBank
 
-INITIAL_POPULATION_SIZE = 2
+INITIAL_POPULATION_SIZE = 10
 MAX_ELEMENTS = 100
-IT_WITHOUT_G_BETTER = 2000
+IT_WITHOUT_G_BETTER = 5000
 
 class GeneticAlgorithm:
     @staticmethod

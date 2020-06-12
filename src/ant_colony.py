@@ -10,19 +10,6 @@ from generator import GenerateState
 
 class AntColony:
     @staticmethod
-    def calculate_if_rose(new, old):
-        if new > 0 and old > 0 and new/old > 1.1:
-            return True
-        
-        if new > 0 and old < 0 and abs(new/old) > 1.1:
-            return True
-
-        if new < 0 and old < 0 and new/old < 0.7:
-            return True
-        
-        return False
-
-    @staticmethod
     def ant_colony(root_state):
         iterations_total = 5000
 
@@ -61,26 +48,23 @@ class AntColony:
 
             if len(best_10) > 10:
                 best_10.pop(10)
-                
-            if maximum.heuristic < ret_node.heuristic:
-                maximum = ret_node
 
-            if AntColony.calculate_if_rose(ret_node.heuristic, maximum.heuristic):
-                print('rose', ret_node.heuristic, maximum.heuristic)
+            if ret_node.heuristic > maximum.heuristic:
                 iterator = iterations_total
+                maximum = ret_node
             else:
                 iterator -= 1
 
-        print(best_10[0].heuristic)
+        #print(best_10[0].heuristic)
         return best_10
 
-subjects = ['BDAD', 'LPOO', 'LGP', 'DWQ', 'AWS', 'BBPA', 'POWQ']
-n_students = 10   
-root_state = GenerateState.get_random_state(subjects, n_students)
+# subjects = ['BDAD', 'LPOO', 'LGP', 'DWQ', 'AWS', 'BBPA', 'POWQ']
+# n_students = 10   
+# root_state = GenerateState.get_random_state(subjects, n_students)
 
-best = AntColony.ant_colony(root_state)
-for b in best:
-    #print(b, "student_num", b.state.student_num, "conflicts", b.state.conflicts, "didn't get", b.state.didnt_get)
-    print(b.heuristic)
-    # for student in b.state.students.values():
-    #     print(student.student.subject_)
+# best = AntColony.ant_colony(root_state)
+# for b in best:
+#     #print(b, "student_num", b.state.student_num, "conflicts", b.state.conflicts, "didn't get", b.state.didnt_get)
+#     print(b.heuristic)
+#     # for student in b.state.students.values():
+#     #     print(student.student.subject_)

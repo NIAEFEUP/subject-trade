@@ -10,7 +10,7 @@ class Ant:
         self.beta = beta
         self.current_node = current_node
         self.edges_path = []
-        self.visited_nodes = []
+        self.visited_nodes = [current_node.id]
         self.deposit_level = 2
         self.evaporation_level = 1
         self.graph = graph
@@ -53,6 +53,7 @@ class Ant:
 
     def update_node(self, new_node):
         self.current_node = new_node
+        self.visited_nodes.append(self.current_node.id)
 
     def deposit_pheromones(self):
         for _, node in self.graph.nodes.items():
@@ -66,7 +67,7 @@ class Ant:
                 if str(e) in node.edges:
                     node.edges[str(e)].pheromones += self.deposit_level
 
-    def explore(self):     # TODO make this work
+    def explore(self):
         if self.graph.id == 1:
             return True
         
