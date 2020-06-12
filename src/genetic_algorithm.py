@@ -8,7 +8,7 @@ from data_bank import DataBank
 
 INITIAL_POPULATION_SIZE = 10
 MAX_ELEMENTS = 100
-IT_WITHOUT_G_BETTER = 5000
+It_Without_G_Better = 5000
 
 class GeneticAlgorithm:
     @staticmethod
@@ -32,7 +32,7 @@ class GeneticAlgorithm:
         return population
 
     @staticmethod
-    def genetic_algorithm(population):
+    def genetic_algorithm(population, IT_WITHOUT_G_BETTER=It_Without_G_Better):
         '''
         Receives initial population and performs a genetic algorithm
         '''

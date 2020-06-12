@@ -8,11 +8,11 @@ from state import State
 
 from generator import GenerateState
 
-IT_WITHOUT_G_BETTER = 5000
+It_Without_G_Better = 5000
 
 class AntColony:
     @staticmethod
-    def ant_colony(root_state):
+    def ant_colony(root_state, IT_WITHOUT_G_BETTER=It_Without_G_Better):
         iterator = IT_WITHOUT_G_BETTER
         best_10 = []
 

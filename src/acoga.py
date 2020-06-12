@@ -4,32 +4,56 @@ from genetic_algorithm import GeneticAlgorithm, GeneticState
 from ant_colony import AntColony, GenerateState
 from data_bank import DataBank
 
+It_Without_G_Better= 5000
 
 class ACOGA:
     @staticmethod
-    def acoga(root):
-        #print('Ant Colony')
-        best_states = AntColony.ant_colony(root)
+    def acoga(root, IT_WITHOUT_G_BETTER=It_Without_G_Better):
+        t1 = time()
+        best_states = AntColony.ant_colony(root, IT_WITHOUT_G_BETTER)
+        t2 = time()
+        print('Ant Colony time:', t2 - t1)
+        print('Current best:', best_states[0].heuristic)
+
         best_states = [GeneticState(state.state) for state in best_states]
-        #print('Genetic Algorithm')
-        return GeneticAlgorithm.genetic_algorithm(best_states)
+
+        t1 = time()
+        ret = GeneticAlgorithm.genetic_algorithm(best_states, IT_WITHOUT_G_BETTER)
+        t2 = time()
+        print('Genetic Algorithm time:', t2 - t1)
+        return ret
 
 
-list_of_states = DataBank.get_states_with_different_number()
+# # # # # Test what happens with more iterations
 
-time_ant_colony = 0
-time_genetic_algorithm = 0
-time_acoga = 0
+root_state = DataBank.get_state_2()
 
-for i, s in enumerate(list_of_states):
-    print('Initial state heuristic:', s.get_score(), '\n')
+list_of_iterations = [500, 1000, 2000, 5000, 10000, 20000]
 
-    print('Acoga: ' + str(i))
+for iterations in list_of_iterations:
     t1 = time()
-    print('Heuristic of:', ACOGA.acoga(s)[0].heuristic)
+    print('Heuristic value', ACOGA.acoga(root_state, iterations)[0].heuristic)
     t2 = time()
-    time_acoga += t2 - t1
-    print('Took', t2 - t1, 'seconds\n\n')
+    print('Total time:', t2 - t1, '\n\n')
+
+
+# # # # # Test mean time and heuristic values
+
+# list_of_states = DataBank.get_states_with_different_number()
+
+# time_ant_colony = 0
+# time_genetic_algorithm = 0
+# time_acoga = 0
+
+# for i, s in enumerate(list_of_states):
+#     print('Initial state heuristic:', s.get_score(), '\n')
+
+#     print('Acoga: ' + str(i))
+#     t1 = time()
+#     print('Heuristic of:', ACOGA.acoga(s)[0].heuristic)
+#     t2 = time()
+#     time_acoga += t2 - t1
+#     print('Took', t2 - t1, 'seconds\n\n')
 
 # # # # # Test mean time and heuristic values
 
