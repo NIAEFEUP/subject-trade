@@ -69,7 +69,7 @@ class GeneticAlgorithm:
             population = deepcopy(new_population[:MAX_ELEMENTS])
 
             if population[0].heuristic > highest_value:
-                print('new best value', population[0].heuristic)
+                #print('new best value', population[0].heuristic)
                 highest_value = population[0].heuristic
                 counter = IT_WITHOUT_G_BETTER
             else:

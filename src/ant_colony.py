@@ -8,13 +8,12 @@ from state import State
 
 from generator import GenerateState
 
+IT_WITHOUT_G_BETTER = 5000
+
 class AntColony:
     @staticmethod
     def ant_colony(root_state):
-        iterations_total = 5000
-
-        iterator = iterations_total
-        percentage = 0.1
+        iterator = IT_WITHOUT_G_BETTER
         best_10 = []
 
         g = Graph()
@@ -50,12 +49,11 @@ class AntColony:
                 best_10.pop(10)
 
             if ret_node.heuristic > maximum.heuristic:
-                iterator = iterations_total
+                iterator = IT_WITHOUT_G_BETTER
                 maximum = ret_node
             else:
                 iterator -= 1
 
-        #print(best_10[0].heuristic)
         return best_10
 
 # subjects = ['BDAD', 'LPOO', 'LGP', 'DWQ', 'AWS', 'BBPA', 'POWQ']
