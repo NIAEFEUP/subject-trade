@@ -3,6 +3,7 @@ import student
 from schedule import Schedule 
 import random
 
+penalty = 1000
 
 def translate_subjects_and_classes(subject, class_number):
     return subject + str(class_number)
@@ -23,6 +24,12 @@ class State:
             self.student_num = 0
             self.heuristic = self.get_score()
     
+    # This comparison says a smaller object is bigger.
+    # This may seem weird, but the comparison is used in the priority queue, which gives more priority to smaller objects
+    # Since we want the bigger objects first in the PQ, I created the operator this way
+    def __lt__(self, other):
+        return self.heuristic > other.heuristic 
+
     def __str__(self):
         #return str(self.heuristic)
         st = ""
@@ -79,9 +86,9 @@ class State:
 
                 #checking if a student gave in any classes 
                 if subject_1 in student.subject_give_ins.keys():
-                    if student.subjects_and_classes[subject_1] in student.subject_give_ins[subject_1]: 
-                        gave_in = True
-                     
+                    if student.original_sac[subject_1] != student.subjects_and_classes[subject_1]:
+                        if student.subjects_and_classes[subject_1] in student.subject_give_ins[subject_1]:
+                            gave_in = True
 
                #checking for schedule conflicts.
                 for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
@@ -91,12 +98,12 @@ class State:
                             sched_1 = self.class_schedules[translate_subjects_and_classes(subject_1,student.subjects_and_classes[subject_1])]
                             sched_2 = self.class_schedules[translate_subjects_and_classes(key, student.subjects_and_classes[key])] 
                             if (sched_1.conflicts(sched_2)):
-                                score -= 10000
+                                score -= penalty
                                 self.conflicts += 1
 
             # If he gives up a class but didn't get the target nor he is with any of his buddies
             if gave_in and not got_target and alone: 
-                score -= 10000
+                score -= penalty
                 self.didnt_get += 1
 
         self.heuristic = score
