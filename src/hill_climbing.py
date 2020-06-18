@@ -41,6 +41,8 @@ class HillClimbingVariants:
             s = state
             for _ in range(100):
                 s = s.random_neighbour()
+            
+            best_state = HillClimbingVariants.hill_climbing(s)
             if s.heuristic > best_state.heuristic:
                 best_state = s
 
