@@ -3,7 +3,7 @@ import student
 from schedule import Schedule 
 import random
 
-penalty = 1000
+penalty = 10000
 
 def translate_subjects_and_classes(subject, class_number):
     return subject + str(class_number)
