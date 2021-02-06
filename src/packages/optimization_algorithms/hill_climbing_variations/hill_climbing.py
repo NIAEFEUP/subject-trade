@@ -2,12 +2,12 @@ import math
 import random
 from time import perf_counter
 
-from hour import Hour
-from schedule import Schedule
-from student import Student
-from state import State
-from generator import GenerateState
-from data_bank import DataBank
+from packages.base.hour import Hour
+from packages.base.schedule import Schedule
+from packages.base.student import Student
+from packages.base.state import State
+from packages.utils.generator import GenerateState
+from packages.utils.data_bank import DataBank
 
 
 Xi = 5000

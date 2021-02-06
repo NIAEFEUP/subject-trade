@@ -3,8 +3,8 @@ from copy import deepcopy
 from time import sleep
 from random import randint
 
-from genetic_state import GeneticState
-from data_bank import DataBank
+from packages.optimization_algorithms.genetic_algorithm.genetic_state import GeneticState
+from packages.utils.data_bank import DataBank
 
 INITIAL_POPULATION_SIZE = 10
 MAX_ELEMENTS = 100

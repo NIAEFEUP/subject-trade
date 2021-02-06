@@ -3,8 +3,8 @@ import os
 
 os.chdir("../")
 
-from schedule import Schedule 
-from hour import Hour
+from packages.base.schedule import Schedule 
+from packages.base.hour import Hour
 
 '''
 For two given classes, A and B, there are the following possibilities:

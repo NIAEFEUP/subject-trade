@@ -1,4 +1,4 @@
-import edge
+from packages.optimization_algorithms.ant_colony.edge import Edge
 
 class Graph:
     def __init__(self):
@@ -10,7 +10,7 @@ class Graph:
         self.root = root
 
     def add_node(self, incoming, node):
-        e = edge.Edge(incoming, node)
+        e = Edge(incoming, node)
         incoming.add_edge(e)
         node.add_edge(e)
         self.nodes[str(node.state)] = node

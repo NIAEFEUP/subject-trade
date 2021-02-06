@@ -137,7 +137,7 @@ class GenerateState:
     @staticmethod
     def random_time_generator(subjects, state): 
         days_of_the_week = {'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'}
-        for number, subject in enumerate(subjects, start=1):
+        for _, subject in enumerate(subjects, start=1):
             for j in range(NUMBER_OF_CLASSES):
                 hour_1 = Hour(7, 0) + Hour(j*2, 0)
                 hour_2 = hour_1 + Hour(2, 0)

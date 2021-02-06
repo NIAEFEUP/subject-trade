@@ -1,8 +1,10 @@
 from time import time
 
-from genetic_algorithm import GeneticAlgorithm, GeneticState
-from ant_colony import AntColony, GenerateState
-from data_bank import DataBank
+from packages.optimization_algorithms.genetic_algorithm.genetic_algorithm import GeneticAlgorithm
+from packages.optimization_algorithms.genetic_algorithm.genetic_state import GeneticState
+from packages.optimization_algorithms.ant_colony.ant_colony import AntColony
+from packages.utils.generator import GenerateState
+from packages.utils.data_bank import DataBank
 
 It_Without_G_Better= 5000
 

@@ -2,9 +2,8 @@ from copy import deepcopy
 from math import ceil
 from random import sample, randint
 
-
-from generator import GenerateState
-from data_bank import DataBank
+from packages.utils.generator import GenerateState
+from packages.utils.data_bank import DataBank
 
 class NewDict:
     def __init__(self, dictionary):
