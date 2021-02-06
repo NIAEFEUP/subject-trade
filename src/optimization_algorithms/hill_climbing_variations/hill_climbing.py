@@ -2,13 +2,7 @@ import math
 import random
 from time import perf_counter
 
-from packages.base.hour import Hour
-from packages.base.schedule import Schedule
-from packages.base.student import Student
-from packages.base.state import State
-from packages.utils.generator import GenerateState
-from packages.utils.data_bank import DataBank
-
+from src.utils.data_bank import DataBank
 
 Xi = 5000
 steepest_ascent_number = 5
@@ -107,42 +101,40 @@ class HillClimbingVariants:
                 number_of_tries += 1
 
         return best_state
-        
-        
 
-state = DataBank.get_state_2()
-state.get_score()
-print(state.heuristic, '\n')
-
-print('Hill Climbing')
-
-t1 = perf_counter()
-ret = HillClimbingVariants.hill_climbing(state)
-t2 = perf_counter()
-
-print('Heuristic', ret.heuristic)
-print('Time', round(t2-t1, 2), '\n')
-
-print('Random Restart Hill Climbing')
-
-t1 = perf_counter()
-ret = HillClimbingVariants.random_restart_hill_climbing(state)
-t2 = perf_counter()
-
-print('Heuristic', ret.heuristic, '\n', 'Time', round(t2-t1, 2), '\n')
-
-print('Steepest Ascent Hill Climbing')
-
-t1 = perf_counter()
-ret = HillClimbingVariants.steepest_ascent_hill_climbing(state)
-t2 = perf_counter()
-
-print('Heuristic', ret.heuristic, '\n', 'Time', round(t2-t1, 2), '\n')
-
-print('Simulated Annealing')
-
-t1 = perf_counter()
-ret = HillClimbingVariants.simulated_annealing(state)
-t2 = perf_counter()
-
-print('Heuristic', ret.heuristic, '\n', 'Time', round(t2-t1, 2), '\n')
+# state = DataBank.get_state_2()
+# state.get_score()
+# print(state.heuristic, '\n')
+#
+# print('Hill Climbing')
+#
+# t1 = perf_counter()
+# ret = HillClimbingVariants.hill_climbing(state)
+# t2 = perf_counter()
+#
+# print('Heuristic', ret.heuristic)
+# print('Time', round(t2-t1, 2), '\n')
+#
+# print('Random Restart Hill Climbing')
+#
+# t1 = perf_counter()
+# ret = HillClimbingVariants.random_restart_hill_climbing(state)
+# t2 = perf_counter()
+#
+# print('Heuristic', ret.heuristic, '\n', 'Time', round(t2-t1, 2), '\n')
+#
+# print('Steepest Ascent Hill Climbing')
+#
+# t1 = perf_counter()
+# ret = HillClimbingVariants.steepest_ascent_hill_climbing(state)
+# t2 = perf_counter()
+#
+# print('Heuristic', ret.heuristic, '\n', 'Time', round(t2-t1, 2), '\n')
+#
+# print('Simulated Annealing')
+#
+# t1 = perf_counter()
+# ret = HillClimbingVariants.simulated_annealing(state)
+# t2 = perf_counter()
+#
+# print('Heuristic', ret.heuristic, '\n', 'Time', round(t2-t1, 2), '\n')

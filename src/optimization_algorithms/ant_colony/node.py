@@ -1,5 +1,3 @@
-from random import randint
-
 class Node:
     def __init__(self, state, id):
         self.state = state

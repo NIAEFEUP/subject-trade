@@ -1,4 +1,4 @@
-from packages.optimization_algorithms.ant_colony.edge import Edge
+from src.optimization_algorithms.ant_colony.edge import Edge
 
 class Graph:
     def __init__(self):

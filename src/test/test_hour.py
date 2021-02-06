@@ -1,8 +1,9 @@
 import unittest
 
-from packages.base.hour import Hour
+from src.base.hour import Hour
 
-class Test_Hour(unittest.TestCase): 
+
+class Test_Hour(unittest.TestCase):
     def test_lower(self): 
         # Test by hour
         h1 = Hour(12,10)    

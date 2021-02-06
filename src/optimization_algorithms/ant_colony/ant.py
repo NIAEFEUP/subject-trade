@@ -1,8 +1,8 @@
 from random import random
-from random import randint
 from random import uniform
 
-from packages.optimization_algorithms.ant_colony.node import Node
+from src.optimization_algorithms.ant_colony.node import Node
+
 
 class Ant:
     def __init__(self, alpha, beta, current_node, graph):

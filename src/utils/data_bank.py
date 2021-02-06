@@ -1,9 +1,8 @@
 from copy import deepcopy
 
-from packages.base.state import State
-from packages.base.student import Student
-from packages.base.schedule import Schedule
-from packages.base.hour import Hour
+from src.base.hour import Hour
+from src.base.state import State
+from src.base.student import Student
 
 
 class DataBank:

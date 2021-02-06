@@ -1,7 +1,7 @@
-from copy import deepcopy
 import random
+from copy import deepcopy
 
-from packages.base.schedule import Schedule 
+from src.base.schedule import Schedule
 
 penalty = 10000
 

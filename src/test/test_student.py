@@ -1,8 +1,9 @@
 import unittest
 
-from packages.base.student import Student
+from src.base.student import Student
 
-class Test_Student(unittest.TestCase): 
+
+class Test_Student(unittest.TestCase):
 
 
     def setUp(self):
