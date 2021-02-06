@@ -3,26 +3,50 @@ import student
 from schedule import Schedule 
 import random
 
+penalty = 10000
 
-def translate_subject_and_class(subject, class_number):
+def translate_subjects_and_classes(subject, class_number):
     return subject + str(class_number)
 
 class State:
-    def __init__(self):
-        self.students = {}
-        self.class_schedules = {}
+    def __init__(self, state=None):
+        if state is None:
+            self.students = {}
+            self.class_schedules = {}
+            self.conflicts = 0
+            self.didnt_get = 0
+            self.student_num = 0
+        else:
+            self.students = state.students
+            self.class_schedules = state.class_schedules
+            self.conflicts = 0
+            self.didnt_get = 0
+            self.student_num = 0
+            self.heuristic = self.get_score()
     
+    # This comparison says a smaller object is bigger.
+    # This may seem weird, but the comparison is used in the priority queue, which gives more priority to smaller objects
+    # Since we want the bigger objects first in the PQ, I created the operator this way
+    def __lt__(self, other):
+        return self.heuristic > other.heuristic 
+
     def __str__(self):
+        #return str(self.heuristic)
         st = ""
         for i, student in self.students.items():
-            print(i, student)
+            st += 'Student {0} has:'.format(student.student_id)
+            for subject, clas in student.subjects_and_classes.items():
+                st += ' Class {0} in the subject {1}/'.format(str(clas), subject)
+            st += '\n'
         return st 
 
     def add_student(self, student):
         self.students[student.student_id] = student
+        self.student_num += 1
 
     def get_score(self): 
-
+        self.conflicts = 0
+        self.didnt_get = 0
         MAX_SCORE = 100
 
         score = 0
@@ -34,58 +58,59 @@ class State:
             got_target = False
 
             #checking buddies 
-            score_buddies = 0.5 * MAX_SCORE  #Gives 50% of importance to the buddies
+            score_buddies = 0.5 * MAX_SCORE  # Gives 50% of importance to the buddies
             
             for subject in student.buddies: 
                 n = len(student.buddies[subject])
                 score_each_buddy = (2 * score_buddies)/(n * (n + 1))
                 increment_buddies = n
                 for numbers in student.buddies[subject]: 
-                    if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
-                        score += score_each_buddy * increment_buddies      # Adds points each time the buddie is in the same class
-                        increment_buddies -= 1        # Removes some points depending on the priority 
-                        alone = False
+                    if subject in self.students[numbers].subjects_and_classes:
+                        if student.subjects_and_classes[subject] == self.students[numbers].subjects_and_classes[subject]: 
+                            score += score_each_buddy * increment_buddies      # Adds points each time the buddie is in the same class
+                            increment_buddies -= 1        # Removes some points depending on the priority 
+                            alone = False
                         
             #checking if student got a target class
             score_target_class = 0.5 * MAX_SCORE  #Gives 50% of importance to the Target Classes
             score_each_target = (2*score_target_class)//((len(student.subjects_and_classes)+1)*len(student.subjects_and_classes))
             increment_targets = len(student.subjects_and_classes)
 
-            for position, subject_A in enumerate(student.subjects_and_classes): 
+            for position, subject_1 in enumerate(student.subjects_and_classes): 
                 
-                if subject_A in student.subject_targets.keys(): 
-                    if student.subjects_and_classes[subject_A] in student.subject_targets[subject_A]:  
+                if subject_1 in student.subject_targets.keys(): 
+                    if student.subjects_and_classes[subject_1] in student.subject_targets[subject_1]:  
                         score += score_each_target * increment_targets   # Adds points each time it is in a target class
                         increment_targets-=1       # Removes some points depending on the priority
                         got_target = True 
 
-
-                score_give_ins = 0.2 * MAX_SCORE #Gives 20% of importance to the Give ins
-                score_each_give_in = (score_give_ins)//(len(student.subjects_and_classes))
-
                 #checking if a student gave in any classes 
-                if subject_A in student.subject_give_ins.keys():
-                    if student.subjects_and_classes[subject_A] in student.subject_give_ins[subject_A]: 
-                        score -= score_each_give_in     # Removes points each time the buddie had to give_in
-                        gave_in = True
-                     
+                if subject_1 in student.subject_give_ins.keys():
+                    if student.original_sac[subject_1] != student.subjects_and_classes[subject_1]:
+                        if student.subjects_and_classes[subject_1] in student.subject_give_ins[subject_1]:
+                            gave_in = True
 
                #checking for schedule conflicts.
                 for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
                     key = list(student.subjects_and_classes.keys())[p] 
-                    sched_1 = self.class_schedules[translate_subject_and_class(subject_A,student.subjects_and_classes[subject_A])]
-                    sched_2 = self.class_schedules[translate_subject_and_class(key, student.subjects_and_classes[key])] 
-                    if (sched_1.conflicts(sched_2)):
-                        return float('-inf')
+                    if translate_subjects_and_classes(subject_1,student.subjects_and_classes[subject_1]) in self.class_schedules:
+                        if translate_subjects_and_classes(key, student.subjects_and_classes[key]) in self.class_schedules:
+                            sched_1 = self.class_schedules[translate_subjects_and_classes(subject_1,student.subjects_and_classes[subject_1])]
+                            sched_2 = self.class_schedules[translate_subjects_and_classes(key, student.subjects_and_classes[key])] 
+                            if (sched_1.conflicts(sched_2)):
+                                score -= penalty
+                                self.conflicts += 1
 
             # If he gives up a class but didn't get the target nor he is with any of his buddies
             if gave_in and not got_target and alone: 
-                return float('-inf')
+                score -= penalty
+                self.didnt_get += 1
 
+        self.heuristic = score
         return score 
 
-    def add_schedule(self, subject, class_number, start_hour, end_hour):
-        self.class_schedules[translate_subject_and_class(subject, class_number)] = Schedule(start_hour, end_hour)
+    def add_schedule(self, subject, class_number, start_hour, end_hour, day):
+        self.class_schedules[translate_subjects_and_classes(subject, class_number)] = Schedule(start_hour, end_hour, day)
 
     def trade_classes(self,student1_id,student2_id,subject_name):
         students = self.students
@@ -176,7 +201,7 @@ class State:
 
     def random_neighbour(self):
         list_students = []
-        for _,elem in self.students.items():
+        for elem in self.students.values():
             list_students.append(elem)
         master_students = deepcopy(list_students)
         used_master = []
@@ -206,15 +231,14 @@ class State:
                         success = True
 
                         deploy_students[student_i].subjects_and_classes[trade_class], deploy_students[trader_i].subjects_and_classes[trade_class] = deploy_students[trader_i].subjects_and_classes[trade_class], deploy_students[student_i].subjects_and_classes[trade_class]
-                        print("------",student_i, trader_i,trade_class,len(list_students)-len(used_master))
-                        
+                
                         deploy_dict = {}
                         for elem in deploy_students:
                             deploy_dict[elem.student_id] = elem
 
                         deploy_state.students = deploy_dict
 
-                        yield deploy_state
+                        return deploy_state
                         break
                 if success == True:
                     break
