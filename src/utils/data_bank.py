@@ -1,9 +1,8 @@
 from copy import deepcopy
 
-from state import State
-from student import Student
-from schedule import Schedule
-from hour import Hour
+from src.base.hour import Hour
+from src.base.state import State
+from src.base.student import Student
 
 
 class DataBank:
@@ -13,7 +12,6 @@ class DataBank:
 
         # Generate schedule
         list_of_subjects = ['MPE', 'SSASC', 'ARSI']
-        class_numbers = [1, 2, 3]
 
         hour_1 = Hour(14, 30)
         hour_2 = Hour(16, 30)

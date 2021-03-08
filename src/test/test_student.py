@@ -1,20 +1,22 @@
 import unittest
-import student
 
-class Test_Student(unittest.TestCase): 
+from src.base.student import Student
+
+
+class Test_Student(unittest.TestCase):
 
 
     def setUp(self):
-        self.student_no_giveIn = student.Student(200000001, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : [2]}, {}, {"LPOO" : [201603820]})
-        self.student_no_target = student.Student(200000002, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {}, {}, {"LPOO" : [201603820]})
-        self.student_no_buddies = student.Student(200000003, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : [2]}, {}, {})
-        self.perfectStudent = student.Student(2000000004, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : [1], "CAL" : [1], "SOPE" : [1]}, {}, {})
-        self.student1 = student.Student(200000000, {"LPOO" : 1}, {"LPOO" : [2]}, {"LPOO" : [2]}, {"LPOO" : [201603820]})
-        self.studentEmpty = student.Student(200000001, {}, {}, {}, {})
+        self.student_no_giveIn = Student(200000001, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : [2]}, {}, {"LPOO" : [201603820]})
+        self.student_no_target = Student(200000002, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {}, {}, {"LPOO" : [201603820]})
+        self.student_no_buddies = Student(200000003, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : [2]}, {}, {})
+        self.perfectStudent = Student(2000000004, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : [1], "CAL" : [1], "SOPE" : [1]}, {}, {})
+        self.student1 = Student(200000000, {"LPOO" : 1}, {"LPOO" : [2]}, {"LPOO" : [2]}, {"LPOO" : [201603820]})
+        self.studentEmpty = Student(200000001, {}, {}, {}, {})
 
 
     def test_constructor(self): 
-        self.student1 = student.Student(200000000, {"LPOO" : 1}, {"LPOO" : [2]}, {"LPOO" : [2]}, {"LPOO" : [201603820]})
+        self.student1 = Student(200000000, {"LPOO" : 1}, {"LPOO" : [2]}, {"LPOO" : [2]}, {"LPOO" : [201603820]})
 
         #Should it allow to have the same give in and target?
 
@@ -30,7 +32,7 @@ class Test_Student(unittest.TestCase):
 
         #Should test if a class exists?
 
-        student_too_many_classes = student.Student(200000000, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1, "CGRA" : 1, "BDAD" : 1, "PLOG": 1, "IART" : 1}, {}, {}, {})
+        student_too_many_classes = Student(200000000, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1, "CGRA" : 1, "BDAD" : 1, "PLOG": 1, "IART" : 1}, {}, {}, {})
 
         # Add normal class
         self.assertEqual(self.student1.add_subject_and_class("CAL" , 5),True)
@@ -69,8 +71,8 @@ class Test_Student(unittest.TestCase):
 
     def test_remove_subject_target(self):
     
-        # self.perfectStudent = student.Student(2000000004, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {}, {})
-        student2 = student.Student(2000000000, {"LPOO" : 1}, {"LPOO" : [1,2,3,4]}, {}, {})
+        # self.perfectStudent = Student(2000000004, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {}, {})
+        student2 = Student(2000000000, {"LPOO" : 1}, {"LPOO" : [1,2,3,4]}, {}, {})
         
         # Remove subject target
         self.assertEqual(self.perfectStudent.remove_subject_target("CAL"),True)
@@ -112,8 +114,8 @@ class Test_Student(unittest.TestCase):
 
     def test_remove_subject_give_in(self):
         
-        # self.perfectStudent = student.Student(2000000004, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {}, {})
-        student2 = student.Student(2000000000, {"LPOO" : 1}, {}, {"LPOO" : [1,2,3,4] , "CAL" : [1]}, {})
+        # self.perfectStudent = Student(2000000004, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {}, {})
+        student2 = Student(2000000000, {"LPOO" : 1}, {}, {"LPOO" : [1,2,3,4] , "CAL" : [1]}, {})
         
         # Remove subject target
         self.assertEqual(student2.remove_subject_give_in("CAL"),True)
@@ -166,7 +168,7 @@ class Test_Student(unittest.TestCase):
 
     def test_remove_buddie(self):
         
-        student2 = student.Student(2000000000, {"LPOO" : 1}, {}, {"LPOO" : [1,2,3,4] , "CAL" : [1]}, {"LPOO": [20000000,20000001,20000002,20000003], "CAL" : 20000000})
+        student2 = Student(2000000000, {"LPOO" : 1}, {}, {"LPOO" : [1,2,3,4] , "CAL" : [1]}, {"LPOO": [20000000,20000001,20000002,20000003], "CAL" : 20000000})
         
         # Remove class from buddies
         student2.remove_buddie("CAL")
@@ -190,8 +192,8 @@ class Test_Student(unittest.TestCase):
 
 
     def test_equal_buddies(self):
-        studentA = student.Student(200000000, {"LPOO" : 1}, {"LPOO" : [2]}, {"LPOO" : [2]}, {"LPOO" : [201603820]})
-        studentB = student.Student(200000000, {"CAL" : 1}, {}, {"LPOO" : [2]}, {"CAL" : [201603820]})
+        studentA = Student(200000000, {"LPOO" : 1}, {"LPOO" : [2]}, {"LPOO" : [2]}, {"LPOO" : [201603820]})
+        studentB = Student(200000000, {"CAL" : 1}, {}, {"LPOO" : [2]}, {"CAL" : [201603820]})
         self.assertEqual(True, studentA == studentB)
 
 

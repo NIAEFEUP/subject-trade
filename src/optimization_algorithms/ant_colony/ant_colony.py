@@ -1,12 +1,6 @@
-from queue import PriorityQueue
-
-from graph import Graph
-from node  import Node
-from edge import Edge
-from ant import Ant
-from state import State
-
-from generator import GenerateState
+from src.optimization_algorithms.ant_colony.ant import Ant
+from src.optimization_algorithms.ant_colony.graph import Graph
+from src.optimization_algorithms.ant_colony.node import Node
 
 It_Without_G_Better = 5000
 

@@ -1,12 +1,9 @@
-from copy import deepcopy
-import student
-from schedule import Schedule 
 import random
+from copy import deepcopy
+
+from src.base.schedule import Schedule
 
 penalty = 10000
-
-def translate_subjects_and_classes(subject, class_number):
-    return subject + str(class_number)
 
 class State:
     def __init__(self, state=None):
@@ -33,7 +30,7 @@ class State:
     def __str__(self):
         #return str(self.heuristic)
         st = ""
-        for i, student in self.students.items():
+        for student in self.students.values():
             st += 'Student {0} has:'.format(student.student_id)
             for subject, clas in student.subjects_and_classes.items():
                 st += ' Class {0} in the subject {1}/'.format(str(clas), subject)
@@ -93,10 +90,10 @@ class State:
                #checking for schedule conflicts.
                 for p in range(position+1, len(list(student.subjects_and_classes.keys()))):
                     key = list(student.subjects_and_classes.keys())[p] 
-                    if translate_subjects_and_classes(subject_1,student.subjects_and_classes[subject_1]) in self.class_schedules:
-                        if translate_subjects_and_classes(key, student.subjects_and_classes[key]) in self.class_schedules:
-                            sched_1 = self.class_schedules[translate_subjects_and_classes(subject_1,student.subjects_and_classes[subject_1])]
-                            sched_2 = self.class_schedules[translate_subjects_and_classes(key, student.subjects_and_classes[key])] 
+                    if State.translate_subjects_and_classes(subject_1,student.subjects_and_classes[subject_1]) in self.class_schedules:
+                        if State.translate_subjects_and_classes(key, student.subjects_and_classes[key]) in self.class_schedules:
+                            sched_1 = self.class_schedules[State.translate_subjects_and_classes(subject_1,student.subjects_and_classes[subject_1])]
+                            sched_2 = self.class_schedules[State.translate_subjects_and_classes(key, student.subjects_and_classes[key])] 
                             if (sched_1.conflicts(sched_2)):
                                 score -= penalty
                                 self.conflicts += 1
@@ -110,7 +107,7 @@ class State:
         return score 
 
     def add_schedule(self, subject, class_number, start_hour, end_hour, day):
-        self.class_schedules[translate_subjects_and_classes(subject, class_number)] = Schedule(start_hour, end_hour, day)
+        self.class_schedules[State.translate_subjects_and_classes(subject, class_number)] = Schedule(start_hour, end_hour, day)
 
     def trade_classes(self,student1_id,student2_id,subject_name):
         students = self.students
@@ -239,8 +236,9 @@ class State:
                         deploy_state.students = deploy_dict
 
                         return deploy_state
-                        break
                 if success == True:
                     break
 
-    
+    @staticmethod
+    def translate_subjects_and_classes(subject, class_number):
+        return subject + str(class_number)

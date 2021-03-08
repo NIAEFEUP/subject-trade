@@ -1,10 +1,10 @@
-import unittest
 import os
+import unittest
 
-os.chdir("../")
+os.chdir("../packages/")
 
-from schedule import Schedule 
-from hour import Hour
+from src.base.schedule import Schedule
+from src.base.hour import Hour
 
 '''
 For two given classes, A and B, there are the following possibilities:
