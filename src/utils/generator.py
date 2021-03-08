@@ -1,8 +1,8 @@
 from random import sample, choice, randint
 
-from src.base.hour import Hour
-from src.base.state import State
-from src.base.student import Student
+from src.state.hour import Hour
+from src.state.state import State
+from src.state.student import Student
 
 MAXIMUM_CLASSES = 6
 NUMBER_OF_CLASSES = 12

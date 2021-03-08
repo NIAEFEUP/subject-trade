@@ -1,6 +1,6 @@
 import unittest
 
-from src.base.student import Student
+from src.state.student import Student
 
 
 class Test_Student(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 
-from src.base.hour import Hour
+from src.state.hour import Hour
 
 
 class Test_Hour(unittest.TestCase):
