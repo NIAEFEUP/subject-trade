@@ -3,8 +3,8 @@ import unittest
 
 os.chdir("../packages/")
 
-from src.base.schedule import Schedule
-from src.base.hour import Hour
+from src.state.schedule import Schedule
+from src.state.hour import Hour
 
 '''
 For two given classes, A and B, there are the following possibilities:
