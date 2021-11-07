@@ -1,0 +1,1 @@
+# This module is purely educational, as the algorithm yielding the best results is hill climbing

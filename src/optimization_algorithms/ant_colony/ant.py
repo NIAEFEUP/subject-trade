@@ -1,5 +1,4 @@
-from random import random
-from random import uniform
+from random import random, uniform
 
 from src.optimization_algorithms.ant_colony.node import Node
 

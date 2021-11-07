@@ -1,14 +1,14 @@
-from random import sample, choice, randint
+from random import choice, randint, sample
 
 from src.state.hour import Hour
 from src.state.state import State
 from src.state.student import Student
 
-MAXIMUM_CLASSES = 6
-NUMBER_OF_CLASSES = 12
-
 
 class NewDict:
+    """
+    This dictionary is necessary because dictionaries are unhashable
+    """
     def __init__(self, dictionary):
         self.dictionary = dictionary
 
@@ -18,9 +18,9 @@ class NewDict:
     def items(self):
         return self.dictionary.items()
 
-
 class GenerateState:
-    # Function that generates students objects
+    MAXIMUM_CLASSES = 6
+    NUMBER_OF_CLASSES = 12
     @staticmethod
     def generator_students(n_students, subjects):
         generated_students = []
@@ -28,21 +28,21 @@ class GenerateState:
             subject_classes = {}
             subject_target = {}
             subject_give_in = {}
-            number_classes = randint(4, NUMBER_OF_CLASSES)
+            number_classes = randint(4, GenerateState.NUMBER_OF_CLASSES)
 
             # subject classes
             for j in range(0, number_classes):
                 subject = choice(subjects)
                 if subject not in subject_classes.keys():  # the subject can't be repeated
-                    subject_classes[subject] = randint(1, NUMBER_OF_CLASSES)
+                    subject_classes[subject] = randint(1, GenerateState.NUMBER_OF_CLASSES)
                 else:
                     j -= 1
 
             # target classes
             for _ in range(randint(1, len(subject_classes))):
                 subject = choice(list(subject_classes.keys()))  # choose a class to change
-                target = [randint(1, MAXIMUM_CLASSES) for _ in
-                          range(randint(1, NUMBER_OF_CLASSES))]  # class target number
+                target = [randint(1, GenerateState.MAXIMUM_CLASSES) for _ in
+                          range(randint(1, GenerateState.NUMBER_OF_CLASSES))]  # class target number
                 target = list(set(
                     filter(lambda x: x != subject_classes[subject], target)))  # the target can't be in subject_classes
                 subject_target[subject] = target
@@ -55,8 +55,8 @@ class GenerateState:
 
                 give_in = []
                 while (give_in == list()):  # if there's a give_in, the list can't be empty
-                    give_in = [randint(1, MAXIMUM_CLASSES) for _ in
-                               range(randint(1, NUMBER_OF_CLASSES))]  # give_in classes
+                    give_in = [randint(1, GenerateState.MAXIMUM_CLASSES) for _ in
+                               range(randint(1, GenerateState.NUMBER_OF_CLASSES))]  # give_in classes
                     give_in = list(set(filter(lambda x: x != subject_classes[subject],
                                               give_in)))  # the give_in can't be the actual class
 
@@ -95,7 +95,7 @@ class GenerateState:
             for el in sample(list_of_subjects, 1):
                 number_of_targets = randint(1, 3)
                 # number_of_targets random targets from 1 to NUMBER_OF_CLASSES
-                subject_target[el] = sample([j for j in range(1, NUMBER_OF_CLASSES + 1)], number_of_targets)
+                subject_target[el] = sample([j for j in range(1, GenerateState.NUMBER_OF_CLASSES + 1)], number_of_targets)
 
             c = choice(list_of_subjects)
             while c in subject_target.keys():
@@ -103,7 +103,7 @@ class GenerateState:
 
             number_of_give_ins = randint(1, 3)
             # number_of_give_ins random give ins from 1 to NUMBER_OF_CLASSES
-            subject_give_in[el] = sample([j for j in range(1, NUMBER_OF_CLASSES + 1)], number_of_give_ins)
+            subject_give_in[el] = sample([j for j in range(1, GenerateState.NUMBER_OF_CLASSES + 1)], number_of_give_ins)
 
             # Fill dict of targets with a random target of this student
             for subject, target in subject_target.items():
@@ -128,7 +128,7 @@ class GenerateState:
                         counter -= 1
                         subjects_and_classes[subject] = clas
                         break
-                subjects_and_classes[subject] = choice([j for j in range(1, NUMBER_OF_CLASSES + 1)])
+                subjects_and_classes[subject] = choice([j for j in range(1, GenerateState.NUMBER_OF_CLASSES + 1)])
 
             subject_targets = dict_of_student_info[i][0]
             subject_give_ins = dict_of_student_info[i][1]
@@ -143,7 +143,7 @@ class GenerateState:
     def random_time_generator(subjects, state):
         days_of_the_week = {'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'}
         for _, subject in enumerate(subjects, start=1):
-            for j in range(NUMBER_OF_CLASSES):
+            for j in range(GenerateState.NUMBER_OF_CLASSES):
                 hour_1 = Hour(7, 0) + Hour(j * 2, 0)
                 hour_2 = hour_1 + Hour(2, 0)
                 state.add_schedule(subject, j, hour_1, hour_2, sample(days_of_the_week, 1)[0])
@@ -153,7 +153,7 @@ class GenerateState:
     def time_generator(subjects, state):
         days_of_the_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         for number, subject in enumerate(subjects, start=1):
-            for j in range(NUMBER_OF_CLASSES):
+            for j in range(GenerateState.NUMBER_OF_CLASSES):
                 hour_1 = Hour(7, 0) + Hour(j * 2, 0)
                 hour_2 = hour_1 + Hour(2, 0)
                 state.add_schedule(subject, j, hour_1, hour_2, days_of_the_week[j % (len(days_of_the_week) - 1)])
@@ -178,9 +178,3 @@ class GenerateState:
             state.add_student(student)
 
         return state
-
-
-# state = State()
-# GenerateState.random_time_generator(['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'], state)
-# GenerateState.generator_students(40,['TCOM', 'FIS', 'LCOM', 'MPCP', 'FIS2', 'CMAT', 'AMAT', 'BDAD'])
-# GenerateState.get_great_state(['a', 'b', 'c'], 100)

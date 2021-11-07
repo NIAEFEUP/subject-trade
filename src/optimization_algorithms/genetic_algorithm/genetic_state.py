@@ -1,5 +1,5 @@
 from copy import deepcopy
-from random import sample, randint
+from random import randint, sample
 
 
 class NewDict:

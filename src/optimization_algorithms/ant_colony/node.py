@@ -15,8 +15,7 @@ class Node:
             l.append(edge.get_other(self))
         return l
         
-    def get_heuristic(self): # To be replaced by state.get_score
-        # return self.state
+    def get_heuristic(self):
         return self.state.get_score()
 
     def get_sum(self, alpha, beta):
@@ -30,8 +29,7 @@ class Node:
             s += (edge.pheromones ** alpha) * (other_node.heuristic ** beta)
         return s
 
-    def return_new_state(self): # To be replaced by random_neighbour
-        # return randint(0, 100)
+    def return_new_state(self): 
         return self.state.random_neighbour()
 
     def __str__(self):
@@ -58,10 +56,6 @@ class Node:
 
         except:
            return False
-        # if str(self) == str(other):
-        #     return True
-        # else:
-        #     return False
 
     def __lt__(self, other):
         if self.heuristic < other.heuristic:

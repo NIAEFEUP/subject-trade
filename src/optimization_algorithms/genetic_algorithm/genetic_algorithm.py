@@ -1,14 +1,15 @@
 from copy import deepcopy
-from random import randint
-from random import sample
+from random import randint, sample
 
-from src.optimization_algorithms.genetic_algorithm.genetic_state import GeneticState
+from src.optimization_algorithms.genetic_algorithm.genetic_state import \
+    GeneticState
 
-INITIAL_POPULATION_SIZE = 10
-MAX_ELEMENTS = 100
-It_Without_G_Better = 5000
 
 class GeneticAlgorithm:
+    INITIAL_POPULATION_SIZE = 10
+    MAX_ELEMENTS = 100
+    IT_WITHOUT_G_BETTER = 5000
+
     @staticmethod
     def random_initial_population(first_state):
         '''
@@ -16,7 +17,7 @@ class GeneticAlgorithm:
         '''
         population = [GeneticState(first_state)]
 
-        while len(population) < INITIAL_POPULATION_SIZE:
+        while len(population) < GeneticAlgorithm.INITIAL_POPULATION_SIZE:
             state = population[0].state
             number_of_students = len(state.students)
 
@@ -30,7 +31,7 @@ class GeneticAlgorithm:
         return population
 
     @staticmethod
-    def genetic_algorithm(population, IT_WITHOUT_G_BETTER=It_Without_G_Better):
+    def genetic_algorithm(population):
         '''
         Receives initial population and performs a genetic algorithm
         '''
@@ -38,7 +39,7 @@ class GeneticAlgorithm:
 
         highest_value = max(population, key = lambda s: s.heuristic)
         highest_value = highest_value.heuristic
-        counter = IT_WITHOUT_G_BETTER
+        counter = GeneticAlgorithm.IT_WITHOUT_G_BETTER
 
         while counter > 0:
             new_population = deepcopy(population)
@@ -64,21 +65,12 @@ class GeneticAlgorithm:
                 new_population.append(off_spring2)
 
             new_population.sort(reverse=True, key=lambda node: node.heuristic)
-            population = deepcopy(new_population[:MAX_ELEMENTS])
+            population = deepcopy(new_population[:GeneticAlgorithm.MAX_ELEMENTS])
 
             if population[0].heuristic > highest_value:
-                #print('new best value', population[0].heuristic)
                 highest_value = population[0].heuristic
-                counter = IT_WITHOUT_G_BETTER
+                counter = GeneticAlgorithm.IT_WITHOUT_G_BETTER
             else:
                 counter -= 1
             
         return new_population
-
-
-
-# first_state = DataBank.get_state_0()
-# population = GeneticAlgorithm.random_initial_population(first_state)
-# results = GeneticAlgorithm.genetic_algorithm(population)
-
-# print('Final result', results[0].heuristic)
