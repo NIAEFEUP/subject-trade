@@ -3,8 +3,7 @@ import unittest
 from src.state.student import Student
 
 
-class Test_Student(unittest.TestCase):
-
+class TestStudent(unittest.TestCase):
 
     def setUp(self):
         self.student_no_giveIn = Student(200000001, {"LPOO" : 1, "CAL" : 1, "SOPE" : 1}, {"LPOO" : [2]}, {}, {"LPOO" : [201603820]})

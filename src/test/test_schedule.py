@@ -1,7 +1,4 @@
-import os
 import unittest
-
-os.chdir("../packages/")
 
 from src.state.schedule import Schedule
 from src.state.hour import Hour
@@ -25,7 +22,7 @@ A and B happen in the same day.
     A and B start at the same hour -- Conflict
 '''
 
-class test_schedule(unittest.TestCase):
+class TestSchedule(unittest.TestCase):
     def test_conflict_case(self):
         h1 = Hour(10,20)
         h2 = Hour(12,20)
