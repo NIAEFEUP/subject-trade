@@ -8,10 +8,8 @@ class Schedule:
         return self.day + " from " + str(self.start_hour) + " to " + str(self.end_hour)
 
     def conflicts(self, other):
-        if self.day == other.day:
-            if other.start_hour <= self.start_hour and self.start_hour < other.end_hour:
-                return True
-            elif other.start_hour < self.end_hour and self.end_hour <= other.end_hour:
-                return True
-            else: return False
-        else: return False
+        if self.day != other.day:
+            return False
+
+        return (other.start_hour <= self.start_hour < other.end_hour) or \
+               (other.start_hour < self.end_hour <= other.end_hour)

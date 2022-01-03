@@ -12,9 +12,10 @@ class GeneticAlgorithm:
 
     @staticmethod
     def random_initial_population(first_state):
-        '''
+        """
         Receives a state and generates several random other.
-        '''
+        """
+
         population = [GeneticState(first_state)]
 
         while len(population) < GeneticAlgorithm.INITIAL_POPULATION_SIZE:
@@ -32,9 +33,10 @@ class GeneticAlgorithm:
 
     @staticmethod
     def genetic_algorithm(population):
-        '''
+        """
         Receives initial population and performs a genetic algorithm
-        '''
+        """
+
         new_population = population
 
         highest_value = max(population, key = lambda s: s.heuristic)

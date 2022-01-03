@@ -21,7 +21,7 @@ class DataBank:
 
         hour_5 = Hour(11, 30)
         hour_6 = Hour(13, 30)
-        
+
         state.add_schedule(list_of_subjects[0], 1, hour_1, hour_2, 'Monday')
         state.add_schedule(list_of_subjects[1], 1, hour_3, hour_4, 'Monday')
         state.add_schedule(list_of_subjects[2], 1, hour_5, hour_6, 'Monday')
@@ -36,16 +36,16 @@ class DataBank:
 
         # Gerar estudantes.
         subect_and_class_1 = {'MPE': 1, 'SSASC': 3, 'ARSI': 1}
-        target_1 = {'MPE': [2, 3], 'SSASC': [1,2]}
-        give_ins_1 = {'ARSI':[2,3]}
+        target_1 = {'MPE': [2, 3], 'SSASC': [1, 2]}
+        give_ins_1 = {'ARSI': [2, 3]}
 
         subect_and_class_2 = {'MPE': 2, 'SSASC': 2, 'ARSI': 3}
-        target_2 = {'MPE': [1, 3], 'ARSI': [1,2]}
-        give_ins_2 = {'SSASC':[2,3]}
+        target_2 = {'MPE': [1, 3], 'ARSI': [1, 2]}
+        give_ins_2 = {'SSASC': [2, 3]}
 
         subect_and_class_3 = {'MPE': 3, 'SSASC': 1, 'ARSI': 2}
-        target_3 = {'SSASC': [1, 3], 'ARSI': [2,3]}
-        give_ins_3 = {'MPE':[1,2]}
+        target_3 = {'SSASC': [1, 3], 'ARSI': [2, 3]}
+        give_ins_3 = {'MPE': [1, 2]}
 
         student_1 = Student(1, subect_and_class_1, target_1, give_ins_1, {})
         student_2 = Student(2, subect_and_class_2, target_2, give_ins_2, {})
@@ -60,7 +60,7 @@ class DataBank:
     @staticmethod
     def get_state_1():
         state = State()
-        
+
         # Generate schedule
         list_of_subjects = ['MPE', 'SSASC', 'ARSI']
         class_numbers = [1, 2, 3]
@@ -73,7 +73,7 @@ class DataBank:
 
         hour_5 = Hour(11, 30)
         hour_6 = Hour(13, 30)
-        
+
         state.add_schedule(list_of_subjects[0], 1, hour_1, hour_2, 'Monday')
         state.add_schedule(list_of_subjects[1], 1, hour_3, hour_4, 'Monday')
         state.add_schedule(list_of_subjects[2], 1, hour_5, hour_6, 'Monday')
@@ -88,16 +88,16 @@ class DataBank:
 
         # Gerar estudantes.
         subect_and_class_1 = {'MPE': 2, 'SSASC': 3, 'ARSI': 3}
-        target_1 = {'MPE': [2, 3], 'SSASC': [1,2]}
-        give_ins_1 = {'ARSI':[2,3]}
+        target_1 = {'MPE': [2, 3], 'SSASC': [1, 2]}
+        give_ins_1 = {'ARSI': [2, 3]}
 
         subect_and_class_2 = {'MPE': 1, 'SSASC': 1, 'ARSI': 2}
-        target_2 = {'MPE': [1, 3], 'ARSI': [1,2]}
-        give_ins_2 = {'SSASC':[2,3]}
+        target_2 = {'MPE': [1, 3], 'ARSI': [1, 2]}
+        give_ins_2 = {'SSASC': [2, 3]}
 
         subect_and_class_3 = {'MPE': 3, 'SSASC': 2, 'ARSI': 1}
-        target_3 = {'SSASC': [1, 3], 'ARSI': [2,3]}
-        give_ins_3 = {'MPE':[1,2]}
+        target_3 = {'SSASC': [1, 3], 'ARSI': [2, 3]}
+        give_ins_3 = {'MPE': [1, 2]}
 
         student_1 = Student(1, subect_and_class_1, target_1, give_ins_1, {})
         student_2 = Student(2, subect_and_class_2, target_2, give_ins_2, {})
@@ -108,7 +108,6 @@ class DataBank:
         for student in list_of_students: state.add_student(student)
 
         return state
-
 
     @staticmethod
     def get_state_2():
@@ -130,7 +129,7 @@ class DataBank:
 
         hour_9 = Hour(9, 0)
         hour_10 = Hour(11, 0)
-        
+
         state.add_schedule(list_of_subjects[0], 1, hour_1, hour_2, 'Monday')
         state.add_schedule(list_of_subjects[1], 1, hour_3, hour_4, 'Monday')
         state.add_schedule(list_of_subjects[2], 1, hour_5, hour_6, 'Monday')
@@ -163,91 +162,89 @@ class DataBank:
 
         # Gerar estudantes
         subect_and_class_1 = {'MPE': 1, 'SSASC': 2, 'ARSI': 3, 'DSG': 4, 'MRKT': 5}
-        target_1 = {'MPE': [1,3], 'ARSI': [1,2]}
-        give_ins_1 = {'SSASC':[2,3], 'DSG': [1,2,3,4], 'MRKT': [2,3,5]}
+        target_1 = {'MPE': [1, 3], 'ARSI': [1, 2]}
+        give_ins_1 = {'SSASC': [2, 3], 'DSG': [1, 2, 3, 4], 'MRKT': [2, 3, 5]}
 
         subect_and_class_2 = {'MPE': 2, 'SSASC': 3, 'ARSI': 4, 'DSG': 5, 'MRKT': 1}
-        target_2 = {'SSASC': [1,3], 'DSG': [1,2], 'MRKT': [1,2,3]}
-        give_ins_2 = {'MPE':[2,3], 'ARSI': [1,2,3,4]}
+        target_2 = {'SSASC': [1, 3], 'DSG': [1, 2], 'MRKT': [1, 2, 3]}
+        give_ins_2 = {'MPE': [2, 3], 'ARSI': [1, 2, 3, 4]}
 
         subect_and_class_3 = {'MPE': 3, 'SSASC': 4, 'ARSI': 5, 'DSG': 1, 'MRKT': 2}
-        target_3 = {'SSASC': [2,4,5], 'MRKT': [5,1]}
-        give_ins_3 = {'DSG': [1,2,4], 'ARSI': [3,4,5]}
+        target_3 = {'SSASC': [2, 4, 5], 'MRKT': [5, 1]}
+        give_ins_3 = {'DSG': [1, 2, 4], 'ARSI': [3, 4, 5]}
 
         subect_and_class_4 = {'MPE': 4, 'SSASC': 5, 'ARSI': 1, 'DSG': 2, 'MRKT': 3}
-        target_4 = {'ARSI': [1,3], 'SSASC': [5,2]}
-        give_ins_4 = {'MPE':[2,3,4,5], 'MRKT': [5,3,4], 'DSG': [1,2]}
+        target_4 = {'ARSI': [1, 3], 'SSASC': [5, 2]}
+        give_ins_4 = {'MPE': [2, 3, 4, 5], 'MRKT': [5, 3, 4], 'DSG': [1, 2]}
 
         subect_and_class_5 = {'MPE': 5, 'SSASC': 1, 'ARSI': 2, 'DSG': 3, 'MRKT': 4}
         target_5 = {}
-        give_ins_5 = {'SSASC':[1,2,3], 'DSG': [1,2,3,4], 'MRKT': [2,4,5]}
-        buddies_5 = {'MPE': [3], 'ARSI': [2,10]}
+        give_ins_5 = {'SSASC': [1, 2, 3], 'DSG': [1, 2, 3, 4], 'MRKT': [2, 4, 5]}
+        buddies_5 = {'MPE': [3], 'ARSI': [2, 10]}
 
         subect_and_class_6 = {'MPE': 1, 'SSASC': 2, 'ARSI': 3, 'DSG': 4, 'MRKT': 5}
-        target_6 = {'DSG': [2,5], 'MRKT': [5,1]}
-        give_ins_6 = {'MPE':[1,2,3], 'SSASC': [1,3,2], 'ARSI': [3,2]}
+        target_6 = {'DSG': [2, 5], 'MRKT': [5, 1]}
+        give_ins_6 = {'MPE': [1, 2, 3], 'SSASC': [1, 3, 2], 'ARSI': [3, 2]}
 
         subect_and_class_7 = {'MPE': 2, 'SSASC': 3, 'ARSI': 4, 'DSG': 5, 'MRKT': 1}
-        target_7 = {'MPE': [3,2,1], 'ARSI': [5,1], 'SSASC': [5,2]}
-        give_ins_7 = {'DSG':[4,5,3], 'MRKT': [1,3,4]}
-        
+        target_7 = {'MPE': [3, 2, 1], 'ARSI': [5, 1], 'SSASC': [5, 2]}
+        give_ins_7 = {'DSG': [4, 5, 3], 'MRKT': [1, 3, 4]}
+
         subect_and_class_8 = {'MPE': 3, 'SSASC': 4, 'ARSI': 5, 'DSG': 1, 'MRKT': 2}
-        target_8 = {'DSG': [1,2], 'SSASC': [3,2,4]}
-        give_ins_8 = {'MPE':[4,1,3], 'MRKT': [5,2], 'ARSI': [1,5,2]}
+        target_8 = {'DSG': [1, 2], 'SSASC': [3, 2, 4]}
+        give_ins_8 = {'MPE': [4, 1, 3], 'MRKT': [5, 2], 'ARSI': [1, 5, 2]}
 
         subect_and_class_9 = {'MPE': 4, 'SSASC': 5, 'ARSI': 1, 'DSG': 2, 'MRKT': 3}
-        target_9 = {'ARSI': [3,4], 'MRKT': [1,2]}
-        give_ins_9 = {'MPE':[1,2,4], 'SSASC': [3,1,5], 'DSG': [3,2]}
+        target_9 = {'ARSI': [3, 4], 'MRKT': [1, 2]}
+        give_ins_9 = {'MPE': [1, 2, 4], 'SSASC': [3, 1, 5], 'DSG': [3, 2]}
 
         subect_and_class_10 = {'MPE': 5, 'SSASC': 1, 'ARSI': 2, 'DSG': 3, 'MRKT': 4}
         target_10 = {}
-        give_ins_10 = {'MRKT':[2,3,4], 'DSG': [5,3,2], 'ARSI': [3,2,1]}
-        buddies_10 = {'MPE': [9,20], 'SSASC': [2,17]}
+        give_ins_10 = {'MRKT': [2, 3, 4], 'DSG': [5, 3, 2], 'ARSI': [3, 2, 1]}
+        buddies_10 = {'MPE': [9, 20], 'SSASC': [2, 17]}
 
         subect_and_class_11 = {'MPE': 1, 'SSASC': 2, 'ARSI': 3, 'DSG': 4, 'MRKT': 5}
         target_11 = {'MPE': [5]}
-        give_ins_11 = {'SSASC': [2,1], 'ARSI': [3,1], 'DSG': [4,1], 'MRKT': [5,1]}
+        give_ins_11 = {'SSASC': [2, 1], 'ARSI': [3, 1], 'DSG': [4, 1], 'MRKT': [5, 1]}
 
         subect_and_class_12 = {'MPE': 2, 'SSASC': 3, 'ARSI': 4, 'DSG': 5, 'MRKT': 1}
-        target_12 = {'ARSI': [1,2,3,4], 'MPE': [5,1,3]}
-        give_ins_12 = {'MRKT':[1,2,3], 'SSASC': [1,3,2], 'DSG': [3,5,2]}
+        target_12 = {'ARSI': [1, 2, 3, 4], 'MPE': [5, 1, 3]}
+        give_ins_12 = {'MRKT': [1, 2, 3], 'SSASC': [1, 3, 2], 'DSG': [3, 5, 2]}
 
         subect_and_class_13 = {'MPE': 3, 'SSASC': 4, 'ARSI': 5, 'DSG': 1, 'MRKT': 2}
-        target_13 = {'MRKT': [2,5,3], 'DSG': [1,4], 'SSASC': [1,3,2,5]}
-        give_ins_13 = {'ARSI':[1,5,3], 'MPE': [3,2,1]}
+        target_13 = {'MRKT': [2, 5, 3], 'DSG': [1, 4], 'SSASC': [1, 3, 2, 5]}
+        give_ins_13 = {'ARSI': [1, 5, 3], 'MPE': [3, 2, 1]}
 
         subect_and_class_14 = {'MPE': 4, 'SSASC': 5, 'ARSI': 1, 'DSG': 2, 'MRKT': 3}
-        target_14 = {'DSG': [1,2], 'MRKT': [4,5], 'ARSI': [4,3]}
-        give_ins_14 = {'MPE':[1,4,3], 'SSASC': [5,3,2]}
+        target_14 = {'DSG': [1, 2], 'MRKT': [4, 5], 'ARSI': [4, 3]}
+        give_ins_14 = {'MPE': [1, 4, 3], 'SSASC': [5, 3, 2]}
 
         subect_and_class_15 = {'MPE': 5, 'SSASC': 1, 'ARSI': 2, 'DSG': 3, 'MRKT': 4}
         target_15 = {}
-        give_ins_15 = {'MPE': [2,3,5], 'SSASC': [1,3,2], 'DSG': [3,5,1]}
-        buddies_15 = {'ARSI': [10,11,12], 'MRKT': [1,3]}
+        give_ins_15 = {'MPE': [2, 3, 5], 'SSASC': [1, 3, 2], 'DSG': [3, 5, 1]}
+        buddies_15 = {'ARSI': [10, 11, 12], 'MRKT': [1, 3]}
 
         subect_and_class_16 = {'MPE': 1, 'SSASC': 2, 'ARSI': 3, 'DSG': 4, 'MRKT': 5}
-        target_16 = {'SSASC': [5,1], 'MRKT': [1], 'MPE':[1,5,3]}
-        give_ins_16 = {'DSG': [4,3,2], 'ARSI': [3,2]}
+        target_16 = {'SSASC': [5, 1], 'MRKT': [1], 'MPE': [1, 5, 3]}
+        give_ins_16 = {'DSG': [4, 3, 2], 'ARSI': [3, 2]}
 
         subect_and_class_17 = {'MPE': 2, 'SSASC': 3, 'ARSI': 4, 'DSG': 5, 'MRKT': 1}
-        target_17 = {'DSG': [1,5], 'MRKT': [5,1]}
-        give_ins_17 = {'MPE':[5,2,3], 'SSASC': [5,3,1], 'ARSI': [1,2,4]}
+        target_17 = {'DSG': [1, 5], 'MRKT': [5, 1]}
+        give_ins_17 = {'MPE': [5, 2, 3], 'SSASC': [5, 3, 1], 'ARSI': [1, 2, 4]}
 
         subect_and_class_18 = {'MPE': 3, 'SSASC': 4, 'ARSI': 5, 'DSG': 1, 'MRKT': 2}
-        target_18 = {'MPE': [2,3], 'SSASC': [5,3,2]}
-        give_ins_18 = {'DSG':[1,2,3,4,5], 'MRKT': [1,2,3,4,5], 'ARSI': [1,2,3,4,5]}
+        target_18 = {'MPE': [2, 3], 'SSASC': [5, 3, 2]}
+        give_ins_18 = {'DSG': [1, 2, 3, 4, 5], 'MRKT': [1, 2, 3, 4, 5], 'ARSI': [1, 2, 3, 4, 5]}
 
         subect_and_class_19 = {'MPE': 4, 'SSASC': 5, 'ARSI': 1, 'DSG': 2, 'MRKT': 3}
-        target_19 = {'DSG': [4,2,5], 'SSASC': [5,1,4]}
-        give_ins_19 = {'MPE': [1,2,3,4,5], 'MRKT': [1,2,3,4,5], 'ARSI': [1,2,3,4,5]}
+        target_19 = {'DSG': [4, 2, 5], 'SSASC': [5, 1, 4]}
+        give_ins_19 = {'MPE': [1, 2, 3, 4, 5], 'MRKT': [1, 2, 3, 4, 5], 'ARSI': [1, 2, 3, 4, 5]}
 
         subect_and_class_20 = {'MPE': 5, 'SSASC': 1, 'ARSI': 2, 'DSG': 3, 'MRKT': 4}
         target_20 = {}
-        give_ins_20 = {'DSG': [1,2,3,4,5], 'SSASC': [1,2,3,4,5], 'MRKT': [1,2,3,4,5]}
-        buddies_20 = {'ARSI': [7,13], 'MPE': [12,19,9]}
+        give_ins_20 = {'DSG': [1, 2, 3, 4, 5], 'SSASC': [1, 2, 3, 4, 5], 'MRKT': [1, 2, 3, 4, 5]}
+        buddies_20 = {'ARSI': [7, 13], 'MPE': [12, 19, 9]}
 
-
-        
         student_1 = Student(1, subect_and_class_1, target_1, give_ins_1, {})
         student_2 = Student(2, subect_and_class_2, target_2, give_ins_2, {})
         student_3 = Student(3, subect_and_class_3, target_3, give_ins_3, {})
@@ -289,11 +286,10 @@ class DataBank:
                             student_18,
                             student_19,
                             student_20]
-    
+
         for student in list_of_students: state.add_student(student)
 
         return state
-
 
     @staticmethod
     def get_states_with_different_number():
@@ -316,7 +312,7 @@ class DataBank:
 
         hour_9 = Hour(9, 0)
         hour_10 = Hour(11, 0)
-        
+
         state.add_schedule(list_of_subjects[0], 1, hour_1, hour_2, 'Monday')
         state.add_schedule(list_of_subjects[1], 1, hour_3, hour_4, 'Monday')
         state.add_schedule(list_of_subjects[2], 1, hour_5, hour_6, 'Monday')
@@ -349,91 +345,89 @@ class DataBank:
 
         # Gerar estudantes
         subect_and_class_1 = {'MPE': 1, 'SSASC': 2, 'ARSI': 3, 'DSG': 4, 'MRKT': 5}
-        target_1 = {'MPE': [1,3], 'ARSI': [1,2]}
-        give_ins_1 = {'SSASC':[2,3], 'DSG': [1,2,3,4], 'MRKT': [2,3,5]}
+        target_1 = {'MPE': [1, 3], 'ARSI': [1, 2]}
+        give_ins_1 = {'SSASC': [2, 3], 'DSG': [1, 2, 3, 4], 'MRKT': [2, 3, 5]}
 
         subect_and_class_2 = {'MPE': 2, 'SSASC': 3, 'ARSI': 4, 'DSG': 5, 'MRKT': 1}
-        target_2 = {'SSASC': [1,3], 'DSG': [1,2], 'MRKT': [1,2,3]}
-        give_ins_2 = {'MPE':[2,3], 'ARSI': [1,2,3,4]}
+        target_2 = {'SSASC': [1, 3], 'DSG': [1, 2], 'MRKT': [1, 2, 3]}
+        give_ins_2 = {'MPE': [2, 3], 'ARSI': [1, 2, 3, 4]}
 
         subect_and_class_3 = {'MPE': 3, 'SSASC': 4, 'ARSI': 5, 'DSG': 1, 'MRKT': 2}
-        target_3 = {'SSASC': [2,4,5], 'MRKT': [5,1]}
-        give_ins_3 = {'DSG': [1,2,4], 'ARSI': [3,4,5]}
+        target_3 = {'SSASC': [2, 4, 5], 'MRKT': [5, 1]}
+        give_ins_3 = {'DSG': [1, 2, 4], 'ARSI': [3, 4, 5]}
 
         subect_and_class_4 = {'MPE': 4, 'SSASC': 5, 'ARSI': 1, 'DSG': 2, 'MRKT': 3}
-        target_4 = {'ARSI': [1,3], 'SSASC': [5,2]}
-        give_ins_4 = {'MPE':[2,3,4,5], 'MRKT': [5,3,4], 'DSG': [1,2]}
+        target_4 = {'ARSI': [1, 3], 'SSASC': [5, 2]}
+        give_ins_4 = {'MPE': [2, 3, 4, 5], 'MRKT': [5, 3, 4], 'DSG': [1, 2]}
 
         subect_and_class_5 = {'MPE': 5, 'SSASC': 1, 'ARSI': 2, 'DSG': 3, 'MRKT': 4}
         target_5 = {}
-        give_ins_5 = {'SSASC':[1,2,3], 'DSG': [1,2,3,4], 'MRKT': [2,4,5]}
-        buddies_5 = {'MPE': [3], 'ARSI': [1,4]}
+        give_ins_5 = {'SSASC': [1, 2, 3], 'DSG': [1, 2, 3, 4], 'MRKT': [2, 4, 5]}
+        buddies_5 = {'MPE': [3], 'ARSI': [1, 4]}
 
         subect_and_class_6 = {'MPE': 1, 'SSASC': 2, 'ARSI': 3, 'DSG': 4, 'MRKT': 5}
-        target_6 = {'DSG': [2,5], 'MRKT': [5,1]}
-        give_ins_6 = {'MPE':[1,2,3], 'SSASC': [1,3,2], 'ARSI': [3,2]}
+        target_6 = {'DSG': [2, 5], 'MRKT': [5, 1]}
+        give_ins_6 = {'MPE': [1, 2, 3], 'SSASC': [1, 3, 2], 'ARSI': [3, 2]}
 
         subect_and_class_7 = {'MPE': 2, 'SSASC': 3, 'ARSI': 4, 'DSG': 5, 'MRKT': 1}
-        target_7 = {'MPE': [3,2,1], 'ARSI': [5,1], 'SSASC': [5,2]}
-        give_ins_7 = {'DSG':[4,5,3], 'MRKT': [1,3,4]}
-        
+        target_7 = {'MPE': [3, 2, 1], 'ARSI': [5, 1], 'SSASC': [5, 2]}
+        give_ins_7 = {'DSG': [4, 5, 3], 'MRKT': [1, 3, 4]}
+
         subect_and_class_8 = {'MPE': 3, 'SSASC': 4, 'ARSI': 5, 'DSG': 1, 'MRKT': 2}
-        target_8 = {'DSG': [1,2], 'SSASC': [3,2,4]}
-        give_ins_8 = {'MPE':[4,1,3], 'MRKT': [5,2], 'ARSI': [1,5,2]}
+        target_8 = {'DSG': [1, 2], 'SSASC': [3, 2, 4]}
+        give_ins_8 = {'MPE': [4, 1, 3], 'MRKT': [5, 2], 'ARSI': [1, 5, 2]}
 
         subect_and_class_9 = {'MPE': 4, 'SSASC': 5, 'ARSI': 1, 'DSG': 2, 'MRKT': 3}
-        target_9 = {'ARSI': [3,4], 'MRKT': [1,2]}
-        give_ins_9 = {'MPE':[1,2,4], 'SSASC': [3,1,5], 'DSG': [3,2]}
+        target_9 = {'ARSI': [3, 4], 'MRKT': [1, 2]}
+        give_ins_9 = {'MPE': [1, 2, 4], 'SSASC': [3, 1, 5], 'DSG': [3, 2]}
 
         subect_and_class_10 = {'MPE': 5, 'SSASC': 1, 'ARSI': 2, 'DSG': 3, 'MRKT': 4}
         target_10 = {}
-        give_ins_10 = {'MRKT':[2,3,4], 'DSG': [5,3,2], 'ARSI': [3,2,1]}
-        buddies_10 = {'MPE': [2,9], 'SSASC': [5,9]}
+        give_ins_10 = {'MRKT': [2, 3, 4], 'DSG': [5, 3, 2], 'ARSI': [3, 2, 1]}
+        buddies_10 = {'MPE': [2, 9], 'SSASC': [5, 9]}
 
         subect_and_class_11 = {'MPE': 1, 'SSASC': 2, 'ARSI': 3, 'DSG': 4, 'MRKT': 5}
         target_11 = {'MPE': [5]}
-        give_ins_11 = {'SSASC': [2,1], 'ARSI': [3,1], 'DSG': [4,1], 'MRKT': [5,1]}
+        give_ins_11 = {'SSASC': [2, 1], 'ARSI': [3, 1], 'DSG': [4, 1], 'MRKT': [5, 1]}
 
         subect_and_class_12 = {'MPE': 2, 'SSASC': 3, 'ARSI': 4, 'DSG': 5, 'MRKT': 1}
-        target_12 = {'ARSI': [1,2,3,4], 'MPE': [5,1,3]}
-        give_ins_12 = {'MRKT':[1,2,3], 'SSASC': [1,3,2], 'DSG': [3,5,2]}
+        target_12 = {'ARSI': [1, 2, 3, 4], 'MPE': [5, 1, 3]}
+        give_ins_12 = {'MRKT': [1, 2, 3], 'SSASC': [1, 3, 2], 'DSG': [3, 5, 2]}
 
         subect_and_class_13 = {'MPE': 3, 'SSASC': 4, 'ARSI': 5, 'DSG': 1, 'MRKT': 2}
-        target_13 = {'MRKT': [2,5,3], 'DSG': [1,4], 'SSASC': [1,3,2,5]}
-        give_ins_13 = {'ARSI':[1,5,3], 'MPE': [3,2,1]}
+        target_13 = {'MRKT': [2, 5, 3], 'DSG': [1, 4], 'SSASC': [1, 3, 2, 5]}
+        give_ins_13 = {'ARSI': [1, 5, 3], 'MPE': [3, 2, 1]}
 
         subect_and_class_14 = {'MPE': 4, 'SSASC': 5, 'ARSI': 1, 'DSG': 2, 'MRKT': 3}
-        target_14 = {'DSG': [1,2], 'MRKT': [4,5], 'ARSI': [4,3]}
-        give_ins_14 = {'MPE':[1,4,3], 'SSASC': [5,3,2]}
+        target_14 = {'DSG': [1, 2], 'MRKT': [4, 5], 'ARSI': [4, 3]}
+        give_ins_14 = {'MPE': [1, 4, 3], 'SSASC': [5, 3, 2]}
 
         subect_and_class_15 = {'MPE': 5, 'SSASC': 1, 'ARSI': 2, 'DSG': 3, 'MRKT': 4}
         target_15 = {}
-        give_ins_15 = {'MPE': [2,3,5], 'SSASC': [1,3,2], 'DSG': [3,5,1]}
-        buddies_15 = {'ARSI': [10,11,12], 'MRKT': [1,3]}
+        give_ins_15 = {'MPE': [2, 3, 5], 'SSASC': [1, 3, 2], 'DSG': [3, 5, 1]}
+        buddies_15 = {'ARSI': [10, 11, 12], 'MRKT': [1, 3]}
 
         subect_and_class_16 = {'MPE': 1, 'SSASC': 2, 'ARSI': 3, 'DSG': 4, 'MRKT': 5}
-        target_16 = {'SSASC': [5,1], 'MRKT': [1], 'MPE':[1,5,3]}
-        give_ins_16 = {'DSG': [4,3,2], 'ARSI': [3,2]}
+        target_16 = {'SSASC': [5, 1], 'MRKT': [1], 'MPE': [1, 5, 3]}
+        give_ins_16 = {'DSG': [4, 3, 2], 'ARSI': [3, 2]}
 
         subect_and_class_17 = {'MPE': 2, 'SSASC': 3, 'ARSI': 4, 'DSG': 5, 'MRKT': 1}
-        target_17 = {'DSG': [1,5], 'MRKT': [5,1]}
-        give_ins_17 = {'MPE':[5,2,3], 'SSASC': [5,3,1], 'ARSI': [1,2,4]}
+        target_17 = {'DSG': [1, 5], 'MRKT': [5, 1]}
+        give_ins_17 = {'MPE': [5, 2, 3], 'SSASC': [5, 3, 1], 'ARSI': [1, 2, 4]}
 
         subect_and_class_18 = {'MPE': 3, 'SSASC': 4, 'ARSI': 5, 'DSG': 1, 'MRKT': 2}
-        target_18 = {'MPE': [2,3], 'SSASC': [5,3,2]}
-        give_ins_18 = {'DSG':[1,2,3,4,5], 'MRKT': [1,2,3,4,5], 'ARSI': [1,2,3,4,5]}
+        target_18 = {'MPE': [2, 3], 'SSASC': [5, 3, 2]}
+        give_ins_18 = {'DSG': [1, 2, 3, 4, 5], 'MRKT': [1, 2, 3, 4, 5], 'ARSI': [1, 2, 3, 4, 5]}
 
         subect_and_class_19 = {'MPE': 4, 'SSASC': 5, 'ARSI': 1, 'DSG': 2, 'MRKT': 3}
-        target_19 = {'DSG': [4,2,5], 'SSASC': [5,1,4]}
-        give_ins_19 = {'MPE': [1,2,3,4,5], 'MRKT': [1,2,3,4,5], 'ARSI': [1,2,3,4,5]}
+        target_19 = {'DSG': [4, 2, 5], 'SSASC': [5, 1, 4]}
+        give_ins_19 = {'MPE': [1, 2, 3, 4, 5], 'MRKT': [1, 2, 3, 4, 5], 'ARSI': [1, 2, 3, 4, 5]}
 
         subect_and_class_20 = {'MPE': 5, 'SSASC': 1, 'ARSI': 2, 'DSG': 3, 'MRKT': 4}
         target_20 = {}
-        give_ins_20 = {'DSG': [1,2,3,4,5], 'SSASC': [1,2,3,4,5], 'MRKT': [1,2,3,4,5]}
-        buddies_20 = {'ARSI': [7,13], 'MPE': [12,19,9]}
+        give_ins_20 = {'DSG': [1, 2, 3, 4, 5], 'SSASC': [1, 2, 3, 4, 5], 'MRKT': [1, 2, 3, 4, 5]}
+        buddies_20 = {'ARSI': [7, 13], 'MPE': [12, 19, 9]}
 
-
-        
         student_1 = Student(1, subect_and_class_1, target_1, give_ins_1, {})
         student_2 = Student(2, subect_and_class_2, target_2, give_ins_2, {})
         student_3 = Student(3, subect_and_class_3, target_3, give_ins_3, {})
@@ -478,9 +472,10 @@ class DataBank:
 
         list_of_states = []
 
-        for i in range(1,20, 2):
+        for i in range(1, 20, 2):
             copy = deepcopy(state)
-            for k in range(i+1): copy.add_student(list_of_students[k])
+            for k in range(i + 1):
+                copy.add_student(list_of_students[k])
             list_of_states.append(copy)
 
         return list_of_states

@@ -8,9 +8,10 @@ class NewDict:
 
     def __repr__(self):
         return 'NewD' + self.dictionary.__repr__()
-        
+
     def items(self):
         return self.dictionary.items()
+
 
 class GeneticState:
     def __init__(self, state):
@@ -41,16 +42,16 @@ class GeneticState:
             for class_, students in value.items():
                 for student in students:
                     state.students[student].subjects_and_classes[subject] = class_
-        
+
         return GeneticState(state)
 
     def gen_off_spring(self, other):
-        '''
+        """"
         Consider self mum and other dad
 
         :param other: Other state to generate offspring
         :return: Tuple with offspring
-        '''
+        """
 
         daughter = deepcopy(self)
         son = deepcopy(other)
@@ -58,7 +59,7 @@ class GeneticState:
         # Cycle to create daughter
         for subject, new_d in daughter.genetic_state.items():
             for class_, students in new_d.dictionary.items():
-                student = sample(students, 1)[0] # A student from this class.
+                student = sample(students, 1)[0]  # A student from this class.
 
                 # Chooses random student from that same class but in the dad state
                 other_student = sample(other.genetic_state[subject].dictionary[class_], 1)[0]
@@ -77,7 +78,7 @@ class GeneticState:
         # Cycle to create son
         for subject, new_d in son.genetic_state.items():
             for class_, students in new_d.dictionary.items():
-                student = sample(students, 1)[0] # A student from this class.
+                student = sample(students, 1)[0]  # A student from this class.
 
                 # Chooses random student from that same class but in the dad state
                 other_student = sample(self.genetic_state[subject].dictionary[class_], 1)[0]
@@ -95,11 +96,9 @@ class GeneticState:
 
         d = GeneticState.convert_to_normal_state(daughter.state, daughter.genetic_state)
         s = GeneticState.convert_to_normal_state(son.state, son.genetic_state)
-        return (d, s)
+        return d, s
 
-            
     def mutate(self):
         n = randint(1, 30)
         if n == 1:
             self.state = self.state.random_neighbour()
-

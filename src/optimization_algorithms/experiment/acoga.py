@@ -8,7 +8,7 @@ from src.optimization_algorithms.genetic_algorithm.genetic_state import \
 
 
 class ACOGA:
-    IT_WITHOUT_G_BETTER= 5000
+    IT_WITHOUT_G_BETTER = 5000
 
     @staticmethod
     def acoga(root):

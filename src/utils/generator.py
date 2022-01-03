@@ -9,6 +9,7 @@ class NewDict:
     """
     This dictionary is necessary because dictionaries are unhashable
     """
+
     def __init__(self, dictionary):
         self.dictionary = dictionary
 
@@ -18,9 +19,11 @@ class NewDict:
     def items(self):
         return self.dictionary.items()
 
+
 class GenerateState:
     MAXIMUM_CLASSES = 6
     NUMBER_OF_CLASSES = 12
+
     @staticmethod
     def generator_students(n_students, subjects):
         generated_students = []
@@ -50,11 +53,11 @@ class GenerateState:
                 # give_in classes
             for _ in range(randint(0, len(subject_classes) - len(subject_target))):  # the give_in can't be a target
                 subject = choice(list(subject_classes.keys()))
-                while (subject in list(subject_target.keys())):
+                while subject in list(subject_target.keys()):
                     subject = choice(list(subject_classes.keys()))
 
                 give_in = []
-                while (give_in == list()):  # if there's a give_in, the list can't be empty
+                while give_in == list():  # if there's a give_in, the list can't be empty
                     give_in = [randint(1, GenerateState.MAXIMUM_CLASSES) for _ in
                                range(randint(1, GenerateState.NUMBER_OF_CLASSES))]  # give_in classes
                     give_in = list(set(filter(lambda x: x != subject_classes[subject],
@@ -68,12 +71,12 @@ class GenerateState:
                 buddies = []
                 for _ in range(1, 4):  # number of buddies in a subject
                     buddy = randint(0, (n_students - 1))
-                    while (buddy == s.student_id):  # avoid the buddy being him self
+                    while buddy == s.student_id:  # avoid the buddy being him self
                         buddy = randint(0, (n_students - 1))
                     buddies.append(buddy)
 
                 subject = choice(list(subject_classes.keys()))
-                while (subject in list(s.buddies.keys())):  # the subject cannot be already at s.buddies
+                while subject in list(s.buddies.keys()):  # the subject cannot be already at s.buddies
                     subject = choice(list(subject_classes.keys()))
 
                 s.add_buddies(subject, list(set(buddies)))
@@ -95,7 +98,8 @@ class GenerateState:
             for el in sample(list_of_subjects, 1):
                 number_of_targets = randint(1, 3)
                 # number_of_targets random targets from 1 to NUMBER_OF_CLASSES
-                subject_target[el] = sample([j for j in range(1, GenerateState.NUMBER_OF_CLASSES + 1)], number_of_targets)
+                subject_target[el] = sample([j for j in range(1, GenerateState.NUMBER_OF_CLASSES + 1)],
+                                            number_of_targets)
 
             c = choice(list_of_subjects)
             while c in subject_target.keys():

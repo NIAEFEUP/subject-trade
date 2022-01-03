@@ -1,8 +1,8 @@
 import math
 import random
 from time import perf_counter
-
 from src.utils.data_bank import DataBank
+
 
 class HillClimbingVariants:
     XI = 5000
@@ -11,7 +11,7 @@ class HillClimbingVariants:
     RESTART_NUMBER = 10
 
     @staticmethod
-    def hill_climbing(state): 
+    def hill_climbing(state):
         number_of_tries = 0
         state.get_score()
         while number_of_tries < HillClimbingVariants.XI:
@@ -30,12 +30,12 @@ class HillClimbingVariants:
     @staticmethod
     def random_restart_hill_climbing(state):
         best_state = HillClimbingVariants.hill_climbing(state)
-        
+
         for _ in range(HillClimbingVariants.RESTART_NUMBER):
             s = state
             for _ in range(100):
                 s = s.random_neighbour()
-            
+
             best_state = HillClimbingVariants.hill_climbing(s)
             if s.heuristic > best_state.heuristic:
                 best_state = s
@@ -49,13 +49,14 @@ class HillClimbingVariants:
             state.get_score()
             counter = 0
             q = []
-            
+
+            s = None
             while counter < HillClimbingVariants.STEEPEST_ASCENT_NUMBER:
                 s = state.random_neighbour()
                 s.get_score()
                 q.append(s)
                 counter += 1
-            
+
             q.sort(reverse=True, key=lambda node: node.heuristic)
             best = q[0]
 
@@ -64,7 +65,7 @@ class HillClimbingVariants:
                 number_of_tries = 0
             else:
                 number_of_tries += 1
-            
+
             if number_of_tries > HillClimbingVariants.XI:
                 break
 
@@ -78,7 +79,7 @@ class HillClimbingVariants:
         best_state = state
         while number_of_tries < HillClimbingVariants.XI:
             temperature = 1 - iterations * HillClimbingVariants.SIMULATED_ANNEALING_STEP
-            
+
             state.get_score()
             s = state.random_neighbour()
             s.get_score()
@@ -90,10 +91,10 @@ class HillClimbingVariants:
                 number_of_tries = 0
                 best_state = s
 
-            elif temperature > 0: 
-                delta = (s.heuristic - state.heuristic) / (s.heuristic + state.heuristic) 
+            elif temperature > 0:
+                delta = (s.heuristic - state.heuristic) / (s.heuristic + state.heuristic)
                 probability = math.exp(delta / temperature)
-                if random.random() <= probability: 
+                if random.random() <= probability:
                     state = s
             iterations += 1
 
