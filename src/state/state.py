@@ -54,7 +54,7 @@ class State:
             gave_in = False
             got_target = False
 
-            #checking buddies 
+            # checking buddies
             score_buddies = 0.5 * MAX_SCORE  # Gives 50% of importance to the buddies
             
             for subject in student.buddies: 
