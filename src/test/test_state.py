@@ -13,6 +13,8 @@ class TestState(unittest.TestCase):
         stored_student = state.students[123]
         self.assertEqual(stored_student, student)
 
-
+    def test_get_score(self):
+        pass
+    
 if __name__ == '__main__':
     unittest.main()
