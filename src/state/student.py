@@ -7,7 +7,7 @@ class Student:
         self.buddies = buddies  # Dict where for each subject (key) there is a list of ups ordered by their priority
 
     def add_subject_and_class(self, subject_name, class_number):
-        if len(self.subjects_and_classes) < 7:
+        if len(self.subjects_and_classes) < 7:  # TODO: review this line. Limit of 7 subjects for each student?
             self.subjects_and_classes[subject_name] = class_number
             return True
         return False
