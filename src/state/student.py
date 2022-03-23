@@ -2,6 +2,7 @@ class Student:
     def __init__(self, student_id, subjects_and_classes, subject_targets, subject_give_ins, buddies):
         self.student_id = student_id  # Id of the student
         self.subjects_and_classes = subjects_and_classes  # Dict with subject as a key and class as value
+        self.original_sac = subjects_and_classes # Dictionary with original subjects and classes
         self.subject_targets = subject_targets  # Dict with subject as key and a list of target classes as value
         self.subject_give_ins = subject_give_ins  # Dict with subject as key and a list of give ins classes as value
         self.buddies = buddies  # Dict where for each subject (key) there is a list of ups ordered by their priority
