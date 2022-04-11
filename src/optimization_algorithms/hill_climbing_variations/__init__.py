@@ -1,0 +1,2 @@
+# For production purposes, a variation of Hill Climbing should be used.
+# After some (undocumented) experiments, it was concluded that the best time over quality algorithm was Random Restart Hill Climbing.

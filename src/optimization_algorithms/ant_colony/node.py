@@ -4,7 +4,7 @@ class Node:
         self.edges = {}
         self.id = id
         self.heuristic = self.get_heuristic()
-    
+
     def add_edge(self, edge):
         if str(edge) not in self.edges:
             self.edges[str(edge)] = edge
@@ -14,9 +14,8 @@ class Node:
         for edge in self.edges.values():
             l.append(edge.get_other(self))
         return l
-        
-    def get_heuristic(self): # To be replaced by state.get_score
-        # return self.state
+
+    def get_heuristic(self):
         return self.state.get_score()
 
     def get_sum(self, alpha, beta):
@@ -25,13 +24,13 @@ class Node:
             other_node = None
             if edge.node_1.id != self.id:
                 other_node = edge.node_1
-            else: other_node = edge.node_2
+            else:
+                other_node = edge.node_2
 
             s += (edge.pheromones ** alpha) * (other_node.heuristic ** beta)
         return s
 
-    def return_new_state(self): # To be replaced by random_neighbour
-        # return randint(0, 100)
+    def return_new_state(self):
         return self.state.random_neighbour()
 
     def __str__(self):
@@ -44,24 +43,20 @@ class Node:
         try:
             if len(self.state.students) == len(other.state.students):
                 for student, student_class in self.state.students.items():
-                    if student in other.state.students.keys():   
-                        for subject, clas in student_class.subjects_and_classes.items():
-                            if other.state.students[student].subjects_and_classes[subject] == clas:
+                    if student in other.state.students.keys():
+                        for subject, subj_class in student_class.subjects_and_classes.items():
+                            if other.state.students[student].subjects_and_classes[subject] == subj_class:
                                 pass
-                            else: 
+                            else:
                                 return False
-                    else: 
+                    else:
                         return False
-            else: 
+            else:
                 return False
             return True
 
-        except:
-           return False
-        # if str(self) == str(other):
-        #     return True
-        # else:
-        #     return False
+        except BaseException:
+            return False
 
     def __lt__(self, other):
         if self.heuristic < other.heuristic:

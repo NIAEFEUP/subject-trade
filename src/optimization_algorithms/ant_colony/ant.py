@@ -1,5 +1,4 @@
-from random import random
-from random import uniform
+from random import random, uniform
 
 from src.optimization_algorithms.ant_colony.node import Node
 
@@ -20,24 +19,26 @@ class Ant:
 
         if s - 1 > 0:
             rand_val = uniform(1, s)
-        else: rand_val = 0
-        
+        else:
+            rand_val = 0
+
         edges = []
         for _, b in self.current_node.edges.items():
             edges.append(b)
 
-        #probabilities range
+        # probabilities range
         e = []
         for i, edge in enumerate(edges):
 
             other_node = None
             if edge.node_1.id != self.current_node.id:
                 other_node = edge.node_1
-            else: other_node = edge.node_2
+            else:
+                other_node = edge.node_2
 
             if i != 0:
                 e.append((edge.pheromones ** self.alpha) * (other_node.heuristic ** self.beta) + e[len(e) - 1])
-            else: 
+            else:
                 e.append((edge.pheromones ** self.alpha) * (other_node.heuristic ** self.beta))
 
         for i, element in enumerate(e):
@@ -46,8 +47,9 @@ class Ant:
                 other_node = None
                 if edges[i].node_1.id != self.current_node.id:
                     other_node = edges[i].node_1
-                else: other_node = edges[i].node_2
-                
+                else:
+                    other_node = edges[i].node_2
+
                 self.edges_path.append(edges[i])
                 self.update_node(other_node)
 
@@ -70,12 +72,9 @@ class Ant:
     def explore(self):
         if self.graph.id == 1:
             return True
-        
+
         r = random()
-        if r > 0.8:
-            return True
-        else:
-            return False
+        return r > 0.8
 
     def expand_node(self):
         node = Node(self.current_node.return_new_state(), self.graph.get_id())

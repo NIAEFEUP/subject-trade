@@ -1,7 +1,4 @@
-import os
 import unittest
-
-os.chdir("../packages/")
 
 from src.state.schedule import Schedule
 from src.state.hour import Hour
@@ -25,12 +22,13 @@ A and B happen in the same day.
     A and B start at the same hour -- Conflict
 '''
 
-class test_schedule(unittest.TestCase):
+
+class TestSchedule(unittest.TestCase):
     def test_conflict_case(self):
-        h1 = Hour(10,20)
-        h2 = Hour(12,20)
-        h3 = Hour(12,21)
-        h4 = Hour(12,50)
+        h1 = Hour(10, 20)
+        h2 = Hour(12, 20)
+        h3 = Hour(12, 21)
+        h4 = Hour(12, 50)
         day1 = 'Monday'
 
         s1 = Schedule(h1, h3, day1)
@@ -41,10 +39,10 @@ class test_schedule(unittest.TestCase):
         self.assertTrue(s1.conflicts(s1))
 
     def test_non_conflict(self):
-        h1 = Hour(10,20)
-        h2 = Hour(12,20)
-        h3 = Hour(12,21)
-        h4 = Hour(12,50)
+        h1 = Hour(10, 20)
+        h2 = Hour(12, 20)
+        h3 = Hour(12, 21)
+        h4 = Hour(12, 50)
         day1 = 'Monday'
         day2 = 'Tuesday'
 
@@ -52,7 +50,7 @@ class test_schedule(unittest.TestCase):
         s2 = Schedule(h2, h4, day1)
         s3 = Schedule(h3, h4, day1)
         s4 = Schedule(h1, h4, day2)
-        
+
         self.assertFalse(s1.conflicts(s2))
         self.assertFalse(s2.conflicts(s1))
         self.assertFalse(s1.conflicts(s3))
@@ -61,5 +59,6 @@ class test_schedule(unittest.TestCase):
         self.assertFalse(s4.conflicts(s2))
         self.assertFalse(s4.conflicts(s2))
 
+
 if __name__ == '__main__':
-    unittest.main() 
+    unittest.main()

@@ -2,12 +2,13 @@ from src.optimization_algorithms.ant_colony.ant import Ant
 from src.optimization_algorithms.ant_colony.graph import Graph
 from src.optimization_algorithms.ant_colony.node import Node
 
-It_Without_G_Better = 5000
 
 class AntColony:
+    IT_WITHOUT_G_BETTER = 5000
+
     @staticmethod
-    def ant_colony(root_state, IT_WITHOUT_G_BETTER=It_Without_G_Better):
-        iterator = IT_WITHOUT_G_BETTER
+    def ant_colony(root_state):
+        iterator = AntColony.IT_WITHOUT_G_BETTER
         best_10 = []
 
         g = Graph()
@@ -43,20 +44,10 @@ class AntColony:
                 best_10.pop(10)
 
             if ret_node.heuristic > maximum.heuristic:
-                iterator = IT_WITHOUT_G_BETTER
+                iterator = AntColony.IT_WITHOUT_G_BETTER
                 maximum = ret_node
             else:
                 iterator -= 1
 
         return best_10
 
-# subjects = ['BDAD', 'LPOO', 'LGP', 'DWQ', 'AWS', 'BBPA', 'POWQ']
-# n_students = 10   
-# root_state = GenerateState.get_random_state(subjects, n_students)
-
-# best = AntColony.ant_colony(root_state)
-# for b in best:
-#     #print(b, "student_num", b.state.student_num, "conflicts", b.state.conflicts, "didn't get", b.state.didnt_get)
-#     print(b.heuristic)
-#     # for student in b.state.students.values():
-#     #     print(student.student.subject_)
