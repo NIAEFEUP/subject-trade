@@ -17,10 +17,10 @@ the best trading configuration.
 
 ## Folders organization 
 
-- optmization_algorithms/       # The trading algorithms  
--- ant_colony/ 
--- experiment/ 
--- genetic_algorithm/ 
--- hill_climbing_variations/ 
-- state/                        # Where the application state should be defined 
-- utils/                        # Some utils files 
+- `optmization_algorithms/`       # The trading algorithms  
+  - `ant_colony/` 
+  - `experiment/`  
+  - `genetic_algorithm/` 
+  - `hill_climbing_variations/` 
+- `state/`                        # Where the application state should be defined 
+- `utils/`                        # Some utils files 
